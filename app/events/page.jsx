@@ -1,3 +1,5 @@
+'use client'
+
 import Header from "@/components/Header"
 import EventsPage from "@/components/EventsPage"
 import Footer from "@/components/Footer"
