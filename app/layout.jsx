@@ -23,25 +23,25 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: "ITRONIX-2K26 — A Simulated Future | Guru Nanak College Techfest",
+  title: "ITRONIX-2026 — Techland: where only the skilled survives | Guru Nanak College Techfest",
   description:
-    "ITRONIX-2K26 — A Simulated Future. March 20–22, 2026. A three-day inter-college techfest at Guru Nanak College, GTB Nagar — Hackathon, Robotics Arena, AI challenges, workshops and e-sports. Register now.",
+    "ITRONIX-2026 — Techland. 20-22 to 2026. A three-day inter-college techfest at Guru Nanak College, GTB Nagar — Hackathon,  web development , workshops and e-sports. Register now.",
   keywords:
-    "techfest, college techfest, hackathon Mumbai, robotics competition, AI workshop, ITRONIX, Guru Nanak College",
+    "techfest, college techfest, hackathon Mumbai, ITRONIX, Guru Nanak College",
   generator: "v0.app",
   metadataBase: new URL("https://itronix2k26.com"),
   alternates: {
     canonical: "https://itronix2k26.com",
   },
   openGraph: {
-    title: "ITRONIX-2K26 — A Simulated Future",
-    description: "March 20–22, 2026. Three-day techfest at Guru Nanak College with Hackathon, Robotics, AI & more.",
+    title: "ITRONIX-2026 — Techland: where only the skilled survives ",
+    description: "jan 2026. two-day techfest at Guru Nanak College with Hackathon, creative ,BGMI & more.",
     type: "website",
     url: "https://itronix2k26.com",
     siteName: "ITRONIX-2K26",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/itlogo.jpg",
         width: 1200,
         height: 630,
         alt: "ITRONIX-2K26 — A Simulated Future",
@@ -52,12 +52,12 @@ export const metadata = {
     card: "summary_large_image",
     title: "ITRONIX-2K26 — A Simulated Future",
     description: "Three-day techfest: Hackathon, Robotics, AI & more. March 20–22, 2026.",
-    images: ["/og-image.jpg"],
+    images: ["/itlogo.jpg"],
   },
   icons: {
     icon: [
       {
-        url: "/icon.svg",
+        url: "/itlogo.svg",
         type: "image/svg+xml",
       },
     ],

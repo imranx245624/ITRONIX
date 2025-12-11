@@ -64,28 +64,41 @@ export default function About() {
               </div>
             </div>
           </div>
+          
 
           {/* Statistics */}
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-cyan-900/20 to-cyan-900/5 border border-cyan-400/20 rounded-lg p-6">
-              <div className="text-4xl font-bold text-cyan-400 font-rajdhani mb-2">50+</div>
+              <div className="text-4xl font-bold text-cyan-400 font-rajdhani mb-2">30+</div>
               <p className="text-gray-400 font-poppins">Years of Excellence</p>
             </div>
 
             <div className="bg-gradient-to-br from-magenta-900/20 to-magenta-900/5 border border-magenta-400/20 rounded-lg p-6">
-              <div className="text-4xl font-bold text-magenta-400 font-rajdhani mb-2">3000+</div>
-              <p className="text-gray-400 font-poppins">Active Students</p>
+              <div className="text-4xl font-bold text-magenta-400 font-rajdhani mb-2">10k+</div>
+              <p className="text-gray-400 font-poppins">Students Empowered</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-900/20 to-orange-900/5 border border-orange-400/20 rounded-lg p-6">
               <div className="text-4xl font-bold text-orange-400 font-rajdhani mb-2">100+</div>
-              <p className="text-gray-400 font-poppins">Faculty Members</p>
+              <p className="text-gray-400 font-poppins">Achievements & Awards</p>
             </div>
 
             <div className="bg-gradient-to-br from-cyan-900/20 to-cyan-900/5 border border-cyan-400/20 rounded-lg p-6">
               <div className="text-4xl font-bold text-cyan-400 font-rajdhani mb-2">15+</div>
               <p className="text-gray-400 font-poppins">Programs Offered</p>
             </div>
+          </div>
+          {/* IT section information */}
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-rajdhani text-balance text-neon-cyan">
+              About Information Technology Department  
+            </h2>
+            <p className="text-gray-300 font-poppins text-lg leading-relaxed mb-6">
+              The department offers undergraduate and postgraduate programs 
+              in Information Technology. These programs focus on core IT concepts, programming languages,
+               software development, database management, networking, cybersecurity, artificial intelligence, and other emerging technologies.
+            </p>
+            
           </div>
         </div>
       </div>

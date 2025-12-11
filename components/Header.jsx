@@ -90,13 +90,15 @@ export default function Header() {
                 {link.name}
               </Link>
             ))}
-            <Link
+            {/* <Link
               href="/register"
               className="btn-primary block text-center text-xs py-2 mt-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Register Now
-            </Link>
+            </Link> */}
+                    <p className="btn-primary block text-center text-xs py-2 mt-2"  >Registration Start <br/>From 1st January  </p> 
+
           </div>
         )}
       </nav>

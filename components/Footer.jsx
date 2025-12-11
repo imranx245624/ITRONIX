@@ -11,8 +11,8 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="font-rajdhani font-bold uppercase text-neon-cyan mb-2">I T R Φ N ! X — 3.O</h3>
-            <p className="font-poppins text-sm text-muted-text">Beyond Tomorrow</p>
+            <h3 className="font-rajdhani font-bold uppercase text-neon-cyan mb-2">I T R Φ N ! X </h3>
+            <p className="font-poppins text-sm text-muted-text">Techland</p>
           </div>
 
           {/* Quick Links */}
@@ -64,12 +64,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
+                {/* <Link
                   href="/register"
                   className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors"
                 >
                   Register
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
@@ -104,7 +104,7 @@ export default function Footer() {
         <div className="border-t border-neon-cyan/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-poppins text-sm text-muted-text text-center md:text-left">
-              © {currentYear} ITRONIX-2K26 — Guru Nanak College of Arts, Science & Commerce, GTB Nagar, Mumbai(400037).
+              © {currentYear} ITRONIX  — Guru Nanak College of Arts, Science & Commerce, GTB Nagar, Mumbai(400037).
             </p>
             <p className="font-poppins text-xs text-muted-text/60">Built by IMRAN Ali</p>
           </div>

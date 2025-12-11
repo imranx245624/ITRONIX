@@ -16,6 +16,10 @@ export default function Hero() {
     return cleanup
   }, [])
 
+  const titleClass =
+  `text-4xl sm:text-5xl lg:text-7xl font-rajdhani font-bold uppercase tracking-wider
+   bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] via-[#7CFFB2] to-[#FF2D95]
+   drop-shadow-[0_8px_40px_rgba(0,0,0,0.6)] transition-all duration-200`;
   return (
 
     <section
@@ -78,7 +82,7 @@ export default function Hero() {
           
           <h1
             id="hero-title"
-            className={` text-4xl sm:text-5xl lg:text-7xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-glow transition-all duration-1000 ${
+            className={` text-4xl sm:text-5xl lg:text-7xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-glow transition-all duration-200 ${
               isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
             style={{
@@ -86,7 +90,7 @@ export default function Hero() {
               transition: 'clip-path 1s ease-out',
             }}
           >
-            I T R Φ N ! X   
+            I T R Φ N ! X   <span className='text-2xl sm:text-1xl lg:text-1xl'>2026</span>
           </h1>
 
           {/* Glitch clones */}
@@ -119,15 +123,20 @@ export default function Hero() {
 
         {/* Date and Location */}
         <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8">
-          23 & 24 jan 2026 • Guru Nanak College of Arts,Science & Commerce <br />GTB Nagar, Mumbai
+           <span classname={"text-neon-cyan"} >Techland : where only the skilled survives</span><br/>Information Technology Department festival<br/>on 23 & 24 jan 2026  
+        </p>
+        <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8">
+          
         </p>
 
         {/* Event Highlights */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-poppins text-neon-cyan ">
           <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Hackathon</span>
-          <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Reverse Engineering </span>
+          <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Web Dev </span>
           <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Vibe Coding</span>
-          <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Web Dev</span>
+          <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Debugging</span>
+          
+          <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Creativity</span>
           <span className="px-2 sm:px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">Gaming</span>
         </div>
 
@@ -139,7 +148,7 @@ export default function Hero() {
           >
             Register Now
           </Link> */}
-        <p className="text-[12px] text-neon-cyan px-2 sm:px-3 py-1 border border-neon-cyan/500 w-40 h-12 backdrop-blur-sm bg-[rgba(4,8,12,0.36)]"  >Registration Start <br/>From 1st January  </p> 
+                    <p className="btn-primary block text-center text-xs py-2 mt-2"  >Registration Start <br/>From 1st January  </p> 
 
           <Link
             href="/events"

@@ -107,7 +107,8 @@ export default function SponsorsPage() {
 
   return (
     <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="top-50 max-w-6xl mx-auto">
+          
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -118,7 +119,7 @@ export default function SponsorsPage() {
         >
           <h1 className="section-title mb-4">SPONSORS & PARTNERS</h1>
           <p className="text-muted-text font-poppins max-w-3xl mx-auto mb-2">
-            Local partners supporting student innovation. Interested to sponsor ITRONIX? Download our deck or contact
+            Local partners supporting student innovation. Interested to sponsor ITRONIX?  contact
             us.
           </p>
         </motion.div>
@@ -146,7 +147,7 @@ export default function SponsorsPage() {
         </motion.div>
 
         {/* Sponsorship Tiers */}
-        <motion.div
+        {/* <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -188,7 +189,7 @@ export default function SponsorsPage() {
               <button className="w-full btn-primary">Get in Touch</button>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
 
         {/* Contact Section */}
         <motion.div
