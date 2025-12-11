@@ -1,0 +1,127 @@
+[
+  {
+    "id": "hackathon",
+    "title": "Web development",
+    "icon": "🌐",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Mini full-stack project challenge: design, code, deploy a working web app.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+  {
+    "id": "hackathon",
+    "title": "Hackathon",
+    "icon": "⚡",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "12–24 hour team hack sprint to build prototypes judged for innovation and feasibility.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+   {
+    "id": "hackathon",
+    "title": "Blind Typing",
+    "icon": "⌨️",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Timed typing accuracy & speed contest to test keyboard skills under pressure.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+   {
+    "id": "hackathon",
+    "title": "Vibe Coding",
+    "icon": "👨‍💻",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Short timed coding rounds focused on creative algorithmic or UI micro-challenges.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+   {
+    "id": "hackathon",
+    "title": "Code Golf",
+    "icon": "🏌️‍♂️",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Write the smallest working code to solve defined problems; size = score.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+  {
+    "id": "hackathon",
+    "title": "Bug-Busters",
+    "icon": "🕸",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Debugging challenge: find and fix bugs in prepared codebases under time limit.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+
+
+
+
+  {
+    "id": "innovation-fair",
+    "title": "Reverse Ebgineering",
+    "icon": "👾",
+    "category": "nonit",
+    "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
+    "description": "Campus fair for design, management, product ideas, business pitches, and creative projects. Showcase prototypes and business plans.",
+    "team_size": "Individuals",
+    "prize": "₹500",
+    "tags": [],
+    "register_url": "/register?event=innovation-fair"
+  },
+  {
+    "id": "innovation-fair",
+    "title": "Reverse Ebgineering",
+    "icon": "👾",
+    "category": "nonit",
+    "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
+    "description": "Campus fair for design, management, product ideas, business pitches, and creative projects. Showcase prototypes and business plans.",
+    "team_size": "Individuals",
+    "prize": "₹500",
+    "tags": [],
+    "register_url": "/register?event=innovation-fair"
+  },
+  {
+    "id": "cyber-arena",
+    "title": "BGMI",
+    "icon": "🪖",
+    "category": "cyber",
+    "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
+    "description": "E-sports tournaments + capture-the-flag security pwn challenges. Compete in teams and win gaming & tech prizes.",
+    "team_size": "4 member team",
+    "prize": "₹1500",
+    "tags": [],
+    ",register_url": "/register?event=cyber-arena"
+  },
+   {
+    "id": "cyber-arena",
+    "title": "BGMI",
+    "icon": "🪖",
+    "category": "cyber",
+    "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
+    "description": "E-sports tournaments + capture-the-flag security pwn challenges. Compete in teams and win gaming & tech prizes.",
+    "team_size": "4 member team",
+    "prize": "₹1500",
+    "tags": [],
+    "register_url": "/register?event=cyber-arena"
+  }
+  
+]

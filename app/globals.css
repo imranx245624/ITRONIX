@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ITRONIX Color Palette */
+    --deep-night: #04040b;
+    --neon-cyan: #00d1c1;
+    --neon-magenta: #ff4ec8;
+    --cyber-orange: #ff8c42;
+    --holo-pale: #c8fff1;
+    --muted-text: #b9ddf0;
+
+    /* Semantic colors */
+    --background: var(--deep-night);
+    --foreground: var(--muted-text);
+    --accent: var(--neon-cyan);
+    --accent-secondary: var(--neon-magenta);
+    --accent-tertiary: var(--cyber-orange);
+  }
+
+  * {
+    @apply outline-neon-cyan/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-deep-night text-muted-text;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .gradient-neon {
+    @apply bg-gradient-to-r from-neon-cyan via-neon-magenta to-cyber-orange;
+  }
+
+  .text-glow {
+    @apply drop-shadow-[0_0_8px_rgba(0,209,193,0.5)];
+  }
+
+  .text-glow-magenta {
+    @apply drop-shadow-[0_0_8px_rgba(255,78,200,0.5)];
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-neon-cyan text-deep-night font-semibold rounded-lg hover:bg-holo-pale transition-all duration-300 uppercase tracking-wider;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-neon-cyan text-neon-cyan font-semibold rounded-lg hover:bg-neon-cyan hover:text-deep-night transition-all duration-300 uppercase tracking-wider;
+  }
+
+  .card-dark {
+    @apply bg-deep-night/80 backdrop-blur-sm border border-neon-cyan/20 rounded-lg p-6;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan;
+  }
+}
+
+@theme inline {
+  --font-rajdhani: "Rajdhani Variable", "Rajdhani Fallback";
+  --font-poppins: "Poppins Variable", "Poppins Fallback";
+  --font-jetbrains: "JetBrains Mono Variable", "JetBrains Mono Fallback";
+
+  --color-deep-night: #04040b;
+  --color-neon-cyan: #00d1c1;
+  --color-neon-magenta: #ff4ec8;
+  --color-cyber-orange: #ff8c42;
+  --color-holo-pale: #c8fff1;
+  --color-muted-text: #b9ddf0;
+}
+
+/* Custom animations */
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.4s ease-in-out;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00d1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff4ec8;
+}

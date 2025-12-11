@@ -1,0 +1,23 @@
+[
+  {
+    "id": "ai-ml",
+    "title": "AI & ML Bootcamp",
+    "description": "2-hour hands-on labs with Kaggle-like datasets. Learn neural networks, classification, and real-world applications. Certificate included.",
+    "duration": "2 hours",
+    "level": "Intermediate"
+  },
+  {
+    "id": "iot",
+    "title": "IoT & Embedded Systems",
+    "description": "Build an IoT sensor prototype. Hands-on with Arduino and sensors.",
+    "duration": "3 hours",
+    "level": "Beginner"
+  },
+  {
+    "id": "web-dev",
+    "title": "Web Dev: From Idea to Launch",
+    "description": "Full-stack workflow: design, code, deploy. Leave with a live mini-app.",
+    "duration": "4 hours",
+    "level": "Intermediate"
+  }
+]
