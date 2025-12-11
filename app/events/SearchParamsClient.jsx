@@ -1,11 +1,11 @@
 // app/events/SearchParamsClient.jsx
 "use client"
+
 import { useSearchParams } from "next/navigation"
 
-export default function SearchParamsClient({ onParams }) {
+export default function SearchParamsClient() {
   const params = useSearchParams()
-  const q = params.get("q") ?? ""
-  // either render minimal UI or call a prop
-  // if you need to pass value to server-rendered sibling, render UI only
-  return <div data-query={q} />
+  const q = params?.get("q") ?? ""
+  // return minimal DOM (or UI) — don't attempt server-side logic here
+  return <div style={{display:"none"}} data-q={q} />
 }

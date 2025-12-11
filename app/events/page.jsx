@@ -1,17 +1,19 @@
+import { Suspense } from "react"
+
 import Header from "@/components/Header"
 import EventsPage from "@/components/EventsPage"
 import Footer from "@/components/Footer"
-import SearchParamsClient from "./SearchParamsClient"
 
-export const metadata = { /* keep metadata here */ }
+export const metadata = { /* ... */ }
 
 export default function Events() {
   return (
     <>
       <Header />
       <main>
-        <SearchParamsClient />
-        <EventsPage />
+        <Suspense fallback={<div/>}>
+          <EventsPage />
+        </Suspense>
       </main>
       <Footer />
     </>

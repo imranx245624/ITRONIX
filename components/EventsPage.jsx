@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -49,12 +47,12 @@ export default function EventsPage() {
       description: "Competitive technical challenges designed to test coding, logic, and real-world problem-solving skills.",
     },
     {
-      id: "nonit",
+      id: "innovation-fair",
       label: "💡Creative Events",
       description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
     },
     {
-      id: "cyber",
+      id: "cyber-arena",
       label: "🎮 Cyber Arena",
       description: "High-energy e-sports battles where players compete for skill, strategy, and victory.",
     },

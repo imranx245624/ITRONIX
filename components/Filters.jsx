@@ -52,8 +52,8 @@ export default function Filters() {
   const filters = [
     { label: "All Events", value: "all" },
     { label: "💻 Tech Events", value: "hackathon" },
-    { label: "💡 Creative Events", value: "nonit" },
-    { label: "🎮 Cyber Arena", value: "cyber" },
+    { label: "💡 Creative Events", value: "innovation-fair" },
+    { label: "🎮 Cyber Arena", value: "cyber-arena" },
   ]
 
   return (
