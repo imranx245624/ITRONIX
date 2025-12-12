@@ -132,7 +132,7 @@ export default function WorkshopsPage() {
                 href={`/register?workshop=${workshop.id}`}
                 className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
               >
-              NOT AVAILABLE RIGHT NOW
+             Apply Now
               </Link>
             </motion.div>
           ))}

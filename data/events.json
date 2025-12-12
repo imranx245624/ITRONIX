@@ -106,13 +106,13 @@
     "team_size": "4 member team",
     "prize": "₹1500",
     "tags": [],
-    ",register_url": "/register?event=cyber-arena"
+    "register_url": "/register?event=cyber-arena"
   },
    {
     "id": "cyber-arena",
     "title": "BGMI",
     "icon": "🪖",
-    "category": "cyber",
+    "category": "cyber-arena",
     "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
     "description": "E-sports tournaments + capture-the-flag security pwn challenges. Compete in teams and win gaming & tech prizes.",
     "team_size": "4 member team",

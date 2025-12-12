@@ -2,7 +2,8 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-
+import Header from "../components/Header"
+import RouteButtons from "../components/RouteButtons" // ensure this exists
 
 const rajdhani = Rajdhani({
   weight: ["400", "600", "700"],
@@ -92,7 +93,17 @@ export default function RootLayout({ children }) {
         )}
       </head>
       <body className={`${rajdhani.variable} ${poppins.variable} ${jetbrainsMono.variable} font-poppins antialiased`}>
-        {children}
+        {/* Header (unchanged for desktop & mobile) */}
+        <Header />
+
+        {/* Route buttons + left brand (desktop) and bottom dock (mobile). Component is client-side. */}
+        <RouteButtons />
+
+        {/* main gets top padding equal to header height to avoid overlap with fixed header */}
+        <main className="pt-[var(--header-height)] md:pt-[var(--header-height)]">
+          {children}
+        </main>
+
         <Analytics />
       </body>
     </html>

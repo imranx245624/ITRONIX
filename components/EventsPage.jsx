@@ -7,6 +7,7 @@ import events from "@/data/events.json"
 import EventCard from "@/components/EventCard"
 import EventsBanner from "@/components/EventsBanner"
 import Filters from "@/components/Filters"
+import { normalizeCategory } from "@/lib/event-utils"
 
 export default function EventsPage() {
   const searchParams = useSearchParams()
@@ -24,7 +25,7 @@ export default function EventsPage() {
     let filtered = events
 
     if (filter !== "all") {
-      filtered = filtered.filter((event) => event.category === filter)
+      filtered = filtered.filter((event) => normalizeCategory(event.category) === filter)
     }
 
     if (searchQuery) {
@@ -80,7 +81,11 @@ export default function EventsPage() {
             // Show all categories
             <div className="space-y-20">
               {categories.map((category) => {
-                const categoryEvents = events.filter((e) => e.category === category.id)
+                // use normalizeCategory to gather events that may have variant category labels
+                const categoryEvents = events.filter((e) => normalizeCategory(e.category) === category.id)
+                // debug counts (remove in production)
+                console.log("category", category.id, "count", categoryEvents.length)
+
                 return (
                   <motion.div
                     key={category.id}
@@ -95,7 +100,7 @@ export default function EventsPage() {
                       <h2 className="text-3xl md:text-4xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-3">
                         {category.label}
                       </h2>
-                      <p className="text-muted-text font-poppins text-lg max-w-3xl">{category.description}</p>
+                      <p className="text-muted-text font-poppins text-lg max-w-3xl" >{category.description}</p>
                     </div>
 
                     <motion.div
@@ -105,9 +110,17 @@ export default function EventsPage() {
                       viewport={{ once: true }}
                       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
-                      {categoryEvents.map((event, idx) => (
-                        <EventCard key={event.id} event={event} index={idx} />
-                      ))}
+                      {categoryEvents.length > 0 ? (
+                        categoryEvents.map((event, idx) => (
+                          <EventCard key={`${category.id}-${idx}-${event.id}`} event={event} index={idx} />
+                        ))
+                      ) : (
+                        <div className="col-span-full">
+                          <div className="card-dark p-8 text-center">
+                            <p className="text-muted-text font-poppins">No events added yet — check back soon.</p>
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   </motion.div>
                 )
@@ -123,7 +136,7 @@ export default function EventsPage() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
             >
               {filteredEvents.length > 0 ? (
-                filteredEvents.map((event, idx) => <EventCard key={event.id} event={event} index={idx} />)
+                filteredEvents.map((event, idx) => <EventCard key={`${event.id}-${idx}`} event={event} index={idx} />)
               ) : (
                 <div className="col-span-full text-center py-12">
                   <p className="text-muted-text font-poppins text-lg">No events found matching your search.</p>

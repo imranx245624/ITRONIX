@@ -34,7 +34,7 @@ export default function Hero() {
         alt="College campus"
         className="absolute inset-0 w-full h-full object-cover filter saturate-150 contrast-125 brightness-90"
         style={{
-          filter: 'saturate(1.5) contrast(1.25) brightness(1) blur(1px)',
+          filter: 'saturate(1.5) contrast(1.25) brightness(0.6) blur(1px)',
           willChange: 'transform',
         }}
       />
@@ -123,7 +123,7 @@ export default function Hero() {
 
         {/* Date and Location */}
         <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8">
-           <span classname={"text-neon-cyan"} >Techland : where only the skilled survives</span><br/>Information Technology Department festival<br/>on 23 & 24 jan 2026  
+           <span className={"text-neon-cyan"} >Techland : where only the skilled survives</span><br/>Information Technology Department festival<br/>on 23 & 24 jan 2026  
         </p>
         <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8">
           
