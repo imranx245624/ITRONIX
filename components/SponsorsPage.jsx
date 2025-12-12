@@ -158,14 +158,14 @@ export default function SponsorsPage() {
             <motion.div
               key={i}
               variants={itemVariants}
-              className="relative top-30 card-dark flex items-center justify-center h-32 group hover:border-neon-cyan/50 transition-all duration-300"
+              className="relative top-30 card-dark flex items-center justify-center h-50 group hover:border-neon-cyan/50 transition-all duration-300"
             >
               <div className="text-center">
                 <div className="text-3xl text-neon-cyan/50 group-hover:text-neon-cyan transition-colors mb-2">📦</div>
                 <p className="text-xs text-muted-text group-hover:text-neon-cyan transition-colors">Sponsor {i + 1}</p>
               </div>
             </motion.div>
-          ))} 
+          ))}  
         </motion.div> 
 
         {/* Sponsorship Tiers */}
@@ -214,6 +214,7 @@ export default function SponsorsPage() {
         </motion.div> */}
 
         {/* Contact Section */}
+        <br/><br/><br/>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -221,6 +222,7 @@ export default function SponsorsPage() {
           viewport={{ once: true }}
           className="text-center card-dark border-2 border-neon-cyan"
         >
+          
           <p className="text-muted-text font-poppins mb-4">Ready to sponsor ITRONIX?</p>
           <p className="text-2xl font-rajdhani font-bold text-neon-cyan mb-6">itronix@gurunanak.edu.in</p>
           <a
