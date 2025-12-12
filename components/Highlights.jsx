@@ -14,7 +14,7 @@ export default function Highlights() {
     {
       title: "Creative Events",
       description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
-      tags: ["Reverse Engineering", "Treasure Hunt", "PPT Presentation(Techy)","Byte Sized Battles"],
+      tags: [ "Treasure Hunt", "PPT Presentation(Techy)","Byte Sized Battles"],
       href: "/events?filter=innovation-fair",
       icon: "💡",
     },

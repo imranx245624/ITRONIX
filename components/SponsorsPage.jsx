@@ -108,9 +108,31 @@ export default function SponsorsPage() {
   return (
     <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
       <div className="top-50 max-w-6xl mx-auto">
-          
-        {/* Page Header */}
+        
+        {/* <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+        style={{
+          backgroundImage: "url(/images/bg1.png)",
+          filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(1px)",
+        }}
+      /> */}
         <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="top-20 relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8"
+      >
+        <div className=""> 
+        <h1 className=" text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-center mb-3">
+          SPONSORS & PARTNERS
+        </h1>
+        <p className=" text-lg md:text-xl font-poppins text-neon-cyan/80 text-center max-w-2xl">
+            Local partners supporting student innovation. Interested to sponsor ITRONIX?  contact
+        </p>
+        </div>
+      </motion.div>
+        {/* Page Header */}
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -122,7 +144,7 @@ export default function SponsorsPage() {
             Local partners supporting student innovation. Interested to sponsor ITRONIX?  contact
             us.
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Sponsor Logos Grid */}
         <motion.div
@@ -136,15 +158,15 @@ export default function SponsorsPage() {
             <motion.div
               key={i}
               variants={itemVariants}
-              className="card-dark flex items-center justify-center h-32 group hover:border-neon-cyan/50 transition-all duration-300"
+              className="relative top-30 card-dark flex items-center justify-center h-32 group hover:border-neon-cyan/50 transition-all duration-300"
             >
               <div className="text-center">
                 <div className="text-3xl text-neon-cyan/50 group-hover:text-neon-cyan transition-colors mb-2">📦</div>
                 <p className="text-xs text-muted-text group-hover:text-neon-cyan transition-colors">Sponsor {i + 1}</p>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
+          ))} 
+        </motion.div> 
 
         {/* Sponsorship Tiers */}
         {/* <motion.div

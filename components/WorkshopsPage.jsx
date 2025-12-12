@@ -50,9 +50,38 @@ export default function WorkshopsPage() {
 
   return (
     <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
+       <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+        style={{
+          backgroundImage: "url(/images/bg1.png)",
+          filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(0px)",
+        }}
+      />
+        
+      <div className="absolute inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80" />
+
+      {/* Content overlay */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="top-20 relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8"
+      >
+        <div className=""> 
+        <h1 className=" text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-center mb-3">
+          LEARNING WORKSHOPS
+        </h1>
+        <p className=" text-lg md:text-xl font-poppins text-neon-cyan/80 text-center max-w-2xl">
+           Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats
+            available — apply early!
+        </p>
+        </div>
+      </motion.div>
+
+      
       <div className="max-w-6xl mx-auto">
         {/* Page Header */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -64,7 +93,7 @@ export default function WorkshopsPage() {
             Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats
             available — apply early!
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Workshop Cards */}
         <motion.div
@@ -72,13 +101,13 @@ export default function WorkshopsPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {workshops.map((workshop) => (
             <motion.div
               key={workshop.id}
               variants={itemVariants}
-              className="card-dark hover:border-neon-magenta/50 transition-all duration-300 group"
+              className="top-40 relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group"
             >
               <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-3 group-hover:text-cyber-orange transition-colors">
                 {workshop.title}
@@ -103,7 +132,7 @@ export default function WorkshopsPage() {
                 href={`/register?workshop=${workshop.id}`}
                 className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
               >
-                Apply Now
+              NOT AVAILABLE RIGHT NOW
               </Link>
             </motion.div>
           ))}

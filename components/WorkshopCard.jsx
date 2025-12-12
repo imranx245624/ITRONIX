@@ -35,7 +35,7 @@ export default function WorkshopCard({ title, description, duration, level, inde
           whileTap={{ scale: 0.95 }}
           className="text-sm font-poppins font-semibold text-neon-cyan hover:text-neon-magenta transition-colors"
         >
-          Apply Now →
+          Not Available right now
         </motion.button>
       </div>
     </motion.div>

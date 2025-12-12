@@ -4,13 +4,13 @@ import { motion } from "framer-motion"
 
 export default function EventsBanner() {
   return (
-    <div className=" relative w-full h-90 md:h-80 overflow-hidden">
+    <div className="relative w-full h-90 md:h-80 overflow-hidden">
       {/* Background image with cartoon effect and blur */}
       <div
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{
           backgroundImage: "url(/images/bg1.png)",
-          filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(0px)",
+          filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(1px)",
         }}
       />
 
