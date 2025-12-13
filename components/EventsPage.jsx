@@ -156,10 +156,10 @@ export default function EventsPage() {
               Event Schedule
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Day 1 */}
               <div className="card-dark">
-                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 1 • 22 March</h3>
+                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 1 • 23 january</h3>
                 <div className="space-y-3 font-poppins text-muted-text text-sm">
                   <div>
                     <p className="text-neon-cyan font-semibold">09:00</p>
@@ -185,10 +185,10 @@ export default function EventsPage() {
               </div>
 
               {/* Day 2 */}
-              <div className="card-dark">
+              {/* <div className="card-dark">
                 <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 2 • 23 March</h3>
                 <div className="space-y-3 font-poppins text-muted-text text-sm">
-                  {/* <div>
+                   <div>
                     <p className="text-neon-cyan font-semibold">09:30</p>
                     <p>Robotics qualifiers</p>
                   </div>
@@ -203,13 +203,13 @@ export default function EventsPage() {
                   <div className="border-t border-neon-cyan/20 pt-3">
                     <p className="text-neon-cyan font-semibold">18:00</p>
                     <p>Gaming finals</p>
-                  </div> */}
+                  </div> 
                 </div>
-              </div>
+              </div> */}
 
               {/* Day 3 */}
               <div className="card-dark">
-                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 3 • 24 March</h3>
+                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 2 • 24 january</h3>
                 <div className="space-y-3 font-poppins text-muted-text text-sm">
                   {/* <div>
                     <p className="text-neon-cyan font-semibold">10:00</p>

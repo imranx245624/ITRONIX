@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 export default function WorkshopsPage() {
   const workshops = [
@@ -29,85 +30,75 @@ export default function WorkshopsPage() {
     },
   ]
 
+  // framer variants (unchanged logic)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 14 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 },
+      transition: { duration: 0.5 },
     },
   }
 
+  // Use mounted flag so animations run reliably on client navigation too
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
-    <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
-       <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center"
+    <section className="relative min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
+      {/* Background image (behind) */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center pointer-events-none -z-10"
         style={{
           backgroundImage: "url(/images/bg1.png)",
           filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(0px)",
         }}
+        aria-hidden="true"
       />
-        
-      <div className="absolute inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80" />
+      <div className="absolute inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80 pointer-events-none -z-10" />
 
-      {/* Content overlay */}
+      {/* Header / intro - animate on mount */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="top-20 relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8"
+        initial="hidden"
+        animate={mounted ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="relative z-10 max-w-3xl mx-auto text-center mb-12"
       >
-        <div className=""> 
-        <h1 className=" text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-center mb-3">
+        <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-3">
           LEARNING WORKSHOPS
-        </h1>
-        <p className=" text-lg md:text-xl font-poppins text-neon-cyan/80 text-center max-w-2xl">
-           Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats
-            available — apply early!
-        </p>
-        </div>
+        </motion.h1>
+        <motion.p variants={itemVariants} className="text-lg md:text-xl font-poppins text-neon-cyan/80 mx-auto">
+          Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats available — apply early!
+        </motion.p>
       </motion.div>
 
-      
-      <div className="max-w-6xl mx-auto">
-        {/* Page Header */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <h1 className="section-title mb-4">LEARNING WORKSHOPS</h1>
-          <p className="text-muted-text font-poppins max-w-3xl mx-auto">
-            Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats
-            available — apply early!
-          </p>
-        </motion.div> */}
-
-        {/* Workshop Cards */}
+      <div className="max-w-6xl mx-auto z-10">
+        {/* Workshop Cards grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          animate={mounted ? "visible" : "hidden"}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {workshops.map((workshop) => (
-            <motion.div
+            <motion.article
               key={workshop.id}
               variants={itemVariants}
-              className="top-40 relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group"
+             className="relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group p-6"
+
+              // className="relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group p-6"
             >
               <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-3 group-hover:text-cyber-orange transition-colors">
                 {workshop.title}
@@ -128,13 +119,15 @@ export default function WorkshopsPage() {
                 </div>
               </div>
 
-              <Link
+              {/* <Link
                 href={`/register?workshop=${workshop.id}`}
                 className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
               >
-             Apply Now
-              </Link>
-            </motion.div>
+                Apply Now
+              </Link> */}
+              <p className="block w-full text-center btn-secondary ">
+              Not available right now </p>
+            </motion.article>
           ))}
         </motion.div>
       </div>

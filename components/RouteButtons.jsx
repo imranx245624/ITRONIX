@@ -68,7 +68,7 @@ export default function RouteButtons() {
                 Guru Nanak
               </div>
               <div className="text-[11px] font-poppins text-muted-text uppercase">
-                College
+                College 
               </div> */}
             </div>
           </Link>

@@ -51,34 +51,31 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-20 z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen ? "bg-deep-night/95 backdrop-blur-md border-b border-neon-cyan/10" : "bg-transparent"
+      className={`fixed top-0 left-0 w-full h-[var(--header-height,4rem)] z-50 transition-all duration-300 ${
+        isScrolled || isMobileMenuOpen
+          ? "bg-deep-night/95 backdrop-blur-md border-b border-neon-cyan/10"
+          : "bg-transparent"
       }`}
     >
       <nav className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
-        {/* Left: logo + full college name (visible on all screen sizes) */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <img
-            src="/images/Clg_logo.png"
-            alt="college logo"
-            className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full flex-shrink-0"
-          />
-          <Link href="/" className="flex flex-col leading-tight min-w-0">
-            {/* allow wrapping on mobile so full name is visible */}
-             <span className="text-[9px] sm:text-[10px] md:text-[12px] font-poppins text-muted-text uppercase whitespace-normal">
-              
-                Guru Nanak Vidyak Society's
-    
-            </span>
-            <span className="text-[11px] sm:text-[12px] md:text-[14px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-widest whitespace-normal">
-              Guru Nanak College of Arts, Science & Commerce (AUTONOMOUS)
-            </span>
-            <span className="text-[9px] sm:text-[10px] md:text-[12px] font-poppins text-muted-text uppercase whitespace-normal">
+        { /* Left: logo + full college name (visible on all screen sizes) */ }
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
+              <img src="/images/Clg_logo.png" alt="college logo" className="w-8 h-8 md:w-9 md:h-9 object-contain" />
+            </div>
 
-                G.T.B. Nagar, Mumbai - 400037
-                NAAC ACCREDITED 'A*' CGPA 3.35
-            </span>
-          </Link>
+            <Link href="/" className="flex flex-col leading-tight min-w-0">
+              {/* keep lines wrapped and compact so it fits desktop and mobile */}
+              <span className="text-[11px] md:text-[13px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wider whitespace-nowrap md:whitespace-normal">
+                GURU NANAK COLLEGE
+              </span>
+
+              <span className="text-[9px] md:text-[11px] font-poppins text-muted-text uppercase whitespace-normal">
+                of Arts, Science & Commerce
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Center: absolute centered nav (desktop only) */}
@@ -132,8 +129,8 @@ export default function Header() {
             {/* panel wrapper positioned below header and safe-area aware */}
             <div
               style={{
-                top: "calc(var(--header-height, 5rem) + env(safe-area-inset-top, 0px))",
-                maxHeight: "calc(100vh - var(--header-height, 5rem) - env(safe-area-inset-top, 0px))",
+                top: "calc(var(--header-height, 4rem) + env(safe-area-inset-top, 0px))",
+                maxHeight: "calc(100vh - var(--header-height, 4rem) - env(safe-area-inset-top, 0px))",
               }}
               className="fixed left-0 right-0 z-[60] overflow-y-auto flex justify-center px-4 pb-6"
             >
