@@ -51,7 +51,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-[var(--header-height)] z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full h-20 z-50 transition-all duration-300 ${
         isScrolled || isMobileMenuOpen ? "bg-deep-night/95 backdrop-blur-md border-b border-neon-cyan/10" : "bg-transparent"
       }`}
     >
@@ -65,17 +65,24 @@ export default function Header() {
           />
           <Link href="/" className="flex flex-col leading-tight min-w-0">
             {/* allow wrapping on mobile so full name is visible */}
+             <span className="text-[9px] sm:text-[10px] md:text-[12px] font-poppins text-muted-text uppercase whitespace-normal">
+              
+                Guru Nanak Vidyak Society's
+    
+            </span>
             <span className="text-[11px] sm:text-[12px] md:text-[14px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-widest whitespace-normal">
-              Guru Nanak College
+              Guru Nanak College of Arts, Science & Commerce (AUTONOMOUS)
             </span>
             <span className="text-[9px] sm:text-[10px] md:text-[12px] font-poppins text-muted-text uppercase whitespace-normal">
-              of Arts, Science & Commerce
+
+                G.T.B. Nagar, Mumbai - 400037
+                NAAC ACCREDITED 'A*' CGPA 3.35
             </span>
           </Link>
         </div>
 
         {/* Center: absolute centered nav (desktop only) */}
-        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center">
+        {/* <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -85,7 +92,7 @@ export default function Header() {
               {link.name}
             </Link>
           ))}
-        </div>
+        </div> */}
 
         {/* Right: CTA / hamburger */}
         <div className="ml-auto flex items-center gap-2">

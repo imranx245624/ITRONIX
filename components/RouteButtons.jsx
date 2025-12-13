@@ -53,29 +53,30 @@ export default function RouteButtons() {
     <>
       {/* DESKTOP: left fixed column with logo + two-line name on top, then route buttons */}
       <aside
-        className="hidden md:flex fixed left-6 top-1/2 transform -translate-y-1/2 z-50 flex-col items-center gap-4"
+        className="hidden md:flex fixed left-4 top-80 transform -translate-y-1/2 z-50 flex-col items-left gap-4"
         style={{ width: 220 }}
         aria-hidden={false}
       >
         {/* Brand block */}
-        <div className="flex flex-col items-center gap-2 mb-2">
-          <Link href="/" className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-left gap-2 mb-2">
+          <Link href="/" className="flex flex-col items-left text-center">
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-neon-cyan/20 flex items-center justify-center bg-deep-night">
               <img src="/images/Clg_logo.png" alt="logo" className="w-11 h-11 object-contain" />
             </div>
             <div className="mt-1 leading-tight">
-              <div className="text-xs font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wide">
+              {/* <div className="text-xs font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wide">
                 Guru Nanak
               </div>
               <div className="text-[11px] font-poppins text-muted-text uppercase">
                 College
-              </div>
+              </div> */}
             </div>
           </Link>
         </div>
 
+
         {/* Vertical nav buttons */}
-        <nav className="flex flex-col w-full gap-3">
+        <nav className="flex flex-col w-16 gap-3">
           {routes.map((r) => {
             const active = pathname === r.href
             return (
@@ -92,7 +93,8 @@ export default function RouteButtons() {
                 <span className={`inline-flex items-center justify-center w-9 h-9 rounded-md ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}>
                   <Icon name={r.icon} className="w-5 h-5" />
                 </span>
-                <span className="text-sm font-semibold tracking-wide">{r.name}</span>
+                {/* <br/> */}
+                {/* <span className="text-sm font-semibold tracking-wide">{r.name}</span> */}
               </Link>
             )
           })}
