@@ -1,5 +1,7 @@
 "use client"
 
+import { SignInButton } from "@clerk/nextjs";
+
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -57,17 +59,16 @@ export default function WorkshopsPage() {
   }, [])
 
   return (
-    <section className="relative min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
+    <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
       {/* Background image (behind) */}
       <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center pointer-events-none -z-10"
+        className="absolute inset-0 w-full h-80 bg-cover bg-center"
         style={{
           backgroundImage: "url(/images/bg1.png)",
-          filter: "saturate(1.3) contrast(1.1) brightness(0.95) blur(0px)",
+          filter: "saturate(1.3) contrast(1.1) brightness(0.3) blur(1px)",
         }}
-        aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80 pointer-events-none -z-10" />
+      <div className="relative top-15 inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80 pointer-events-none -z-10" />
 
       {/* Header / intro - animate on mount */}
       <motion.div
@@ -84,7 +85,7 @@ export default function WorkshopsPage() {
         </motion.p>
       </motion.div>
 
-      <div className="max-w-6xl mx-auto z-10">
+      <div className="relative top-22 max-w-6xl mx-auto z-30">
         {/* Workshop Cards grid */}
         <motion.div
           variants={containerVariants}
@@ -118,13 +119,14 @@ export default function WorkshopsPage() {
                   </span>
                 </div>
               </div>
-
-              {/* <Link
+                  {/* <SignInButton mode="modal">
+              <Link
                 href={`/register?workshop=${workshop.id}`}
                 className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
               >
                 Apply Now
-              </Link> */}
+              </Link>
+              </SignInButton> */}
               <p className="block w-full text-center btn-secondary ">
               Not available right now </p>
             </motion.article>
