@@ -1,5 +1,9 @@
 "use client"
 
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
+// import Link from "next/link"
+// import { SignInButton } from "@clerk/nextjs";
+
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 
@@ -61,8 +65,8 @@ export default function Header() {
         { /* Left: logo + full college name (visible on all screen sizes) */ }
         <div className="flex items-center gap-3 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
-              <img src="/images/Clg_logo.png" alt="college logo" className="w-8 h-8 md:w-9 md:h-9 object-contain" />
+            <div className="w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
+              <img src="/images/Clg_logo.png" alt="college logo" className="w-10 h-10 md:w-20 md:h-20 object-contain" />
             </div>
 
             <Link href="/" className="flex flex-col leading-tight min-w-0">
@@ -79,7 +83,7 @@ export default function Header() {
         </div>
 
         {/* Center: absolute centered nav (desktop only) */}
-        {/* <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center">
+        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -89,31 +93,50 @@ export default function Header() {
               {link.name}
             </Link>
           ))}
-        </div> */}
-
-        {/* Right: CTA / hamburger */}
+        </div>
+        
+        {/* Right: CTA / sign-in (moved here) */}
         <div className="ml-auto flex items-center gap-2">
-          {/* Placeholder for possible CTA on desktop */}
-          <div className="hidden md:block">{/* optional CTA here */}</div>
+          {/* Desktop: show sign-in or dashboard & user */}
+          <div className="hidden md:flex items-center gap-3">
+            <SignedOut>
+              <SignInButton mode="modal" redirectUrl="/Dashboard">
+                <button className="btn-secondary transition-all duration-300 hover:shadow-lg hover:shadow-neon-cyan/50 text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 transition-transform duration-200 ease-out transform-gpu  hover:-translate-y-1 hover:scale-110 hover:rotate-1">
+                  Sign in
+                </button>
+              </SignInButton>
+            </SignedOut>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={toggleMenu}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden text-neon-cyan hover:text-holo-pale transition-colors p-2"
-          >
-            {!isMobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            )}
-          </button>
+            <SignedIn>
+              <Link href="/Dashboard" className="btn-secondary">
+                Dashboard
+              </Link>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </div>
+
+          {/* Mobile: instead of hamburger show sign-in or user button at same place */}
+          <div className="md:hidden">
+            <SignedOut>
+              <SignInButton mode="modal" redirectUrl="/Dashboard">
+                <button
+                  className="p-2 rounded-md bg-deep-night/40 border border-neon-cyan/10 text-neon-cyan hover:bg-deep-night/70 transition-colors"
+                  aria-label="Sign in"
+                >
+                  {/* small icon + text for mobile */}
+                  <svg className="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12H3m12 0l-4-4m4 4l-4 4M21 12v6a2 2 0 01-2 2H7" />
+                  </svg>
+                  <span className="align-middle text-sm">Sign in</span>
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              {/* show user button on mobile when signed in */}
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </div>
         </div>
 
         {/* Mobile full-screen overlay + menu panel below header */}
@@ -161,7 +184,7 @@ export default function Header() {
                       onClick={closeMenu}
                       className="btn-primary inline-block text-xs py-2 px-6 text-center"
                     >
-                      Registration Start <br />From 1st January
+                      Registration Start <br/> From 1st January
                     </button>
                   </div>
                 </div>

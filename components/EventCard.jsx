@@ -1,5 +1,7 @@
 "use client"
 
+import { SignInButton } from "@clerk/nextjs";
+
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -43,12 +45,14 @@ export default function EventCard({ event, index = 0 }) {
           <span className="font-rajdhani font-bold text-neon-magenta text-lg">{event.prize}</span>
         </div>
 
-        {/* <Link
+        {/* <SignInButton mode="modal">
+        <Link
           href={event.register_url}
           className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
         >
           Register
-        </Link> */}
+        </Link>
+        </SignInButton> */}
       </div>
     </motion.div>
   )

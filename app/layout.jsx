@@ -2,6 +2,9 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
+import { ClerkProvider } from "@clerk/nextjs";
+
+
 import Header from "../components/Header"
 import RouteButtons from "../components/RouteButtons" // ensure this exists
 
@@ -71,6 +74,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#04040B" />
@@ -107,5 +111,6 @@ export default function RootLayout({ children }) {
         <Analytics />
       </body>
     </html>
+    </ClerkProvider>
   )
 }
