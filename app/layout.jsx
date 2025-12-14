@@ -2,6 +2,8 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
+import ClerkProviderClient from "@/components/ClerkProviderClient"
+
 import ClerkWrapper from "@/components/ClerkWrapper"
 
 
@@ -98,17 +100,20 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${rajdhani.variable} ${poppins.variable} ${jetbrainsMono.variable} font-poppins antialiased`}>
         {/* Header (unchanged for desktop & mobile) */}
+         <ClerkProviderClient>
         <Header />
 
         {/* Route buttons + left brand (desktop) and bottom dock (mobile). Component is client-side. */}
         <RouteButtons />
-
+        
         {/* main gets top padding equal to header height to avoid overlap with fixed header */}
         <main className="pt-[var(--header-height)] md:pt-[var(--header-height)]">
           {children}
         </main>
+        
 
         <Analytics />
+        </ClerkProviderClient>
       </body>
     </html>
     
