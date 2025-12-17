@@ -1,6 +1,7 @@
 import Header from "@/components/Header"
 import SponsorsPage from "@/components/SponsorsPage"
 import Footer from "@/components/Footer"
+// import '../styles/globals.css'
 
 export const metadata = {
   title: "Sponsors - ITRONIX-2K26 | Guru Nanak College Techfest",

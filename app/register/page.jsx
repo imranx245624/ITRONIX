@@ -3,6 +3,7 @@ import SearchParamsClient from "@/components/SearchParamsClient"
 import Header from "@/components/Header"
 import RegisterPage from "@/components/RegisterPage"
 import Footer from "@/components/Footer"
+// import '../styles/globals.css'
 
 export const metadata = { /* ... */ }
 

@@ -36,7 +36,7 @@ export default function Hero() {
         alt="College campus"
         className="absolute inset-0 w-full h-full object-cover filter saturate-150 contrast-125 brightness-90"
         style={{
-          filter: 'saturate(1.5) contrast(1.25) brightness(0.6) blur(1px)',
+          filter: 'saturate(1.5) contrast(1.25) brightness(0.7) blur(0.2px)',
           willChange: 'transform',
         }}
       />
@@ -56,7 +56,7 @@ export default function Hero() {
         {/* changed: added -mt-8 on mobile only so content shifts upward on small screens */}
 
         {/* Main Title with Animation */}
-        <div
+        {/* <div
           className="z-30 top-500 mb-4 sm:mb-6"
           aria-hidden={false}
         >
@@ -66,7 +66,7 @@ export default function Hero() {
             title="Main Sponsor"
             aria-label="Main Sponsor"
           >
-            {/* Replace below <div> with an <img src="/path/to/logo.png" alt="Sponsor"/> when you have the logo */}
+            Replace below <div> with an <img src="/path/to/logo.png" alt="Sponsor"/> when you have the logo
             <div className="w-full h-full flex items-center justify-center">
               <div className="text-center" >
                 <div className="text-xs sm:text-sm font-poppins text-neon-cyan/95 uppercase tracking-wider ">
@@ -76,29 +76,49 @@ export default function Hero() {
               </div>
             </div>
           </a>
-        </div>
+        </div> */}
 
-        <div className="mb-4 sm:mb-6">
-          <h1
-            id="hero-title"
-            className={` text-4xl sm:text-5xl lg:text-7xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-glow transition-all duration-200 ${
-              isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-            }`}
-            style={{
-              clipPath: isVisible ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
-              transition: 'clip-path 1s ease-out',
-            }}
-          >
-            I T R Φ N ! X   <span className='text-2xl sm:text-1xl lg:text-1xl'>2026</span>
-          </h1>
-        </div>
+       <div className="mb-4 sm:mb-6">
+  <h1
+    id="hero-title"
+    className={`relative text-3xl sm:text-4xl lg:text-7xl
+      font-serif font-bold
+      tracking-tight sm:tracking-[0.25em]        /* mobile: tight, sm+ restore spaced look */
+      bg-gradient-to-r from-neon-cyan via-white to-neon-cyan
+      bg-clip-text text-transparent
+      drop-shadow-[0_0_20px_rgba(0,255,255,0.35)]
+      transition-all duration-300
+      whitespace-nowrap sm:whitespace-normal     /* mobile: force single line, sm+ allow normal wrapping */}
+      ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+    style={{
+      clipPath: isVisible ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
+      transition: "clip-path 1s ease-out",
+    }}
+  >
+    I T R O N I X
+    <span className="ml-4 align-middle text-sm sm:text-base lg:text-lg 
+      px-3 py-1 rounded-full 
+      border border-neon-cyan/40 
+      text-neon-cyan 
+      tracking-widest">
+      2026
+    </span>
+  </h1>
+</div>
+
+
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl lg:text-2xl font-poppins text-holo-pale mb-1 sm:mb-2 animate-shimmer"></p>
 
         {/* Date and Location */}
-        <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8">
-           <span className={"text-neon-cyan"} >Techland : where only the skilled survives</span><br/>Information Technology Department festival<br/>on 23 & 24 jan 2026  
+        <p className="text-sm sm:text-base font-poppins text-muted-text mb-6 sm:mb-8 ">
+           <span className={"text-neon-cyan text-3xl sm:text-4xl lg:text-3xl font-serif font-bold "}
+            >Techland</span>
+            <br/> 
+            <span className={"text-neon-cyan font-italic text-sm sm:text-base lg:text-lg "}
+            >where only the skilled survives</span>
+            <br/><br/>Information Technology Department festival<br/>on 23 & 24 jan 2026  
         </p>
 
         {/* Event Highlights */}

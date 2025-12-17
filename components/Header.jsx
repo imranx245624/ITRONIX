@@ -39,26 +39,44 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-[var(--header-height,4rem)] z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full h-[var(--header-height,6rem)] z-50 transition-all duration-300 ${
         isScrolled || isMobileMenuOpen ? "bg-deep-night/95 backdrop-blur-md border-b border-neon-cyan/10" : "bg-transparent"
       }`}
     >
       <nav className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
         {/* Left: logo + college name */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
+        <div className="
+        flex items-center justify-center h-full gap-3 flex-shrink-0 ">
+          <div className="flex items-center justify-center gap-3">
+            {/* <div className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
               <img src="/images/Clg_logo.png" alt="college logo" className="w-8 h-8 md:w-9 md:h-9 object-contain" />
-            </div>
+            </div> */}
+          <div className="flex items-center justify-center">
+  <div className="flex items-center gap-3">
+   <img
+  src="/images/Clg_logo.png"
+  alt="college logo"
+  className="w-15 h-15 md:w-30 md:h-30 object-contain"
+/>
 
-            <Link href="/" className="flex flex-col leading-tight min-w-0">
-              <span className="text-[11px] md:text-[13px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wider whitespace-nowrap md:whitespace-normal">
-                GURU NANAK COLLEGE
-              </span>
-              <span className="text-[9px] md:text-[11px] font-poppins text-muted-text uppercase whitespace-normal">
-                of Arts, Science & Commerce
-              </span>
-            </Link>
+
+    <Link href="/" className="flex flex-col leading-tight min-w-0 text-center">
+      <span className="text-[7px] md:text-[7px] font-poppins text-muted-text uppercase whitespace-normal">
+        Guru Nanak Vidyak Society’s
+      </span>
+                
+      <span className="text-[11px] md:text-[17px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wider whitespace-nowrap md:whitespace-normal">
+        GURU NANAK COLLEGE
+      </span>
+
+      <span className="text-[9px] md:text-[7px] font-poppins text-muted-text uppercase whitespace-normal">
+        of Arts, Science & Commerce<br/>(AUTONOMOUS)<br/>G.T.B. Nagar, Mumbai- 400037 <br/>
+        NAAC Accredited ‘A+’ CGPA 3.35
+      </span>
+    </Link>
+  </div>
+</div>
+
           </div>
         </div>
 

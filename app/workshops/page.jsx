@@ -1,6 +1,7 @@
 import Header from "@/components/Header"
 import WorkshopsPage from "@/components/WorkshopsPage"
 import Footer from "@/components/Footer"
+// import '../styles/globals.css'
 
 export const metadata = {
   title: "Workshops - ITRONIX-2K26 | Guru Nanak College Techfest",
