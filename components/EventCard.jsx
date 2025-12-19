@@ -1,7 +1,6 @@
 "use client"
 
-import { SignInButton } from "@clerk/nextjs";
-
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -45,14 +44,22 @@ export default function EventCard({ event, index = 0 }) {
           <span className="font-rajdhani font-bold text-neon-magenta text-lg">{event.prize}</span>
         </div>
 
-        {/* <SignInButton mode="modal">
-        <Link
-          href={event.register_url}
-          className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
-        >
-          Register
-        </Link>
-        </SignInButton> */}
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
+              Register
+            </button>
+          </SignInButton>
+        </SignedOut>
+
+        <SignedIn>
+          <Link
+            href={event.register_url}
+            className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
+          >
+            Register
+          </Link>
+        </SignedIn>
       </div>
     </motion.div>
   )
