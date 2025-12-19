@@ -2,7 +2,7 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
-import DevControls from "@/components/DevControls"
+// import DevControls from "@/components/DevControls"
 
 
 import ClerkProviderClient from "@/components/ClerkProviderClient"
