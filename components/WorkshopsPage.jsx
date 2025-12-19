@@ -117,9 +117,13 @@ export default function WorkshopsPage() {
                 </div>
               </div>
 
-              <SignedOut>
+              <p className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300">
+                not available right now
+              </p>
+              {/* <SignedOut>
                 <SignInButton mode="modal">
-                  <button className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300">
+                  <button
+                   className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300">
                     Apply Now
                   </button>
                 </SignInButton>
@@ -132,7 +136,7 @@ export default function WorkshopsPage() {
                 >
                   Apply Now
                 </Link>
-              </SignedIn>
+              </SignedIn> */}
             </motion.article>
           ))}
         </motion.div>
