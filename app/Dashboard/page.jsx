@@ -2,7 +2,6 @@
 
 import { useUser, SignOutButton } from "@clerk/nextjs"
 import Link from "next/link"
-import Image from "next/image"
 import { useEffect, useState } from "react"
 
 export default function Dashboard() {
@@ -14,20 +13,32 @@ export default function Dashboard() {
   useEffect(() => {
     if (!isLoaded || !user) return
 
-    // try to fetch user's registrations from your API
     const fetchRegs = async () => {
       setLoadingRegs(true)
       setRegsError("")
       try {
-        // API should accept ?userId=... and return { registrations: [...] }
-        const res = await fetch(`/api/registrations?userId=${user.id}`)
-        if (!res.ok) {
-          // if not implemented, gracefully handle
+        // Get user email from Clerk
+        const userEmail = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress
+        
+        if (!userEmail) {
           setRegistrations([])
-          setRegsError("No registrations found or API not implemented.")
+          setRegsError("Email not found")
+          setLoadingRegs(false)
+          return
+        }
+
+        // Fetch by email instead of userId
+        const res = await fetch(`/api/registrations?email=${encodeURIComponent(userEmail)}`)
+        
+        if (!res.ok) {
+          setRegistrations([])
+          setRegsError("No registrations found yet.")
         } else {
           const json = await res.json()
           setRegistrations(json.registrations ?? [])
+          if (json.registrations?.length === 0) {
+            setRegsError("")
+          }
         }
       } catch (err) {
         setRegistrations([])
@@ -45,6 +56,9 @@ export default function Dashboard() {
 
   const displayName = user?.fullName || `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
   const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress ?? "—"
+  
+  // Get latest registration for activity
+  const latestReg = registrations && registrations.length > 0 ? registrations[0] : null
 
   return (
     <div className="relative top-20 min-h-screen bg-deep-night py-12 px-4 sm:px-6 lg:px-8">
@@ -92,7 +106,7 @@ export default function Dashboard() {
         </div>
 
         {/* main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="relative left-100  grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column: user info card */}
           <div className="lg:col-span-1 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
@@ -127,10 +141,12 @@ export default function Dashboard() {
           </div>
 
           {/* Middle: registrations */}
-          <div className="lg:col-span-2 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
+          {/* <div className="lg:col-span-2 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-rajdhani text-neon-cyan text-lg">Your Registrations</h3>
-              <div className="text-sm text-muted-text">Latest activity</div>
+              <div className="text-sm text-muted-text">
+                {latestReg ? `Latest: ${new Date(latestReg.created_at).toLocaleDateString()}` : "No activity"}
+              </div>
             </div>
 
             {loadingRegs ? (
@@ -142,9 +158,6 @@ export default function Dashboard() {
                 <p className="text-sm text-neon-magenta font-medium">Info</p>
                 <p className="text-sm text-muted-text mt-1">{regsError}</p>
                 <div className="mt-3 flex gap-2">
-                  {/* <Link href="/register" className="btn-primary text-xs">
-                    Register now
-                  </Link> */}
                   <Link href="/workshops" className="btn-secondary text-xs">
                     Browse workshops
                   </Link>
@@ -154,46 +167,48 @@ export default function Dashboard() {
               <div className="p-6 text-center text-muted-text">
                 <p className="mb-3">You don't have any registrations yet.</p>
                 <div className="flex justify-center gap-3">
-                  {/* <Link href="/register" className="btn-primary">
-                    Register for events
-                  </Link> */}
                   <Link href="/workshops" className="btn-secondary">
-                    Buy workshop
+                    Browse workshops
                   </Link>
                 </div>
               </div>
             ) : (
               <div className="space-y-4">
                 {registrations?.map((r) => (
-                  <div key={r.id || `${r.type}-${r.createdAt}`} className="p-4 border border-neon-cyan/10 rounded-lg bg-deep-night/40 flex items-center justify-between">
+                  <div key={r.id || `${r.category}-${r.created_at}`} className="p-4 border border-neon-cyan/10 rounded-lg bg-deep-night/40 flex items-center justify-between">
                     <div>
-                      <div className="font-semibold text-sm text-neon-cyan">{r.title ?? r.registrationType ?? "Registration"}</div>
-                      <div className="text-xs text-muted-text mt-1">{r.college ?? r.meta?.college ?? "—"}</div>
-                      <div className="text-xs text-muted-text mt-1">Registered: {new Date(r.createdAt ?? Date.now()).toLocaleString()}</div>
+                      <div className="font-semibold text-sm text-neon-cyan">
+                        {r.registration_type ?? "Registration"}
+                      </div>
+                      <div className="text-xs text-muted-text mt-1">
+                        Category: <span className="capitalize">{r.category ?? "—"}</span>
+                      </div>
+                      <div className="text-xs text-muted-text mt-1">
+                        College: {r.college ?? "—"}
+                      </div>
+                      <div className="text-xs text-muted-text mt-1">
+                        Registered: {new Date(r.created_at).toLocaleString()}
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      {/* payment status */}
-                      <div className={`text-xs px-3 py-1 rounded-md ${r.paymentStatus === "paid" ? "bg-cyber-green/10 text-cyber-green border border-cyber-green/20" : "bg-neon-magenta/10 text-neon-magenta border border-neon-magenta/20"}`}>
-                        {r.paymentStatus === "paid" ? "Paid" : r.paymentStatus ?? "Pending"}
+                    <div className="flex items-center gap-3 flex-col md:flex-row">
+                      <div className={`text-xs px-3 py-1 rounded-md ${r.payment_status === "paid" ? "bg-cyber-green/10 text-cyber-green border border-cyber-green/20" : "bg-neon-magenta/10 text-neon-magenta border border-neon-magenta/20"}`}>
+                        {r.payment_status === "paid" ? "Paid" : r.payment_status ?? "Pending"}
                       </div>
 
-                      {/* if workshop has sponsorUrl, redirect */}
-                      {r.type === "workshop" && r.sponsorUrl ? (
-                        <a href={r.sponsorUrl} target="_blank" rel="noreferrer" className="btn-secondary text-xs">
+                      {r.category === "workshop" && r.sponsor_url ? (
+                        <a href={r.sponsor_url} target="_blank" rel="noreferrer" className="btn-secondary text-xs">
                           Open workshop
                         </a>
                       ) : (
-                        <Link href="/register" className="btn-ghost text-xs">
-                          Details
-                        </Link>
+                        <span className="text-xs text-muted-text">Details</span>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* Footer quick links */}

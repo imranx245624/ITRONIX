@@ -1,7 +1,6 @@
 "use client"
 
-import { SignInButton } from "@clerk/nextjs";
-
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -97,9 +96,7 @@ export default function WorkshopsPage() {
             <motion.article
               key={workshop.id}
               variants={itemVariants}
-             className="relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group p-6"
-
-              // className="relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group p-6"
+              className="relative card-dark hover:border-neon-magenta/50 transition-all duration-300 group p-6"
             >
               <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-3 group-hover:text-cyber-orange transition-colors">
                 {workshop.title}
@@ -119,16 +116,23 @@ export default function WorkshopsPage() {
                   </span>
                 </div>
               </div>
-                  {/* <SignInButton mode="modal">
-              <Link
-                href={`/register?workshop=${workshop.id}`}
-                className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
-              >
-                Apply Now
-              </Link>
-              </SignInButton> */}
-              <p className="block w-full text-center btn-secondary ">
-              Not available right now </p>
+
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300">
+                    Apply Now
+                  </button>
+                </SignInButton>
+              </SignedOut>
+
+              <SignedIn>
+                <Link
+                  href={`/register?workshop=${workshop.id}`}
+                  className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
+                >
+                  Apply Now
+                </Link>
+              </SignedIn>
             </motion.article>
           ))}
         </motion.div>

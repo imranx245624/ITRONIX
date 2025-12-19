@@ -123,6 +123,16 @@ export default function SponsorsPage() {
     setMounted(true)
   }, [])
 
+  const EMAIL = "Itronix@gncasc.org"
+
+  const openEmailCompose = () => {
+    // Open Gmail web compose directly
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      EMAIL
+    )}`
+    window.open(gmailUrl, "_blank", "noopener,noreferrer")
+  }
+
   return (
     <section className="relative min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto z-10">
@@ -165,7 +175,7 @@ export default function SponsorsPage() {
         </motion.div>
 
         {/* Sponsorship tiers grid */}
-        <motion.div
+        {/* <motion.div
           initial="hidden"
           animate={mounted ? "visible" : "hidden"}
           variants={containerVariants}
@@ -197,7 +207,7 @@ export default function SponsorsPage() {
                   </ul>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between gap-4">
+                <div className="mt-6 flex items-center justify-between gap-4"> */}
                   {/* <a
                     className="inline-block btn-ghost px-4 py-2 rounded-md text-sm font-semibold"
                     href={`mailto:itronix@gurunanak.edu.in?subject=Sponsorship Inquiry: ${encodeURIComponent(tier.title)}`}
@@ -213,11 +223,11 @@ export default function SponsorsPage() {
                   >
                     Get in Touch
                   </a> */}
-                </div>
+                {/* </div>
               </motion.div>
             )
           })}
-        </motion.div>
+        </motion.div> */}
 
         {/* Contact / CTA */}
         <motion.div
@@ -226,21 +236,35 @@ export default function SponsorsPage() {
           variants={containerVariants}
           className="text-center card-dark border-2 border-neon-cyan p-8 rounded-lg"
         >
-          <motion.p variants={itemVariants} className="text-muted-text font-poppins mb-4">
+          <motion.p
+            variants={itemVariants}
+            className="text-muted-text font-poppins mb-4"
+          >
             Ready to sponsor ITRONIX?
           </motion.p>
-          <motion.p variants={itemVariants} className="text-2xl font-rajdhani font-bold text-neon-cyan mb-6">
-            itronix@gurunanak.edu.in
-          </motion.p>
-          <motion.a
+
+          {/* EMAIL – display only (no link) */}
+          <motion.div
             variants={itemVariants}
-            href="mailto:itronix@gurunanak.edu.in?subject=Sponsorship Inquiry - ITRONIX-2K26"
-            className="inline-block btn-primary"
+            className="text-2xl font-rajdhani font-bold text-neon-cyan mb-6 block"
+          >
+            {EMAIL}
+          </motion.div>
+
+          {/* CONTACT BUTTON – opens Gmail compose */}
+          <motion.button
+            variants={itemVariants}
+            onClick={openEmailCompose}
+            type="button"
+            aria-label="Contact ITRONIX via email"
+            className="inline-block btn-primary cursor-pointer"
           >
             Contact Us
-          </motion.a>
+          </motion.button>
         </motion.div>
       </div>
     </section>
   )
 }
+
+

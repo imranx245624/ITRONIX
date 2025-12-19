@@ -2,16 +2,20 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+// If using Clerk auth, import useUser hook
+import { useUser } from "@clerk/nextjs"
 
 export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) {
   const router = useRouter()
+  // Try to get signed-in email from Clerk
+  const { user: clerkUser } = useUser()
 
-  // Workshops list (example) — change redirect links as needed
+  //Workshops list with UNIQUE URLs for each workshop
   const WORKSHOPS = [
-    { id: "ws-1", name: "Web Dev: From Idea to Launch", url: "https://workshop.example.com/webdev" },
-    { id: "ws-2", name: "AI & ML Bootcamp", url: "https://workshop.example.com/aiml" },
-    { id: "ws-3", name: "IoT & Embedded Systems", url: "https://workshop.example.com/iot" },
-    { id: "ws-4", name: "Robotics Hands-on", url: "https://workshop.example.com/robotics" },
+    { id: "ws-1", name: "Web Dev: From Idea to Launch", url: "http://www.google.co.in/" },
+    { id: "ws-2", name: "AI & ML Bootcamp", url: "https://youtube.com/" },
+    { id: "ws-3", name: "IoT & Embedded Systems", url: "http://instagram.com/" },
+    { id: "ws-4", name: "Robotics Hands-on", url: "https://www.canva.com/" },
   ]
 
   // Events list — includes whether event is team or individual
@@ -35,6 +39,39 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     teamMembers: "", // comma separated names
     consent: false,
   })
+
+  // Detect signed-in email from Clerk or fallback sources
+  const [signedInEmail, setSignedInEmail] = useState(null)
+  useEffect(() => {
+    // 1) Try Clerk user session first
+    if (clerkUser?.emailAddresses?.[0]?.emailAddress) {
+      setSignedInEmail(clerkUser.emailAddresses[0].emailAddress)
+      setFormData((prev) => ({ ...prev, email: clerkUser.emailAddresses[0].emailAddress }))
+      return
+    }
+
+    // 2) Fallback: check window.__USER_EMAIL (set by layout)
+    if (typeof window !== "undefined" && window.__USER_EMAIL) {
+      setSignedInEmail(window.__USER_EMAIL)
+      setFormData((prev) => ({ ...prev, email: window.__USER_EMAIL }))
+      return
+    }
+
+    // 3) Fallback: check localStorage
+    try {
+      const fromStorage = localStorage?.getItem("userEmail")
+      if (fromStorage) {
+        setSignedInEmail(fromStorage)
+        setFormData((prev) => ({ ...prev, email: fromStorage }))
+        return
+      }
+    } catch (err) {
+      // ignore storage errors
+    }
+
+    // No signed-in email found
+    setSignedInEmail(null)
+  }, [clerkUser])
 
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -75,6 +112,10 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
+
+    // Prevent email change if signed in
+    if (name === "email" && signedInEmail) return
+    
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -99,17 +140,21 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
     setIsSubmitting(true)
 
-    // payload: keep same DB shape — you can extend as needed
     const payload = {
-      fullName: formData.fullName.trim(),
+      full_name: formData.fullName.trim(),
       email: formData.email.trim(),
       phone: formData.phone.trim(),
       college: formData.college.trim(),
       category: formData.category,
-      registrationType: formData.registrationType,
-      teamMembers: formData.teamMembers.trim(),
+      registration_type: formData.registrationType,
+      team_members: formData.teamMembers.trim(),
       consent: formData.consent,
-      timestamp: new Date().toISOString(),
+      amount: 0,
+      payment_status: formData.category === "event" ? "pending" : "pending",
+      payment_id: null,
+      sponsor_url: selectedWorkshopObj?.url || null,
+      metadata: { event_mode: selectedEventObj?.mode || null },
+      created_at: new Date().toISOString(),
     }
 
     try {
@@ -127,19 +172,18 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         return
       }
 
-      // success: show message briefly then redirect depending on category
       setSubmitSuccess(true)
-      setSubmitMessage(data.message || "Registration recorded. Redirecting...")
+      setSubmitMessage(data.message || "Registration successful! Opening workshop in new tab...")
 
-      // small delay so user sees confirmation
       setTimeout(() => {
         if (formData.category === "workshop") {
-          // redirect to workshop external URL (if found), else go to a fallback page
-          const url = selectedWorkshopObj?.url || "/"
-          window.location.href = url
+          const url = selectedWorkshopObj?.url
+          if (url) {
+            window.open(url, "_blank")
+          }
+          // Push to lowercase /dashboard
+          router.push("/Dashboard")
         } else {
-          // event -> go to payment page (internal). adjust route as needed.
-          // passing event and name in query for payment page to use.
           const params = new URLSearchParams({
             event: formData.registrationType,
             name: formData.fullName,
@@ -148,9 +192,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
           })
           router.push(`/payment?${params.toString()}`)
         }
-      }, 900) // short delay
-
-      // clear form (optional) — keeping minimal, not clearing to preserve values before redirect
+      }, 1200)
     } catch (err) {
       console.error("Registration error:", err)
       setErrors({ submit: "An error occurred. Please try again." })
@@ -190,19 +232,65 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         {errors.fullName && <p className="mt-1 text-sm text-neon-magenta">{errors.fullName}</p>}
       </div>
 
+      {/* EMAIL INPUT – Read-only if signed in, editable otherwise */}
       <div>
         <label htmlFor="email" className="block font-poppins text-sm font-semibold text-neon-cyan mb-2">
           Email <span className="text-neon-magenta">*</span>
         </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full px-4 py-3 bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
-          placeholder="your@email.com"
-        />
+        
+        {signedInEmail ? (
+          <>
+            {/* Read-only input when signed in (user can select/copy) */}
+            <input
+              id="email"
+              name="email_display"
+              type="text"
+              value={formData.email}
+              readOnly
+              aria-readonly="true"
+              aria-describedby="emailHelp"
+              onFocus={(e) => e.target.select()}
+              className="w-full px-4 py-3 bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none cursor-default opacity-90"
+            />
+            
+            {/* Hidden input for form submission */}
+            <input type="hidden" name="email" value={formData.email} />
+
+            {/* Helper text with lock icon */}
+            <p id="emailHelp" className="mt-2 text-sm text-muted-text flex items-center gap-2">
+              <svg
+                aria-hidden="true"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="flex-shrink-0"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                <circle cx="12" cy="16" r="1" />
+              </svg>
+              <span>
+                Signed in as <strong>{formData.email}</strong> — email is fixed for this registration.
+              </span>
+            </p>
+          </>
+        ) : (
+          /* Editable input when not signed in */
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
+            placeholder="your@email.com"
+          />
+        )}
         {errors.email && <p className="mt-1 text-sm text-neon-magenta">{errors.email}</p>}
       </div>
 
