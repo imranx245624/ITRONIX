@@ -2,6 +2,8 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
+import DevControls from "@/components/DevControls"
+
 
 import ClerkProviderClient from "@/components/ClerkProviderClient"
 
@@ -114,6 +116,7 @@ export default function RootLayout({ children }) {
              {/* main gets top padding equal to header height to avoid overlap with fixed header */}
              <main className="pt-[var(--header-height)] md:pt-[var(--header-height)]">
                {children}
+                       
              </main>
              
 

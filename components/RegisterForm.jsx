@@ -2,15 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-// If using Clerk auth, import useUser hook
 import { useUser } from "@clerk/nextjs"
+import eventPricing from "@/data/eventPricing.json"
 
 export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) {
   const router = useRouter()
-  // Try to get signed-in email from Clerk
   const { user: clerkUser } = useUser()
 
-  //Workshops list with UNIQUE URLs for each workshop
   const WORKSHOPS = [
     { id: "ws-1", name: "Web Dev: From Idea to Launch", url: "http://www.google.co.in/" },
     { id: "ws-2", name: "AI & ML Bootcamp", url: "https://youtube.com/" },
@@ -18,15 +16,26 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     { id: "ws-4", name: "Robotics Hands-on", url: "https://www.canva.com/" },
   ]
 
-  // Events list — includes whether event is team or individual
   const EVENTS = [
+
     { id: "e-blind-typing", name: "Blind Typing", mode: "individual" },
+    { id: "e-web", name: "Web Development", mode: "individual" },
+    { id: "e-vibe", name: "Vibe Coding", mode: "individual" },
+    { id: "e-golf", name: "Code Golf", mode: "individual" },
+    { id: "e-busters", name: "Bug-Busters", mode: "individual" },
+    { id: "e-hack", name: "Hackathon", mode: "individual" },
+
+    { id: "e-Treasure", name: "Treasure Hunt", mode: "team" },
+    { id: "e-byte", name: "Byte Sized Battles", mode: "team" },
+    { id: "e-presentation", name: "Presentation", mode: "team" },
+
+
     { id: "e-bgmi", name: "BGMI Tournament", mode: "team" },
-    { id: "e-hack", name: "Hackathon", mode: "team" },
-    { id: "e-cyber", name: "Cyber Arena", mode: "individual" },
+    { id: "e-free-fire", name: "Free Fire", mode: "team" }, 
+    { id: "e-ludo", name: "Ludo King", mode: "team" },
+
   ]
 
-  // initial category based on query params
   const initialCategory = preselectedWorkshop ? "workshop" : preselectedEvent ? "event" : ""
 
   const [formData, setFormData] = useState({
@@ -40,24 +49,20 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     consent: false,
   })
 
-  // Detect signed-in email from Clerk or fallback sources
   const [signedInEmail, setSignedInEmail] = useState(null)
   useEffect(() => {
-    // 1) Try Clerk user session first
     if (clerkUser?.emailAddresses?.[0]?.emailAddress) {
       setSignedInEmail(clerkUser.emailAddresses[0].emailAddress)
       setFormData((prev) => ({ ...prev, email: clerkUser.emailAddresses[0].emailAddress }))
       return
     }
 
-    // 2) Fallback: check window.__USER_EMAIL (set by layout)
     if (typeof window !== "undefined" && window.__USER_EMAIL) {
       setSignedInEmail(window.__USER_EMAIL)
       setFormData((prev) => ({ ...prev, email: window.__USER_EMAIL }))
       return
     }
 
-    // 3) Fallback: check localStorage
     try {
       const fromStorage = localStorage?.getItem("userEmail")
       if (fromStorage) {
@@ -69,7 +74,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
       // ignore storage errors
     }
 
-    // No signed-in email found
     setSignedInEmail(null)
   }, [clerkUser])
 
@@ -78,7 +82,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitMessage, setSubmitMessage] = useState("")
 
-  // if preselected props change after mount, sync them
   useEffect(() => {
     setFormData((s) => ({
       ...s,
@@ -87,10 +90,10 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     }))
   }, [preselectedEvent, preselectedWorkshop])
 
-  // helper to get selected event object
   const selectedEventObj = EVENTS.find((ev) => ev.id === formData.registrationType || ev.name === formData.registrationType)
   const selectedWorkshopObj = WORKSHOPS.find((ws) => ws.id === formData.registrationType || ws.name === formData.registrationType)
   const isTeamEvent = selectedEventObj?.mode === "team"
+  const eventPrice = selectedEventObj ? eventPricing[selectedEventObj.id] || 0 : 0
 
   const validateForm = () => {
     const newErrors = {}
@@ -113,7 +116,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
 
-    // Prevent email change if signed in
     if (name === "email" && signedInEmail) return
     
     setFormData((prev) => ({
@@ -123,7 +125,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
 
-  // special handler for category radio
   const handleCategoryChange = (cat) => {
     setFormData((prev) => ({
       ...prev,
@@ -149,7 +150,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
       registration_type: formData.registrationType,
       team_members: formData.teamMembers.trim(),
       consent: formData.consent,
-      amount: 0,
+      amount: formData.category === "event" ? eventPrice : 0,
       payment_status: formData.category === "event" ? "pending" : "pending",
       payment_id: null,
       sponsor_url: selectedWorkshopObj?.url || null,
@@ -181,7 +182,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
           if (url) {
             window.open(url, "_blank")
           }
-          // Push to lowercase /dashboard
           router.push("/Dashboard")
         } else {
           const params = new URLSearchParams({
@@ -378,7 +378,9 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
       {formData.category === "event" && (
         <div>
-          <label htmlFor="registrationType" className="block font-poppins text-sm font-semibold text-neon-cyan mb-2">Choose Event <span className="text-neon-magenta">*</span></label>
+          <label htmlFor="registrationType" className="block font-poppins text-sm font-semibold text-neon-cyan mb-2">
+            Choose Event <span className="text-neon-magenta">*</span>
+          </label>
           <select
             id="registrationType"
             name="registrationType"
@@ -389,13 +391,20 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
             <option value="">Select an event...</option>
             {EVENTS.map((ev) => (
               <option key={ev.id} value={ev.id}>
-                {ev.name} {ev.mode === "team" ? "(Team)" : "(Individual)"}
+                {ev.name} {ev.mode === "team" ? "(Team)" : "(Individual)"} - ₹{eventPricing[ev.id] || 0}
               </option>
             ))}
           </select>
           {errors.registrationType && <p className="mt-1 text-sm text-neon-magenta">{errors.registrationType}</p>}
 
-          {/* Team members only for team events */}
+          {selectedEventObj && (
+            <div className="mt-3 p-3 bg-neon-cyan/10 border border-neon-cyan/30 rounded-lg">
+              <p className="font-poppins text-sm text-neon-cyan">
+                <span className="font-semibold">Registration Fee:</span> ₹{eventPrice}
+              </p>
+            </div>
+          )}
+
           {isTeamEvent && (
             <div className="mt-3">
               <label htmlFor="teamMembers" className="block font-poppins text-sm font-semibold text-neon-cyan mb-2">
@@ -408,7 +417,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
                 onChange={handleChange}
                 rows={3}
                 className="w-full px-4 py-3 bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40 resize-none"
-                placeholder="John Doe, Jane Doe"
+                placeholder="list like this --> imran, ayush, birendra, Afzal"
               />
               {errors.teamMembers && <p className="mt-1 text-sm text-neon-magenta">{errors.teamMembers}</p>}
             </div>

@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Globe } from "lucide-react"
 
 export default function About() {
   return (
-    <section className="py-16 md:py-24 px-4 md:px-8 bg-deep-night">
+    <section className="py-16 md:py-24 px-4 md:px-8 bg-deep-night ">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* College Information */}
