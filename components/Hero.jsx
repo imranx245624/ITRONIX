@@ -1,6 +1,6 @@
 "use client"
 
-import CanvasBackground from "@/components/CanvasBackground"
+// import CanvasBackground from "@/components/CanvasBackground"
 
 import "./hero.css"
 import { useEffect, useRef, useState } from "react"
