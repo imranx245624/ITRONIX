@@ -43,8 +43,9 @@ export default function EventCard({ event, index = 0 }) {
           <span className="text-sm font-poppins text-neon-cyan">Prize Pool</span>
           <span className="font-rajdhani font-bold text-neon-magenta text-lg">{event.prize}</span>
         </div>
-
-        <SignedOut>
+        <p className="block w-full text-xs text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
+        > Registeration will start <br/>from 1st january</p>
+        {/* <SignedOut>
           <SignInButton mode="modal">
             <button className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
               Register
@@ -59,7 +60,7 @@ export default function EventCard({ event, index = 0 }) {
           >
             Register
           </Link>
-        </SignedIn>
+        </SignedIn> */}
       </div>
     </motion.div>
   )
