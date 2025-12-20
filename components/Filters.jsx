@@ -60,14 +60,14 @@ export default function Filters() {
     <div className="bg-deep-night/50 backdrop-blur-sm border border-neon-cyan/20 rounded-lg p-6 mb-12">
       <div className="flex flex-col gap-4">
         {/* Search Bar */}
-        <input
+        {/* <input
           type="text"
           placeholder="Search events by title or tags..."
           value={searchQuery}
           onChange={handleSearchChange}
           className="w-full px-4 py-2 rounded-lg bg-deep-night border border-neon-cyan/30 text-white font-poppins placeholder-neon-cyan/50 focus:outline-none focus:border-neon-cyan/60 focus:ring-1 focus:ring-neon-cyan/30 transition-all"
           aria-label="Search events"
-        />
+        /> */}
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap gap-3">
