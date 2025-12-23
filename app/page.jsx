@@ -11,13 +11,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      {/* main has id to allow Hero to compute scroll target */}
+      <main id="site-main">
         <Hero />
         <Highlights />
         <Gallery />
         <About />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

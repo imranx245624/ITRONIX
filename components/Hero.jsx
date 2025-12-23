@@ -13,6 +13,8 @@ export default function Hero() {
 
   // overlay progress from 0 to 1 (0 = no overlay, 1 = fully visible)
   const [overlayProgress, setOverlayProgress] = useState(0)
+  // if user manually closed the info card, keep it closed until they return to top
+  const [overlayClosed, setOverlayClosed] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
@@ -27,6 +29,19 @@ export default function Hero() {
       const heroEl = heroRef.current
       const heroHeight = (heroEl && heroEl.offsetHeight) || window.innerHeight
       const y = lastKnownScroll
+
+      // if user closed overlay manually: keep it hidden while they scroll down
+      if (overlayClosed && y > 60) {
+        if (overlayProgress !== 0) setOverlayProgress(0)
+        ticking = false
+        return
+      }
+
+      // if user scrolled back to near-top, re-enable overlay
+      if (overlayClosed && y <= 60) {
+        setOverlayClosed(false)
+      }
+
       const progress = Math.min(Math.max(y / heroHeight, 0), 1)
       // Make overlay a bit quicker to appear: map 0..1 -> 0..1 with easing
       const eased = Math.pow(progress, 0.85)
@@ -52,7 +67,7 @@ export default function Hero() {
       window.removeEventListener("resize", onScroll)
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [])
+  }, [overlayClosed, overlayProgress])
 
   // Click overlay => scroll to after hero (smooth)
   const handleOverlayClick = () => {
@@ -61,12 +76,23 @@ export default function Hero() {
     window.scrollTo({ top: target + 2, behavior: "smooth" })
   }
 
+  // close button handler
+  const handleCloseOverlay = (e) => {
+    e.stopPropagation()
+    // hide overlay; keep it closed while user scrolls down; will re-open when they come back to top
+    setOverlayClosed(true)
+    setOverlayProgress(0)
+  }
+
   // derived style values
   const overlayOpacity = Math.min(1, overlayProgress * 1.15) // slightly boost
   const blurPx = 8 * overlayOpacity // up to 8px blur
   const darkAlpha = 0.55 * overlayOpacity // overlay darkness
   const cardOpacity = Math.min(1, Math.max(0, (overlayProgress - 0.06) * 1.25)) // card appears a bit later
   const cardTranslate = 30 * (1 - cardOpacity) // translate up as it appears
+
+  // overlay should be interactive only when visible and not closed
+  const overlayInteractive = !overlayClosed && overlayProgress > 0.02
 
   return (
     <section
@@ -102,12 +128,12 @@ export default function Hero() {
         className="fixed inset-0 z-40 flex items-center justify-center"
         aria-hidden="true"
         onClick={() => {
-          // if overlay is visible enough, allow click to jump; otherwise ignore
-          if (overlayProgress > 0.02) handleOverlayClick()
+          // if overlay is visible enough and not closed, allow click to jump; otherwise ignore
+          if (overlayInteractive) handleOverlayClick()
         }}
         style={{
-          // pointer events only when overlay visible enough
-          pointerEvents: overlayProgress > 0.02 ? "auto" : "none",
+          // pointer events only when overlay visible enough and not closed
+          pointerEvents: overlayInteractive ? "auto" : "none",
           transition: "background-color 160ms linear, backdrop-filter 160ms linear",
           backgroundColor: `rgba(2,6,11, ${darkAlpha})`,
           backdropFilter: `blur(${blurPx}px)`,
@@ -116,20 +142,34 @@ export default function Hero() {
       >
         {/* Info card */}
         <div
-          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left"
+          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative"
           style={{
             transform: `translateY(${cardTranslate}px)`,
             opacity: cardOpacity,
             transition: "transform 280ms cubic-bezier(.2,.9,.2,1), opacity 240ms ease-out",
             zIndex: 41,
-            cursor: overlayProgress > 0.02 ? "pointer" : "default",
+            cursor: overlayInteractive ? "pointer" : "default",
           }}
           onClick={(e) => {
             // prevent bubbling overlay click twice
             e.stopPropagation()
-            if (overlayProgress > 0.02) handleOverlayClick()
+            if (overlayInteractive) handleOverlayClick()
           }}
         >
+          {/* CLOSE BUTTON (top-right inside card) */}
+          <button
+            aria-label="Close about overlay"
+            onClick={handleCloseOverlay}
+            className="absolute right-3 top-3 w-8 h-8 rounded-md bg-deep-night/50 border border-neon-cyan/10 flex items-center justify-center text-neon-cyan hover:bg-neon-cyan/6 focus:outline-none focus:ring-2 focus:ring-neon-cyan/30"
+            title="Close"
+            type="button"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
           <h2 className="text-3xl sm:text-4xl font-rajdhani text-neon-cyan font-bold mb-2">About ITRONIX</h2>
           {/* <p className="text-sm text-muted-text mb-3">
             ITRONIX — <span className="font-semibold text-neon-cyan">TECHLAND</span> is a futuristic virtual world where technology comes to life.
@@ -139,39 +179,20 @@ export default function Hero() {
           <p className="text-sm text-muted-text mb-3">
             ITRONIX is the annual technical fest of the Information Technology Department,
             celebrating innovation, creativity, and technical excellence. Inspired by the theme
-              <strong> TECHLAND</strong>, it represents a futuristic digital world where technology
-              comes to life through AI, robotics, networking, and virtual systems. The fest provides 
-              a platform for students to learn, compete, collaborate, and experience the future of technology.
+            <strong> TECHLAND</strong>, it represents a futuristic digital world where technology
+            comes to life through AI, robotics, networking, and virtual systems. The fest provides 
+            a platform for students to learn, compete, collaborate, and experience the future of technology.
           </p>
 
           <div className="flex justify-center flex-wrap gap-3 mt-2">
             <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">23 — 24 Jan 2026</div><br/>
-            {/* <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">Workshops</div>
-                        <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">Tech Events</div>
-
-            <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">Creative Events</div>
-
-            <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">Cyber Arena</div> */}
           </div>
 
           <div className="flex justify-center  mt-5 flex gap-3">
-            <Link href="/events" className="inline-block btn-secondary px-4 py-2">
+            <Link href="/events" className="inline-block btn-secondary px-4 py-2 pointer-events-auto">
               See Events
             </Link>
 
-            {/* <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                // scroll to next content (hero height)
-                const heroEl = heroRef.current
-                const top = heroEl ? heroEl.offsetHeight : window.innerHeight
-                window.scrollTo({ top: top + 2, behavior: "smooth" })
-              }}
-              className="inline-block btn-primary px-4 py-2"
-            >
-              Explore
-            </button> */}
           </div>
         </div>
       </div>
