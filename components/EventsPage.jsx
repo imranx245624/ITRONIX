@@ -44,18 +44,24 @@ export default function EventsPage() {
   const categories = [
     {
       id: "hackathon",
-      label: "💻Tech EventS",
-      description: "Competitive technical challenges designed to test coding, logic, and real-world problem-solving skills.",
+      label: "💻 Tech EventS",
+      // description: "Competitive technical challenges designed to test coding, logic, and real-world problem-solving skills.",
+      description: "",
+
     },
     {
       id: "innovation-fair",
-      label: "💡Creative Events",
-      description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
+      label: "💡 Creative Events",
+      // description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
+      
+      description: "",
     },
     {
       id: "cyber-arena",
       label: "🎮 Cyber Arena",
       description: "High-energy e-sports battles where players compete for skill, strategy, and victory.",
+      description: "",
+
     },
   ]
 
@@ -74,7 +80,7 @@ export default function EventsPage() {
       <EventsBanner />
 
       <section className="min-h-screen bg-deep-night py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+        <div className=" max-w-6xl mx-auto">
           <Filters />
 
           {activeFilter === "all" ? (
@@ -96,8 +102,8 @@ export default function EventsPage() {
                     id={`section-${category.id}`}
                     className="scroll-mt-20"
                   >
-                    <div className="mb-8">
-                      <h2 className="text-3xl md:text-4xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-3">
+                    <div className=" flex flex-center justify-center mb-8 border-2 border-neon-cyan/60 rounded-full px-4 py-2 bg-deep-night/40 backdrop-blur-sm">
+                      <h2 className="text-2xl md:text-4xl font-serif font-bold uppercase tracking-wider text-neon-cyan mb-3">
                         {category.label}
                       </h2>
                       <p className="text-muted-text font-poppins text-lg max-w-3xl" >{category.description}</p>
@@ -117,7 +123,7 @@ export default function EventsPage() {
                       ) : (
                         <div className="col-span-full">
                           <div className="card-dark p-8 text-center">
-                            <p className="text-muted-text font-poppins">No events added yet — check back soon.</p>
+                            <p className="text-muted-text font-serif">No events added yet — check back soon.</p>
                           </div>
                         </div>
                       )}

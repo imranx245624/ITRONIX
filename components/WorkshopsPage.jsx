@@ -14,21 +14,8 @@ export default function WorkshopsPage() {
         "2-hour hands-on labs with Kaggle-like datasets. Learn neural networks, classification, and real-world applications. Certificate included.",
       duration: "2 hours",
       level: "Intermediate",
-    },
-    {
-      id: "iot",
-      title: "IoT & Embedded Systems",
-      description: "Build an IoT sensor prototype. Hands-on with Arduino and sensors.",
-      duration: "3 hours",
-      level: "Beginner",
-    },
-    {
-      id: "web-dev",
-      title: "Web Dev: From Idea to Launch",
-      description: "Full-stack workflow: design, code, deploy. Leave with a live mini-app.",
-      duration: "4 hours",
-      level: "Intermediate",
-    },
+    }
+    
   ]
 
   // framer variants (unchanged logic)
@@ -61,13 +48,13 @@ export default function WorkshopsPage() {
     <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
       {/* Background image (behind) */}
       <div
-        className="absolute inset-0 w-full h-80 bg-cover bg-center"
+        className="absolute inset-0 w-full h-90 bg-cover bg-center"
         style={{
           backgroundImage: "url(/images/bg1.png)",
           filter: "saturate(1.3) contrast(1.1) brightness(0.3) blur(1px)",
         }}
       />
-      <div className="relative top-15 inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80 pointer-events-none -z-10" />
+      <div className="relative top-20 inset-0 bg-gradient-to-r from-deep-night/80 via-deep-night/60 to-deep-night/80 pointer-events-none -z-10" />
 
       {/* Header / intro - animate on mount */}
       <motion.div
@@ -76,21 +63,21 @@ export default function WorkshopsPage() {
         variants={containerVariants}
         className="relative z-10 max-w-3xl mx-auto text-center mb-12"
       >
-        <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-3">
-          LEARNING WORKSHOPS
+        <motion.h1 variants={itemVariants} className="relative top-15 text-4xl md:text-5xl font-serif font-bold uppercase tracking-wider text-neon-cyan mb-3">
+          WORKSHOPS
         </motion.h1>
-        <motion.p variants={itemVariants} className="text-lg md:text-xl font-poppins text-neon-cyan/80 mx-auto">
-          Upskill with industry experts. Hands-on workshops across AI, IoT, and Web Development. Limited seats available — apply early!
+        <motion.p variants={itemVariants} className="relative top-15 text-lg md:text-xl font-serif  mx-auto">
+          Upskill with industry experts. Limited seats available — apply early!
         </motion.p>
       </motion.div>
 
-      <div className="relative top-22 max-w-6xl mx-auto z-30">
+      <div className="relative top-40 h-120 max-w-2xl mx-auto z-30">
         {/* Workshop Cards grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={mounted ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8"
         >
           {workshops.map((workshop) => (
             <motion.article

@@ -38,7 +38,7 @@ export default function Highlights() {
               className="group card-dark hover:border-neon-magenta/50 transition-all duration-300 transform hover:scale-105 cursor-pointer font-serif "
             >
               <div className="text-3xl sm:text-4xl mb-4 ">{item.icon}</div>
-              <h3 className="text-lg sm:text-2xl font-rajdhani font-bold uppercase text-neon-cyan mb-3 group-hover:text-neon-magenta transition-colors duration-300 ">
+              <h3 className="text-lg sm:text-2xl font-serif font-bold uppercase text-neon-cyan mb-3 group-hover:text-neon-magenta transition-colors duration-300 ">
                 {item.title}
               </h3>
               <p className="font-poppins text-muted-text leading-relaxed text-sm sm:text-base mb-4 font-serif ">

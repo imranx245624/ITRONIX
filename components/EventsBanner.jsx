@@ -21,13 +21,13 @@ export default function EventsBanner() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="top-20 relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8"
+        className="top-20 relative h-full flex flex-col items-center  px-4 sm:px-6 lg:px-8"
       >
         <div className=""> 
-        <h1 className=" text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan text-center mb-3">
-          Featured Events
+        <h1 className="relative w-full top-10 text-4xl md:text-5xl font-serif font-bold uppercase tracking-wider text-neon-cyan text-center mb-3">
+          Featured <br/> Events
         </h1>
-        <p className=" text-lg md:text-xl font-poppins text-neon-cyan/80 text-center max-w-2xl">
+        <p className="relative w-full top-10 font-serif text-lg md:text-xl font-poppins  text-center max-w-2xl">
           Competitions & experiences across Tech , Innovation & Cyber Arena
         </p>
         </div>

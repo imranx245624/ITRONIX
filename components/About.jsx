@@ -58,7 +58,16 @@ export default function About() {
                     rel="noopener noreferrer"
                     className="text-cyan-400 hover:text-cyan-300 transition-colors"
                   >
-                    www.gurunanakcollegeasc.in
+                    www.gurunanakcollegeasc.in 
+                  </a>
+                  <br/> 
+                  <a
+                    href="https://gncasc.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
+                    gncasc.org
                   </a>
                 </div>
               </div>
@@ -88,19 +97,21 @@ export default function About() {
               <p className="text-gray-400 font-poppins">Programs Offered</p>
             </div>
           </div>
+           </div>
+           <br/><br/><br/><br/>
           {/* IT section information */}
           <div>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-rajdhani text-balance text-neon-cyan">
               About Information Technology Department  
             </h2>
-            <p className="text-gray-300 font-poppins text-lg leading-relaxed mb-6">
+            <p className="text-gray-300 font-poppins text-lg leading-relaxed relative w-full mb-6 ">
               The department offers undergraduate and postgraduate programs 
               in Information Technology. These programs focus on core IT concepts, programming languages,
                software development, database management, networking, cybersecurity, artificial intelligence, and other emerging technologies.
             </p>
             
           </div>
-        </div>
+       
       </div>
     </section>
   )

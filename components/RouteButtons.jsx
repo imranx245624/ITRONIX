@@ -116,14 +116,14 @@ export default function RouteButtons() {
                 key={r.key}
                 href={r.href}
                 aria-label={r.name}
-                className={`flex flex-col items-center justify-center min-w-[56px] max-w-[72px] px-2 py-1 rounded-full transition-transform duration-150 ${
+                className={`flex flex-col items-center justify-center min-w-[56px] max-w-[100px] px-3 py-1 rounded-full transition-transform duration-150 ${
                   active
                     ? "bg-neon-cyan text-deep-night shadow-[0_6px_18px_rgba(0,209,193,0.12)]"
                     : "bg-transparent text-neon-cyan/90 hover:bg-neon-cyan/10"
                 }`}
               >
                 <span
-                  className={`inline-flex items-center justify-center w-9 h-9 rounded-full ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}
+                  className={`inline-flex items-center justify-center w-13 h-9 rounded-full  px-5 py-2 ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}
                 >
                   <Icon name={r.icon} className="w-5 h-5" />
                 </span>

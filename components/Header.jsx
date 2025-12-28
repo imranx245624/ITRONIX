@@ -44,39 +44,30 @@ export default function Header() {
       }`}
     >
       <nav className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
-        {/* Left: logo + college name */}
-        <div className="
-        flex items-center justify-center h-full gap-3 flex-shrink-0 ">
-          <div className="flex items-center justify-center gap-3">
-            {/* <div className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center bg-deep-night/60 border border-neon-cyan/10 overflow-hidden">
-              <img src="/images/Clg_logo.png" alt="college logo" className="w-8 h-8 md:w-9 md:h-9 object-contain" />
-            </div> */}
-          <div className="flex items-center justify-center">
-  <div className="flex items-center gap-3">
-   <img
-  src="/images/Clg_logo.png"
-  alt="college logo"
-  className="w-15 h-15 md:w-30 md:h-30 object-contain"
-/>
+        <div className="flex items-center justify-center h-full gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <img
+              src="/images/Clg_logo.png"
+              alt="college logo"
+              className="w-10 h-15 md:w-30 md:h-30 object-contain"
+            />
 
+            <Link href="/" className="flex flex-col leading-tight min-w-0 text-center">
+              <span className="text-[7px] font-poppins text-muted-text uppercase">
+                Guru Nanak Vidyak Society’s
+              </span>
 
-    <Link href="/" className="flex flex-col leading-tight min-w-0 text-center">
-      <span className="text-[7px] md:text-[7px] font-poppins text-muted-text uppercase whitespace-normal">
-        Guru Nanak Vidyak Society’s
-      </span>
-                
-      <span className="text-[11px] md:text-[17px] font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wider whitespace-nowrap md:whitespace-normal">
-        GURU NANAK COLLEGE
-      </span>
+              <span className="text-[11px] md:text-[17px] font-rajdhani font-bold uppercase text-neon-cyan tracking-wider">
+                GURU NANAK COLLEGE
+              </span>
 
-      <span className="text-[9px] md:text-[7px] font-poppins text-muted-text uppercase whitespace-normal">
-        of Arts, Science & Commerce<br/>(AUTONOMOUS)<br/>G.T.B. Nagar, Mumbai- 400037 <br/>
-        NAAC Accredited ‘A+’ CGPA 3.35
-      </span>
-    </Link>
-  </div>
-</div>
-
+              <span className="text-[9px] font-poppins text-muted-text uppercase">
+                of Arts, Science & Commerce
+                <br />(AUTONOMOUS)
+                <br />G.T.B. Nagar, Mumbai- 400037
+                <br />NAAC Accredited ‘A+’ CGPA 3.35
+              </span>
+            </Link>
           </div>
         </div>
 
@@ -98,9 +89,7 @@ export default function Header() {
           {/* Desktop: sign-in or dashboard */}
           <div className="hidden md:flex items-center gap-3">
             <SignedOut>
-              {/* Removed redirectUrl prop to avoid DOM warning */}
               <SignInButton mode="modal">
-                {/* SignInButton will render an accessible button; we can pass className directly */}
                 <button className="btn-secondary transition-all duration-300 hover:shadow-lg hover:shadow-neon-cyan/50 text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 transition-transform duration-200 ease-out transform-gpu hover:-translate-y-1 hover:scale-110 hover:rotate-1">
                   Sign in
                 </button>
@@ -115,8 +104,8 @@ export default function Header() {
             </SignedIn>
           </div>
 
-          {/* Mobile: show sign-in or user button */}
-          <div className="md:hidden">
+          {/* Mobile: show sign-in or user button AND Dashboard link when signed in */}
+          <div className="md:hidden flex items-center gap-2">
             <SignedOut>
               <SignInButton mode="modal">
                 <button
@@ -132,15 +121,32 @@ export default function Header() {
             </SignedOut>
 
             <SignedIn>
+              {/* show Dashboard button on mobile after signin */}
+              <Link href="/Dashboard" className="p-2 rounded-md bg-deep-night/30 border border-neon-cyan/10 text-neon-cyan text-sm">
+                Dashboard
+              </Link>
+
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
+
+            {/* Mobile menu toggle (optional) */}
+            {/* <button
+              onClick={toggleMenu}
+              className="ml-1 p-2 rounded-md bg-deep-night/30 border border-neon-cyan/10 text-neon-cyan"
+              aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              </svg>
+            </button> */}
           </div>
         </div>
 
-        {/* Mobile menu panel (if used) */}
+        {/* Mobile menu panel */}
         {isMobileMenuOpen && (
           <>
-            <div className="fixed inset-0 bg-black/60 z-40 transition-opacity duration-300" onClick={closeMenu} aria-hidden="true" />
+            <div className="fixed inset-0 bg-black/60 z-40" onClick={closeMenu} aria-hidden="true" />
             <div
               style={{
                 top: "calc(var(--header-height, 4rem) + env(safe-area-inset-top, 0px))",

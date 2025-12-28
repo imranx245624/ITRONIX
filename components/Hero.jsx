@@ -142,7 +142,7 @@ export default function Hero() {
       >
         {/* Info card */}
         <div
-          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative"
+          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-5"
           style={{
             transform: `translateY(${cardTranslate}px)`,
             opacity: cardOpacity,
@@ -170,28 +170,39 @@ export default function Hero() {
             </svg>
           </button>
 
-          <h2 className="text-3xl sm:text-4xl font-rajdhani text-neon-cyan font-bold mb-2">About ITRONIX</h2>
+          <h2 className="text-3xl sm:text-4xl font-rajdhani text-neon-cyan font-bold mb-2 font-serif">About ITRONIX</h2>
           {/* <p className="text-sm text-muted-text mb-3">
             ITRONIX — <span className="font-semibold text-neon-cyan">TECHLAND</span> is a futuristic virtual world where technology comes to life.
             Robots, AI, networks and holographic experiences come together to create an immersive IT universe. Explore workshops, competitions and
             live demonstrations.
           </p> */}
-          <p className="text-sm text-muted-text mb-3">
-            ITRONIX is the annual technical fest of the Information Technology Department,
-            celebrating innovation, creativity, and technical excellence. Inspired by the theme
-            <strong> TECHLAND</strong>, it represents a futuristic digital world where technology
-            comes to life through AI, robotics, networking, and virtual systems. The fest provides 
-            a platform for students to learn, compete, collaborate, and experience the future of technology.
-          </p>
 
-          <div className="flex justify-center flex-wrap gap-3 mt-2">
+            <div className="text-sm text-muted-text mb-3 space-y-4 leading-relaxed">
+            <p>
+                <strong>ITRONIX</strong> is the annual technical fest of the <strong>Information Technology Department</strong>, celebrating innovation, creativity, and technical excellence. Inspired by the futuristic theme <strong>TECHLAND</strong>, the fest is crafted as a virtual world where technology truly comes to life.
+              </p>
+
+              {/* <p>
+                <strong>TECHLAND</strong> represents an immersive IT universe filled with <strong>AI systems, robotics, computers, network signals,</strong> and dynamic digital environments. Every element reflects the power of innovation, seamless connectivity, and digital intelligence—making participants feel as if they have stepped into the future of technology itself.
+              </p> */}
+
+              
+                Through a vibrant mix of <strong>Technical competitions,
+                 Non-Technical challenges, Gaming events, Workshops,</strong> 
+                 and interactive experiences, <strong>ITRONIX</strong> provides a platform
+                  for students to learn, compete, collaborate, and showcase their skills.
+                   {/* while exploring the limitless possibilities of the tech-driven world. */}
+              
+              </div>
+
+          {/* <div className="flex justify-center flex-wrap gap-3 mt-2">
             <div className="px-3 py-2 rounded-md border border-neon-cyan/20 bg-[rgba(4,8,12,0.36)] text-neon-cyan text-xs">23 — 24 Jan 2026</div><br/>
-          </div>
+          </div> */}
 
           <div className="flex justify-center  mt-5 flex gap-3">
-            <Link href="/events" className="inline-block btn-secondary px-4 py-2 pointer-events-auto">
-              See Events
-            </Link>
+            <div  className="inline-block btn-secondary px-4 py-2 pointer-events-auto">
+              23 — 24 Jan 2026
+            </div>
 
           </div>
         </div>
@@ -203,17 +214,22 @@ export default function Hero() {
         {/* TITLE */}
         <div className="mb-4 sm:mb-6">
           <h1
-            className={`relative text-3xl sm:text-4xl lg:text-7xl
+           className={`relative text-3xl sm:text-4xl lg:text-7xl
               font-serif font-bold tracking-tight sm:tracking-[0.25em]
-              bg-gradient-to-r from-neon-cyan via-white to-neon-cyan
+              bg-gradient-to-r from-[#06F7FF]  to-[#00C2FF]
               bg-clip-text text-transparent
-              drop-shadow-[0_0_20px_rgba(0,255,255,0.35)]
+              drop-shadow-[0_8px_30px_rgba(0,200,255,0.18)]
+              ring-1 ring-[#00d4ff]/10 rounded-md
+              before:content-[''] before:absolute before:-inset-2 before:-z-10
+              before:rounded-lg before:blur-[24px] before:opacity-60
+              before:bg-gradient-to-r before:from-[#00121a]/60 before:via-transparent before:to-[#002233]/60
               transition-all duration-300
-              whitespace-nowrap sm:whitespace-normal 
-              ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 "}`}
+              whitespace-nowrap sm:whitespace-normal
+              ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
             style={{
               clipPath: isVisible ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
               transition: "clip-path 1s ease-out",
+              WebkitTextStroke: "0.9px rgba(0,200,255,0.22)", // subtle cyan outline for separation
             }}
           >
             I T R O N I X
@@ -241,14 +257,14 @@ export default function Hero() {
           </span>
         </p>
 
-        <p className="text-sm sm:text-base font-poppins text-muted-text mb-8 sm:mb-12 ">
+        <p className="text-sm sm:text-base font-serif text-muted-text mb-8 sm:mb-12 ">
           Information Technology Department festival
           <br />
           on 23 & 24 Jan 2026
         </p>
 
         {/* TAGS */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-poppins text-neon-cyan ">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-serif text-neon-cyan ">
           {["Hackathon", "Web Dev", "Vibe Coding", "Debugging", "Creativity", "Gaming"].map(
             (tag) => (
               <span

@@ -135,20 +135,28 @@ export default function SponsorsPage() {
 
   return (
     <section className="relative min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto z-10">
+       {/* Background image (behind) */}
+      <div
+        className="absolute inset-0 w-full h-90 bg-cover bg-center"
+        style={{
+          backgroundImage: "url(/images/bg1.png)",
+          filter: "saturate(1.3) contrast(1.1) brightness(0.3) blur(1px)",
+        }}
+      />
+      <div className="relative top-17 max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
           animate={mounted ? "visible" : "hidden"}
           variants={containerVariants}
-          className="relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 mb-8 text-center"
+          className=" relative h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 mb-8 text-center"
         >
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-5xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-3"
+            className="text-4xl md:text-5xl font-serif  font-bold uppercase tracking-wider text-neon-cyan mb-3"
           >
             SPONSORS & PARTNERS
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-lg md:text-xl font-poppins text-neon-cyan/80 max-w-2xl">
+          <motion.p variants={itemVariants} className="font-serif text-lg md:text-xl font-poppins  max-w-2xl">
             Local partners supporting student innovation. Interested to sponsor ITRONIX? Contact us below.
           </motion.p>
         </motion.div>
@@ -158,13 +166,13 @@ export default function SponsorsPage() {
           initial="hidden"
           animate={mounted ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12"
+          className="h-170 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12"
         >
           {Array.from({ length: 6 }).map((_, i) => (
             <motion.div
               key={i}
               variants={itemVariants}
-              className="relative card-dark flex items-center justify-center h-40 group hover:border-neon-cyan/50 transition-all duration-300 p-4 rounded-lg"
+              className="relative top-20 card-dark flex items-center justify-center h-40 group hover:border-neon-cyan/50 transition-all duration-300 p-4 rounded-lg"
             >
               <div className="text-center">
                 <div className="text-3xl text-neon-cyan/40 group-hover:text-neon-cyan transition-colors mb-1">📦</div>
