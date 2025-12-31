@@ -167,10 +167,16 @@ export default function EventsPage() {
               <div className="card-dark">
                 <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 1 • 23 january</h3>
                 <div className="space-y-3 font-poppins text-muted-text text-sm">
-                  <div>
-                    <p className="text-neon-cyan font-semibold">09:00</p>
-                    <p>Opening Ceremony</p>
-                  </div>
+                  <div className="space-y-1">
+  <p className="text-neon-cyan font-semibold">09:00 AM</p>
+  <p className="font-medium">Opening Ceremony</p>
+<p className="text-neon-magenta">
+  .<br/>
+  .<br/>.</p>
+
+  <p className="text-neon-magenta text-sm italic">Detailed schedule will be announced soon....</p>
+</div>
+
                   {/* <div className="border-t border-neon-cyan/20 pt-3">
                     <p className="text-neon-cyan font-semibold">10:00</p>
                     <p>Keynote: "Simulating Cities" (Alumni Panel)</p>
@@ -221,6 +227,8 @@ export default function EventsPage() {
                     <p className="text-neon-cyan font-semibold">10:00</p>
                     <p>Hackathon final pitches</p>
                   </div> */}
+                  <p className="text-neon-magenta">.<br/>
+  .<br/>.</p>
                   <div className="border-t border-neon-cyan/20 pt-3">
                     <p className="text-neon-cyan font-semibold">21:00</p>
                     <p>Prize distribution & certificates</p>
@@ -228,6 +236,8 @@ export default function EventsPage() {
                   <div className="border-t border-neon-cyan/20 pt-3">
                     <p className="text-neon-cyan font-semibold">22:00</p>
                     <p>Closing ceremony</p>
+                    
+
                   </div>
                 </div>
               </div>

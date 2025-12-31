@@ -21,7 +21,7 @@ export default function EventCard({ event, index = 0 }) {
         </span>
       </div>
 
-      <h3 className="text-xl font-rajdhani font-bold uppercase text-neon-cyan group-hover:text-neon-magenta transition-colors mb-2">
+      <h3 className="text-xl font-serif font-bold uppercase text-neon-cyan group-hover:text-neon-magenta transition-colors mb-2">
         {event.title}
       </h3>
 
@@ -43,8 +43,8 @@ export default function EventCard({ event, index = 0 }) {
           <span className="text-sm font-poppins text-neon-cyan">Prize Pool</span>
           <span className="font-rajdhani font-bold text-neon-magenta text-lg">{event.prize}</span>
         </div>
-        <p className="block w-full text-xs text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
-        > Registeration will start <br/>from 1st january</p>
+        <p className="block w-full text-xs text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 font-poppins"
+        > Registeration will start <br/>from 5th january</p>
         {/* <SignedOut>
           <SignInButton mode="modal">
             <button className="block w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">

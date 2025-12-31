@@ -83,7 +83,7 @@ export default function RouteButtons() {
               <Link
                 key={r.key}
                 href={r.href}
-                className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl transition transform duration-150 ${
+                className={`relative group flex items-center gap-3 w-full px-3 py-3 rounded-xl transition transform duration-150 ${
                   active
                     ? "bg-neon-cyan text-deep-night shadow-[0_8px_24px_rgba(0,209,193,0.12)]"
                     : "bg-deep-night/70 border border-neon-cyan/15 text-neon-cyan hover:translate-x-1"
@@ -93,6 +93,16 @@ export default function RouteButtons() {
                 <span className={`inline-flex items-center justify-center w-9 h-9 rounded-md ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}>
                   <Icon name={r.icon} className="w-5 h-5" />
                 </span>
+
+                {/* Tooltip that appears on hover (desktop) or always when active */}
+                <span
+                  className={`pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap px-3 py-1 rounded-md text-xs bg-deep-night/95 border border-neon-cyan/20 text-neon-cyan shadow-sm transition-opacity duration-150 ${
+                    active ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
+                >
+                  {r.name}
+                </span>
+
                 {/* <br/> */}
                 {/* <span className="text-sm font-semibold tracking-wide">{r.name}</span> */}
               </Link>

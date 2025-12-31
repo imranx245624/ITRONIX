@@ -67,11 +67,11 @@ export default function WorkshopsPage() {
           WORKSHOPS
         </motion.h1>
         <motion.p variants={itemVariants} className="relative top-15 text-lg md:text-xl font-serif  mx-auto">
-          Upskill with industry experts. Limited seats available — apply early!
+          {/* Upskill with industry experts. Limited seats available — apply early! */}
         </motion.p>
       </motion.div>
 
-      <div className="relative top-40 h-120 max-w-2xl mx-auto z-30">
+      <div className="relative top-50 h-120 max-w-2xl mx-auto z-30">
         {/* Workshop Cards grid */}
         <motion.div
           variants={containerVariants}

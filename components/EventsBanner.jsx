@@ -28,7 +28,7 @@ export default function EventsBanner() {
           Featured <br/> Events
         </h1>
         <p className="relative w-full top-10 font-serif text-lg md:text-xl font-poppins  text-center max-w-2xl">
-          Competitions & experiences across Tech , Innovation & Cyber Arena
+          Competitions & experiences across Tech , Creative & Cyber Arena
         </p>
         </div>
       </motion.div>
