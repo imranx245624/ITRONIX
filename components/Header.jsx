@@ -1,4 +1,3 @@
-// components/Header.jsx
 "use client"
 
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
@@ -10,7 +9,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
+    const handleScroll = () => setIsScrolled(window.scrollY > 0)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -40,7 +39,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 w-full h-[var(--header-height,6rem)] z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen ? "bg-deep-night/95 backdrop-blur-md border-b border-neon-cyan/10" : "bg-transparent"
+        isScrolled || isMobileMenuOpen ? "bg-deep-night/300 backdrop-blur-md border-b border-neon-cyan/50" : "bg-transparent border-b border-transparent "
       }`}
     >
       <nav className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
@@ -72,12 +71,14 @@ export default function Header() {
         </div>
 
         {/* Center nav (desktop only) */}
-        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center">
+        {/* Added z-index + pointer-events to ensure links are not blocked by other fixed elements */}
+        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 lg:gap-8 items-center z-[9999] pointer-events-auto">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="px-3 py-1 text-xs uppercase tracking-wider font-poppins text-muted-text transition-transform duration-200 ease-out transform-gpu hover:text-neon-cyan hover:-translate-y-1 hover:scale-105"
+              // ensure each link itself receives pointer events and sits above overlays
+              className="px-3 py-1 text-xs uppercase tracking-wider font-serif text-muted-text transition-transform duration-200 ease-out  hover:text-neon-cyan z-[10000] "
             >
               {link.name}
             </Link>
