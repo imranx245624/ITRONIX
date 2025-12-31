@@ -99,7 +99,7 @@ export default function Dashboard() {
   }, [showContact])
 
   return (
-    <div className="relative top-0 pt-20 pb-24 bg-deep-night min-h-screen">
+    <div className="relative flex items-center justify-center top-0 pt-20 pb-24 bg-deep-night min-h-screen">
       <div className="relative top-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile compact header + quick actions */}
         <div className="sm:hidden mb-6">
@@ -204,7 +204,7 @@ export default function Dashboard() {
         </div>
 
         {/* main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className=" relative left-60 flex  grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column: user info card */}
           <aside className="lg:col-span-1 card-dark p-6 border border-neon-cyan/100 rounded-2xl">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
@@ -220,10 +220,10 @@ export default function Dashboard() {
                 <div className="mt-1">{email}</div>
               </div>
 
-              <div>
+              {/* <div>
                 <span className="block text-xs uppercase text-neon-cyan/70">Phone</span>
                 <div className="mt-1">{phone || "—"}</div>
-              </div>
+              </div> */}
 
               <div>
                 <span className="block text-xs uppercase text-neon-cyan/70">Joined</span>
