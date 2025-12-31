@@ -2,13 +2,23 @@
 
 import { useUser, SignOutButton } from "@clerk/nextjs"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export default function Dashboard() {
   const { user, isLoaded } = useUser()
   const [loadingRegs, setLoadingRegs] = useState(false)
   const [registrations, setRegistrations] = useState(null)
   const [regsError, setRegsError] = useState("")
+
+  // contact modal state
+  const [showContact, setShowContact] = useState(false)
+  const contactRef = useRef(null)
+
+  // === TECH CONTACT (edit these with your real details) ===
+  const TECH_NAME = "Imran Ali" // your name (as requested)
+  const TECH_PHONE = "+91 9905956912" // replace with your real number
+  const CONTACT_EMAIL = "itronix@gncasc.org"
+  // =======================================================
 
   useEffect(() => {
     if (!isLoaded || !user) return
@@ -60,9 +70,33 @@ export default function Dashboard() {
 
   const displayName = user?.fullName || `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
   const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress ?? "—"
+  const phone = user?.phoneNumber ?? ""
   
   // Get latest registration for activity
   const latestReg = registrations && registrations.length > 0 ? registrations[0] : null
+
+  // Contact modal helpers
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape") setShowContact(false)
+    }
+    if (showContact) {
+      document.addEventListener("keydown", onKey)
+    }
+    return () => document.removeEventListener("keydown", onKey)
+  }, [showContact])
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (showContact && contactRef.current && !contactRef.current.contains(e.target)) {
+        setShowContact(false)
+      }
+    }
+    if (showContact) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [showContact])
 
   return (
     <div className="relative top-0 pt-20 pb-24 bg-deep-night min-h-screen">
@@ -172,7 +206,7 @@ export default function Dashboard() {
         {/* main grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column: user info card */}
-          <aside className="lg:col-span-1 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
+          <aside className="lg:col-span-1 card-dark p-6 border border-neon-cyan/100 rounded-2xl">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
 
             <div className="space-y-3 text-sm text-muted-text">
@@ -188,7 +222,7 @@ export default function Dashboard() {
 
               <div>
                 <span className="block text-xs uppercase text-neon-cyan/70">Phone</span>
-                <div className="mt-1">{user?.phoneNumber ?? "—"}</div>
+                <div className="mt-1">{phone || "—"}</div>
               </div>
 
               <div>
@@ -213,11 +247,97 @@ export default function Dashboard() {
         {/* Footer quick links */}
         <div className="mt-8 text-center text-sm text-muted-text">
           <p>
-            Need help? <Link href="/contact" className="text-neon-cyan underline">Contact us</Link>
+            Need help?{" "}
+            <button
+              onClick={() => setShowContact(true)}
+              className="text-neon-cyan underline hover:text-neon-cyan/80 transition"
+            >
+              Contact us
+            </button>
           </p>
         </div>
       </div>
 
+      {/* Contact modal (small & simple) */}
+      {showContact && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* blurred background overlay */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" aria-hidden="true" />
+          <div
+            ref={contactRef}
+            role="dialog"
+            aria-modal="true"
+            className="relative z-60 w-full max-w-sm mx-4 bg-deep-night/95 border border-neon-cyan/100 rounded-2xl p-4 shadow-lg"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-neon-cyan font-rajdhani font-semibold text-lg">Contact </h3>
+                <p className="text-sm text-muted-text mt-1">Reach out for technical help or any other query.</p>
+              </div>
+              <div>
+                <button
+                  onClick={() => setShowContact(false)}
+                  aria-label="Close"
+                  className="text-sm px-3 py-1 rounded-md border border-neon-cyan/10"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3 text-sm">
+              <div>
+                {/* <div className="text-xs uppercase text-neon-cyan/70">Name</div>
+                <div className="font-medium ">Technical Head</div> */}
+              </div>
+
+              <div>
+                <div className="text-xs uppercase text-neon-cyan/70">Phone</div>
+                <div className="">{TECH_PHONE}</div>
+              </div>
+
+              <div>
+                <div className="text-xs uppercase text-neon-cyan/70">ITRONIX Email</div>
+                <div className="">{CONTACT_EMAIL}</div>
+              </div>
+
+              <div className="pt-2">
+                {/* <a href={`mailto:${CONTACT_EMAIL}`} className="inline-block btn-secondary px-4 py-2 text-sm">
+                  Email ITRONIX
+                </a> */}
+                 <button
+                  onClick={() => {
+                    // copy contact email to clipboard
+                    try {
+                      navigator.clipboard.writeText(TECH_PHONE)
+                      alert("Number copied")
+                    } catch (err) {
+                      alert("Copy failed")
+                    }
+                  }}
+                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-cyan/10"
+                >
+                  Copy phone number
+                </button>
+                <button
+                  onClick={() => {
+                    // copy contact email to clipboard
+                    try {
+                      navigator.clipboard.writeText(CONTACT_EMAIL)
+                      alert("ITRONIX email copied")
+                    } catch (err) {
+                      alert("Copy failed")
+                    }
+                  }}
+                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-cyan/10"
+                >
+                  Copy Email
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Mobile sticky action bar */}
       {/* <div className="fixed left-1/2 transform -translate-x-1/2 bottom-4 sm:hidden z-50 flex gap-3 bg-deep-night/90 p-2 rounded-full border border-neon-cyan/10 shadow-lg">
         <Link href="/workshops" className="px-4 py-2 rounded-md btn-secondary text-sm">
