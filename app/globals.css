@@ -3,12 +3,14 @@
 @layer base {
   :root {
     /* ITRONIX Color Palette */
-    --deep-night: #04040b;
+    --deep-night: #2020e2;
+    --colo-rer: #00d5ff;
     --neon-cyan: #00d1c1;
     --neon-magenta: #ff4ec8;
     --cyber-orange: #ff8c42;
     --holo-pale: #c8fff1;
     --muted-text: #b9ddf0;
+
 
     /* Semantic colors */
     --background: var(--deep-night);
@@ -163,4 +165,87 @@
     0 2px 6px rgba(0,229,255,0.06),
     0 0 18px rgba(0,229,255,0.12),
     0 0 40px rgba(255,45,149,0.06);
+}
+
+
+
+
+/* use Rajdhani for big tech headings */
+.tech-heading {
+  font-family: var(--font-rajdhani), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 1;
+  display: inline-block;
+  background: linear-gradient(90deg, rgba(0,209,193,1), rgba(255,78,200,0.95), rgba(255,140,66,0.9));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* neon glow */
+  text-shadow:
+    0 6px 24px rgba(0,209,193,0.08),
+    0 0 24px rgba(0,209,193,0.12),
+    0 0 48px rgba(255,78,200,0.06);
+}
+
+/* small accent / subtitle */
+.tech-sub {
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  opacity: 0.95;
+}
+
+/* optional glitch micro effect for headings */
+.tech-glitch {
+  position: relative;
+}
+.tech-glitch::before,
+.tech-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  transform-origin: left;
+}
+.tech-glitch::before {
+  color: rgba(0,209,193,0.28);
+  transform: translate3d(-2px, -1px, 0);
+  filter: blur(1px);
+}
+.tech-glitch::after {
+  color: rgba(255,78,200,0.22);
+  transform: translate3d(2px, 1px, 0);
+  filter: blur(1.2px);
+}
+
+/* helper small: use mono for code-like badges */
+.mono-badge {
+  font-family: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono";
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(0,209,193,0.06);
+  color: var(--neon-cyan);
+}
+
+
+body {
+  
+
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  background-color:#54586b;
+ 
 }
