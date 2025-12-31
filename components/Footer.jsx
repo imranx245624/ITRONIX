@@ -79,9 +79,9 @@ export default function Footer() {
             <h4 className="font-poppins font-semibold text-neon-cyan mb-4 text-sm uppercase">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors">
+                <p href="#" className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors">
                   Privacy
-                </a>
+                </p>
               </li>
               <li>
                 <a href="#" className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors">
