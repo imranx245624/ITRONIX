@@ -248,7 +248,7 @@ export default function Hero() {
 
         {/* SUBTITLE */}
         <p className="text-lg sm:text-xl lg:text-2xl font-poppins text-holo-pale mb-2 sm:mb-4">
-          <span className="text-neon-cyan text-3xl sm:text-4xl lg:text-3xl font-serif font-bold ">
+          <span className="text-neon-cyan text-1xl sm:text-4xl lg:text-3xl font-serif font-bold ">
             Techland
           </span>
           <br />
@@ -279,9 +279,9 @@ export default function Hero() {
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center ">
-          <p className="btn-primary block text-center text-xs py-2 mt-2 sm:mt-0 pointer-events-auto">
-            Registration Start <br /> From 1st January
-          </p>
+          <p className="btn-primary block text-center text-xs py-2 mt-2 sm:mt-0 pointer-events-auto font-poppins">
+  Registrations Open <br /> from 5th January
+</p>
 
           <Link
             href="/events"

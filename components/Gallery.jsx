@@ -9,13 +9,13 @@ export default function Gallery() {
   const galleryImages = [
     {
       id: 1,
-      src: "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwSc6a1DV0k_EyALs2I18-0igxaY7xECJG5zSJLFf43BthoR1QuzRkzsM9jNAXf-uIK5z_hwKMJZNVocbFVdo5B-uLOqoEFiAGASQpiZ7B9aokkXF_lIyMqDOpjWSnn6kPk9PKx=s1360-w1360-h1020-rw",
+      src: "/clg_images/clg_entrance.webp",
       alt: "College campus entrance",
       title: "Campus Entrance",
     },
     {
       id: 2,
-      src: "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSz_zXHFUo9vas1Mo6TvT1F0BVqXIvm8zTdj2kdFktO102jz1mUtdd90qyAPW0XcVFsKvmw023V7ohULtkUcTAAoqI1PC-XOTrBeymgqKouX5fNjTDRDrpVmPdA4LOtSG05iicxF=s1360-w1360-h1020-rw",
+      src: "/clg_images/library.webp",
       alt: "Library and study area",
       title: "Study Areas",
     },
@@ -27,13 +27,13 @@ export default function Gallery() {
     },
     {
       id: 4,
-      src: "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxzcC1_ZLk_6VM3GF4o9A3PcnUBMlYVbAl8Z9diB2T7ql7Dg2KMGw2fFwH_qUBZ_SWZEXW2n0y71rQ_mOTwtf4dQTfpRQnTPsv5Pvsd-cHM2ncl66Ko-Og1m-k3q0do16_7wDQ4=s1360-w1360-h1020-rw",
+      src: "/clg_images/auditorium.webp",
       alt: "Auditorium and events",
       title: "Gnc Auditorium",
     },
     {
       id: 5,
-      src: "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwSgmYfE_mSSn2wz1KXYjwWZjJ24v5KF3qOTEKNJqHrNuI2nyFIuovbzV5eulUx70idjX2njM9lfxJMh_lsbujvvpRuNlhi1EE1KAgvnNafohS3wFfs69PsXm4hsLGUKle2LsUL=s1360-w1360-h1020-rw",
+      src: "/clg_images/sports.webp",
       alt: "Sports facilities",
       title: "Sports Ground",
     },
