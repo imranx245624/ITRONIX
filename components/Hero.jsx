@@ -142,7 +142,7 @@ export default function Hero() {
       >
         {/* Info card */}
         <div
-          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-5"
+          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/200 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-5"
           style={{
             transform: `translateY(${cardTranslate}px)`,
             opacity: cardOpacity,
@@ -177,7 +177,7 @@ export default function Hero() {
             live demonstrations.
           </p> */}
 
-            <div className="text-sm text-muted-text mb-3 space-y-4 leading-relaxed">
+            <div className="text-sm text-muted-text mb-3 space-y-4 leading-relaxed ">
             <p>
                 <strong>ITRONIX</strong> is the annual technical fest of the <strong>Information Technology Department</strong>, celebrating innovation, creativity, and technical excellence. Inspired by the futuristic theme <strong>TECHLAND</strong>, the fest is crafted as a virtual world where technology truly comes to life.
               </p>
