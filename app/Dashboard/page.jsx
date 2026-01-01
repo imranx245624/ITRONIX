@@ -66,15 +66,6 @@ export default function Dashboard() {
     fetchRegs()
   }, [isLoaded, user])
 
-  if (!isLoaded) return null
-
-  const displayName = user?.fullName || `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
-  const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress ?? "—"
-  const phone = user?.phoneNumber ?? ""
-  
-  // Get latest registration for activity
-  const latestReg = registrations && registrations.length > 0 ? registrations[0] : null
-
   // Contact modal helpers
   useEffect(() => {
     function onKey(e) {
@@ -98,12 +89,23 @@ export default function Dashboard() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [showContact])
 
+  // <-- moved this AFTER all hooks so hook order never changes -->
+  if (!isLoaded) return null
+
+  const displayName = user?.fullName || `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
+  const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress ?? "—"
+  const phone = user?.phoneNumber ?? ""
+  
+  // Get latest registration for activity
+  const latestReg = registrations && registrations.length > 0 ? registrations[0] : null
+
   return (
-    <div className="relative flex items-center justify-center top-0 pt-20 pb-24 bg-deep-night min-h-screen">
-      <div className="relative top-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    // NOTE: vertical centering only on md+ screens — mobile will use normal top-aligned flow
+    <div className="relative top-0 pt-20 pb-24 bg-deep-night min-h-screen md:flex md:items-center md:justify-center">
+      <div className="relative top-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Mobile compact header + quick actions */}
         <div className="sm:hidden mb-6">
-          <div className="flex items-center justify-between p-4 bg-deep-night/60 border border-neon-cyan/10 rounded-xl">
+          <div className="flex items-center justify-between p-4 bg-deep-night/60 border border-cyber-orange/100 rounded-xl">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-deep-night/40 to-deep-night/70 border border-neon-cyan/20 p-1 flex items-center justify-center">
                 {user?.profileImageUrl ? (
@@ -118,25 +120,25 @@ export default function Dashboard() {
 
               <div>
                 <div className="text-sm font-semibold text-neon-cyan">{displayName || "Participant"}</div>
-                <div className="text-xs text-muted-text truncate w-40">{email}</div>
+                {/* <div className="text-xs text-muted-text truncate w-40">{email}</div> */}
               </div>
             </div>
 
             <SignOutButton>
-              <button className="px-3 py-2 rounded-md bg-deep-night/30 border border-neon-cyan/10 text-sm">Sign out</button>
+              <button className="px-3 py-2 rounded-md bg-deep-night/30 border border-neon-cyan/30 text-sm">Sign out</button>
             </SignOutButton>
           </div>
 
           <div className="mt-3 flex gap-3">
-            <Link href="/workshops" className="btn-secondary flex-1 text-center">
+            {/* <Link href="/workshops" className="btn-secondary flex-1 text-center">
               Workshops
-            </Link>
+            </Link> */}
             {/* <Link href="/account" className="btn-primary flex-1 text-center">
               Account
             </Link> */}
           </div>
 
-          <div className="mt-3 p-3 card-dark rounded-xl">
+          {/* <div className="mt-3 p-3 card-dark rounded-xl">
             {loadingRegs ? (
               <div className="text-sm text-muted-text">Loading registrations…</div>
             ) : regsError ? (
@@ -152,7 +154,7 @@ export default function Dashboard() {
                <div className="text-sm text-muted-text">You don't have any registrations yet. Tap Workshops to browse.</div>
             )
             }
-          </div>
+          </div> */}
         </div>
 
         {/* header */}
@@ -174,20 +176,20 @@ export default function Dashboard() {
               <h2 className="text-lg md:text-2xl font-rajdhani font-bold text-neon-cyan">
                 Welcome, {displayName || "Participant"}
               </h2>
-              <p className="text-sm text-muted-text mt-1">{email}</p>
-              <p className="text-xs text-muted-text mt-1">Member ID: <span className="text-neon-magenta">{user?.id}</span></p>
+              {/* <p className="text-sm text-muted-text mt-1">{email}</p> */}
+              {/* <p className="text-xs text-muted-text mt-1">Member ID: <span className="text-neon-magenta">{user?.id}</span></p> */}
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Desktop CTA */}
             <div className="hidden sm:flex items-center gap-2">
-              <Link href="/workshops" className="btn-secondary px-4 py-2">
+              {/* <Link href="/workshops" className="btn-secondary px-4 py-2">
                 Browse Workshops
-              </Link>
+              </Link> */}
 
               <SignOutButton>
-                <button className="ml-1 btn-ghost px-3 py-2 border border-neon-cyan/10 text-xs">Sign out</button>
+                <button className="ml-1 btn-ghost px-3 py-2 border border-neon-cyan/100 rounded  text-xs">Sign out</button>
               </SignOutButton>
             </div>
 
@@ -204,9 +206,9 @@ export default function Dashboard() {
         </div>
 
         {/* main grid */}
-        <div className=" relative left-60 flex  grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column: user info card */}
-          <aside className="lg:col-span-1 card-dark p-6 border border-neon-cyan/100 rounded-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-center items-center">
+          {/* Left column: user info card (centered on desktop via lg:col-start-2) */}
+          <aside className="lg:col-span-1 lg:col-start-2 card-dark p-6 border border-neon-cyan/100 rounded-2xl">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
 
             <div className="space-y-3 text-sm text-muted-text">
@@ -245,7 +247,7 @@ export default function Dashboard() {
         </div>
 
         {/* Footer quick links */}
-        <div className="mt-8 text-center text-sm text-muted-text">
+        <div className="relative h-30 mt-8 text-center text-sm text-muted-text">
           <p>
             Need help?{" "}
             <button
@@ -267,7 +269,7 @@ export default function Dashboard() {
             ref={contactRef}
             role="dialog"
             aria-modal="true"
-            className="relative z-60 w-full max-w-sm mx-4 bg-deep-night/95 border border-neon-cyan/100 rounded-2xl p-4 shadow-lg"
+            className="relative z-60 w-full max-w-sm mx-4 bg-deep-night/95 border border-cyber-orange/100 rounded-2xl p-4 shadow-lg"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -278,7 +280,7 @@ export default function Dashboard() {
                 <button
                   onClick={() => setShowContact(false)}
                   aria-label="Close"
-                  className="text-sm px-3 py-1 rounded-md border border-neon-cyan/10"
+                  className="text-sm px-3 py-1 rounded-md border border-neon-magenta/30"
                 >
                   Close
                 </button>
@@ -302,12 +304,9 @@ export default function Dashboard() {
               </div>
 
               <div className="pt-2">
-                {/* <a href={`mailto:${CONTACT_EMAIL}`} className="inline-block btn-secondary px-4 py-2 text-sm">
-                  Email ITRONIX
-                </a> */}
                  <button
                   onClick={() => {
-                    // copy contact email to clipboard
+                    // copy contact phone to clipboard
                     try {
                       navigator.clipboard.writeText(TECH_PHONE)
                       alert("Number copied")
@@ -315,7 +314,7 @@ export default function Dashboard() {
                       alert("Copy failed")
                     }
                   }}
-                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-cyan/10"
+                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-magenta/30"
                 >
                   Copy phone number
                 </button>
@@ -329,7 +328,7 @@ export default function Dashboard() {
                       alert("Copy failed")
                     }
                   }}
-                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-cyan/10"
+                  className="ml-3 px-3 py-2 text-sm rounded-md border border-neon-magenta/30"
                 >
                   Copy Email
                 </button>
