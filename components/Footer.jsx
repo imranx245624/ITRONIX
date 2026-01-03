@@ -84,17 +84,17 @@ export default function Footer() {
                 </p>
               </li>
               <li>
-                <a href="#" className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors">
+                <p href="#" className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors">
                   Terms
-                </a>
+                </p>
               </li>
               <li>
-                <a
+                {/* <a
                   href="mailto:itronix@gurunanak.edu.in"
                   className="font-poppins text-sm text-muted-text hover:text-neon-cyan transition-colors"
                 >
                   Contact
-                </a>
+                </a> */}
               </li>
             </ul>
           </div>

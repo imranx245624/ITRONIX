@@ -18,7 +18,7 @@ export default function Home() {
         <Gallery />
         <About />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

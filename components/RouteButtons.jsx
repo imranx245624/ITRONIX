@@ -40,7 +40,11 @@ function Icon({ name, className = "w-5 h-5" }) {
 }
 
 export default function RouteButtons() {
-  const pathname = usePathname() || "/"
+  const pathnameRaw = usePathname() || "/"
+  const pathname = pathnameRaw.toLowerCase()
+
+  // Hide RouteButtons entirely on any /ai route (e.g., /ai or /ai/...)
+  if (pathname.startsWith("/ai")) return null
 
   const routes = [
     { name: "HOME", href: "/", key: "home", icon: "home" },
@@ -63,17 +67,9 @@ export default function RouteButtons() {
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-neon-cyan/20 flex items-center justify-center bg-deep-night">
               <img src="/images/Clg_logo.png" alt="logo" className="w-11 h-11 object-contain" />
             </div>
-            <div className="mt-1 leading-tight">
-              {/* <div className="text-xs font-rajdhani font-bold uppercase text-neon-cyan text-glow tracking-wide">
-                Guru Nanak
-              </div>
-              <div className="text-[11px] font-poppins text-muted-text uppercase">
-                College 
-              </div> */}
-            </div>
+            <div className="mt-1 leading-tight"></div>
           </Link>
         </div>
-
 
         {/* Vertical nav buttons */}
         <nav className="flex flex-col w-16 gap-3">
@@ -94,7 +90,6 @@ export default function RouteButtons() {
                   <Icon name={r.icon} className="w-5 h-5" />
                 </span>
 
-                {/* Tooltip that appears on hover (desktop) or always when active */}
                 <span
                   className={`pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap px-3 py-1 rounded-md text-xs bg-deep-night/95 border border-neon-cyan/20 text-neon-cyan shadow-sm transition-opacity duration-150 ${
                     active ? "opacity-100" : "opacity-0 group-hover:opacity-100"
@@ -102,9 +97,6 @@ export default function RouteButtons() {
                 >
                   {r.name}
                 </span>
-
-                {/* <br/> */}
-                {/* <span className="text-sm font-semibold tracking-wide">{r.name}</span> */}
               </Link>
             )
           })}
@@ -127,14 +119,10 @@ export default function RouteButtons() {
                 href={r.href}
                 aria-label={r.name}
                 className={`flex flex-col items-center justify-center min-w-[56px] max-w-[100px] px-3 py-1 rounded-full transition-transform duration-150 ${
-                  active
-                    ? "bg-neon-cyan text-deep-night shadow-[0_6px_18px_rgba(0,209,193,0.12)]"
-                    : "bg-transparent text-neon-cyan/90 hover:bg-neon-cyan/10"
+                  active ? "bg-neon-cyan text-deep-night shadow-[0_6px_18px_rgba(0,209,193,0.12)]" : "bg-transparent text-neon-cyan/90 hover:bg-neon-cyan/10"
                 }`}
               >
-                <span
-                  className={`inline-flex items-center justify-center w-13 h-9 rounded-full  px-5 py-2 ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}
-                >
+                <span className={`inline-flex items-center justify-center w-13 h-9 rounded-full px-5 py-2 ${active ? "bg-deep-night/0" : "bg-deep-night/80"}`}>
                   <Icon name={r.icon} className="w-5 h-5" />
                 </span>
                 <span className="text-[10px] font-semibold mt-1 leading-none">{r.name}</span>

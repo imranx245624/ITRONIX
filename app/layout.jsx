@@ -4,6 +4,9 @@ import "./globals.css"
 import { Suspense } from "react"
 // import DevControls from "@/components/DevControls"
 
+import FloatingAIButton from "@/components/ai/FloatingAIButton"
+
+
 
 import ClerkProviderClient from "@/components/ClerkProviderClient"
 
@@ -14,22 +17,23 @@ import Header from "../components/Header"
 import RouteButtons from "../components/RouteButtons" // ensure this exists
 
 const rajdhani = Rajdhani({
-  weight: ["400", "600", "700"],
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
   variable: "--font-rajdhani",
-})
+});
 
 const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
-})
+});
 
 const jetbrainsMono = JetBrains_Mono({
-  weight: ["400", "500", "600"],
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   variable: "--font-jetbrains",
-})
+});
+
 
 export const metadata = {
   title: "ITRONIX-2026 — Techland: where only the skilled survives | Guru Nanak College Techfest",
@@ -103,7 +107,8 @@ export default function RootLayout({ children }) {
           </>
         )}
       </head>
-      <body className={`${rajdhani.variable} ${poppins.variable} ${jetbrainsMono.variable} font-poppins antialiased`}>
+      {/* added scroll-smooth to body class so programmatic scrolling feels smooth */}
+      <body className={`${rajdhani.variable} ${poppins.variable} ${jetbrainsMono.variable} font-poppins antialiased scroll-smooth`}>
         {/* Header (unchanged for desktop & mobile) */}
          {/* Wrap client components that use next/navigation hooks in Suspense to avoid prerender errors */}
          <Suspense fallback={<div/>}>
@@ -116,9 +121,10 @@ export default function RootLayout({ children }) {
              {/* main gets top padding equal to header height to avoid overlap with fixed header */}
              <main className="pt-[var(--header-height)] md:pt-[var(--header-height)]">
                {children}
-                       
+                          
+
              </main>
-             
+             <FloatingAIButton />
 
              <Analytics />
            </ClerkProviderClient>

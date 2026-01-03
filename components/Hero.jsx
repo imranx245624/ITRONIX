@@ -142,7 +142,7 @@ export default function Hero() {
       >
         {/* Info card */}
         <div
-          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/200 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-5"
+          className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/200 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-2"
           style={{
             transform: `translateY(${cardTranslate}px)`,
             opacity: cardOpacity,
@@ -200,9 +200,9 @@ export default function Hero() {
           </div> */}
 
           <div className="flex justify-center  mt-5 flex gap-3">
-            <div  className="inline-block btn-secondary px-4 py-2 pointer-events-auto">
+            {/* <div  className="inline-block btn-secondary px-4 py-2 pointer-events-auto">
               23 — 24 Jan 2026
-            </div>
+            </div> */}
 
           </div>
         </div>
@@ -294,6 +294,31 @@ export default function Hero() {
           </Link>
         </div>
       </div>
+
+      {/* ================= FLOATING AI LAUNCHER (ITRONIX style) ================= */}
+      {/* small, neon glass button bottom-right that opens the AI chat page (/ai) */}
+      {/* <div className="absolute top-120 z-50 right-4 bottom-6 sm:right-8 sm:bottom-8 pointer-events-auto">
+        <Link href="/ai" aria-label="Ask ITRONIX AI" className="group">
+          <div className="flex items-center gap-2 bg-gradient-to-br from-deep-night/70 to-deep-night/80 border border-neon-cyan/20 rounded-full px-3 py-2 shadow-[0_8px_30px_rgba(0,200,255,0.08)] hover:shadow-[0_12px_40px_rgba(0,200,255,0.14)] transition-all">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#001219] to-[#002233] border border-neon-cyan/30 flex items-center justify-center text-neon-cyan">
+              chat icon
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="inline-block">
+                <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            </div>
+
+            <div className="hidden sm:flex flex-col items-start leading-none">
+              <span className="text-xs font-poppins text-muted-text group-hover:text-neon-cyan transition">Ask ITRONIX AI</span>
+              <span className="text-[11px] text-neon-cyan font-rajdhani tracking-wide">Fest assistant</span>
+            </div>
+
+            small badge for mobile (only icon visible)
+            <div className="sm:hidden ml-0">
+              <span className="sr-only">Open AI chat</span>
+            </div>
+          </div>
+        </Link>
+      </div> */}
 
       {/* SCROLL INDICATOR */}
       <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce flex flex-col items-center gap-2 text-neon-cyan/70">
