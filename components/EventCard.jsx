@@ -53,7 +53,7 @@ export default function EventCard({ event, index = 0 }) {
 
           {/* 1 row, 2 columns: left = Register (SignedOut/SignedIn), right = Explore */}
           <div className="grid grid-cols-1 gap-10 mt-3">
-            <p className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">Registrations are open from 7th January</p>
+            <p className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">Registrations are open From 7th January</p>
             {/* LEFT: Register (same cell for SignedOut & SignedIn) */}
             <div>
               {/* <SignedOut>
