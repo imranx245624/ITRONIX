@@ -11,7 +11,6 @@ export default function FloatingAIButton() {
   // hide on /ai routes
   if (pathname.startsWith("/ai")) return null
 
-  // neon shadow
   const neonShadow = "0 10px 30px rgba(0,200,255,0.08), 0 0 20px rgba(0,200,255,0.04) inset"
 
   // touch handling for mobile swipe
@@ -43,7 +42,7 @@ export default function FloatingAIButton() {
 
   return (
     <>
-      {/* DESKTOP pill (bottom-right) */}
+      {/* DESKTOP pill (bottom-right) -> unchanged except wrapped in button */}
       <div
         aria-hidden={false}
         className="hidden sm:flex fixed z-[99999] right-6 bottom-6 items-center"
@@ -88,7 +87,7 @@ export default function FloatingAIButton() {
         </button>
       </div>
 
-      {/* MOBILE right-edge tab (tap OR left-swipe opens /ai) */}
+      {/* MOBILE right-edge tab (smaller + unique styling) */}
       <div
         className="sm:hidden fixed z-[99999] right-0 top-1/2 transform -translate-y-1/2 flex items-center"
         style={{ padding: 6, pointerEvents: "auto" }}
@@ -102,32 +101,59 @@ export default function FloatingAIButton() {
           onKeyDown={onKeyActivate}
           aria-label="Open ITRONIX Assistant"
           title="Open ITRONIX Assistant"
-          className="flex items-center justify-center rounded-l-full bg-gradient-to-b from-[#071216] to-[#041014] p-2 shadow-md"
+          className="flex items-center justify-center rounded-l-full p-1 transition-transform duration-150"
           style={{
-            width: 46,
-            height: 140,
+            width: 36,            // ← smaller width
+            height: 150,          // ← slightly reduced height
             borderTopLeftRadius: 9999,
             borderBottomLeftRadius: 9999,
             border: "1px solid rgba(0,200,255,0.06)",
+            background: "linear-gradient(180deg, rgba(7,14,16,0.98), rgba(3,6,8,0.9))",
             boxShadow: neonShadow,
           }}
         >
           <div style={{ transform: "rotate(-90deg)", whiteSpace: "nowrap" }} className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="text-neon-cyan">
-              <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            <span className="text-xs font-semibold text-neon-cyan uppercase tracking-wider">ITRONIX AI</span>
+            {/* small icon with a neon dot */}
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="text-neon-cyan">
+                <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+
+              {/* small pulsating dot to make it unique */}
+              <span
+                aria-hidden="true"
+                style={{
+                  display: "inline-block",
+                  width: 8,
+                  height: 8,
+                  borderRadius: 9999,
+                  background: "rgba(0,255,220,0.95)",
+                  boxShadow: "0 0 8px rgba(0,255,220,0.25)",
+                  animation: "pulse 1.8s infinite",
+                }}
+              />
+            </span>
+
+            {/* label: tiny uppercase */}
+            <span className="text-[11px] font-semibold text-neon-cyan uppercase tracking-wide">ITRONIX AI</span>
           </div>
         </button>
       </div>
 
       <style jsx>{`
-        /* small hover/focus lift */
+        /* small hover/focus lift for desktop */
         .group:hover { transform: translateY(-3px); }
         .group:focus-within { transform: translateY(-2px); }
 
+        /* pulse animation for mobile dot */
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 1; }
+          60% { transform: scale(1.6); opacity: 0.55; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* keep the tab pinned exactly on the right edge for small screens */
         @media (max-width: 640px) {
-          /* keep the tab pinned exactly on the right edge */
           div[style*="right: 0"] { right: 0 !important; }
         }
       `}</style>
