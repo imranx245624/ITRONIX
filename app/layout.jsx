@@ -5,6 +5,8 @@ import { Suspense } from "react"
 // import DevControls from "@/components/DevControls"
 
 import FloatingAIButton from "@/components/ai/FloatingAIButton"
+import ContactWidget from "@/components/ContactWidget"   // <-- new
+
 
 
 
@@ -122,9 +124,10 @@ export default function RootLayout({ children }) {
              <main className="pt-[var(--header-height)] md:pt-[var(--header-height)]">
                {children}
                           
-
+          
              </main>
              <FloatingAIButton />
+             <ContactWidget />
 
              <Analytics />
            </ClerkProviderClient>
