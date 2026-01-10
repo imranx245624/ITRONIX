@@ -102,7 +102,7 @@ export default function EventsPage() {
                     id={`section-${category.id}`}
                     className="scroll-mt-20"
                   >
-                    <div className=" flex flex-center justify-center mb-8 border-2 border-neon-cyan/60 rounded-full px-4 py-2 bg-deep-night/40 backdrop-blur-sm">
+                    <div className=" flex flex-center justify-center mb-8 border-2  border-neon-cyan/60 rounded-full px-4 py-2 bg-deep-night/40 backdrop-blur-sm">
                       <h2 className="text-2xl md:text-4xl font-serif font-bold uppercase tracking-wider text-neon-cyan mb-3">
                         {category.label}
                       </h2>
