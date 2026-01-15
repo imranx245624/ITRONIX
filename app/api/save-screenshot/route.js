@@ -2,19 +2,20 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
-
 const SUPA_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPA_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-if (!SUPA_URL || !SUPA_SERVICE_KEY) {
-  // during build this file may execute — guard with helpful error message
-  console.error("Missing Supabase service credentials in env")
+function getSupabaseAdmin() {
+  if (!SUPA_URL || !SUPA_SERVICE_KEY) {
+    throw new Error("Supabase service credentials missing")
+  }
+  return createClient(SUPA_URL, SUPA_SERVICE_KEY)
 }
-
-const supabaseAdmin = createClient(SUPA_URL, SUPA_SERVICE_KEY)
 
 export async function POST(req) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
+
     const body = await req.json()
     const {
       registrationId,
@@ -25,12 +26,15 @@ export async function POST(req) {
     } = body || {}
 
     if (!path || !publicURL) {
-      return NextResponse.json({ error: "Missing path/publicURL" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Missing path or publicURL" },
+        { status: 400 }
+      )
     }
 
-    // If registrationId given -> update that row
+    // 🔁 UPDATE EXISTING REGISTRATION
     if (registrationId) {
-      const { error: updErr, data: updData } = await supabaseAdmin
+      const { data, error } = await supabaseAdmin
         .from("registrations")
         .update({
           payment_screenshot_url: publicURL,
@@ -42,16 +46,22 @@ export async function POST(req) {
         .select("id")
         .limit(1)
 
-      if (updErr) {
-        console.error("admin update error:", updErr)
-        return NextResponse.json({ error: "DB update failed", details: updErr }, { status: 500 })
+      if (error) {
+        console.error("Supabase update error:", error)
+        return NextResponse.json(
+          { error: "DB update failed" },
+          { status: 500 }
+        )
       }
 
-      return NextResponse.json({ success: true, updated: updData?.[0] || null })
+      return NextResponse.json({
+        success: true,
+        updated: data?.[0] || null
+      })
     }
 
-    // Fallback: no registrationId -> create a new minimal registration row (if you want)
-    const { data: ins, error: insErr } = await supabaseAdmin
+    // ➕ INSERT NEW REGISTRATION (fallback)
+    const { data, error } = await supabaseAdmin
       .from("registrations")
       .insert([
         {
@@ -71,14 +81,24 @@ export async function POST(req) {
       .select("id")
       .limit(1)
 
-    if (insErr) {
-      console.error("admin insert error:", insErr)
-      return NextResponse.json({ error: "DB insert failed", details: insErr }, { status: 500 })
+    if (error) {
+      console.error("Supabase insert error:", error)
+      return NextResponse.json(
+        { error: "DB insert failed" },
+        { status: 500 }
+      )
     }
 
-    return NextResponse.json({ success: true, inserted: ins?.[0] || null })
+    return NextResponse.json({
+      success: true,
+      inserted: data?.[0] || null
+    })
+
   } catch (err) {
-    console.error("save-screenshot route error:", err)
-    return NextResponse.json({ error: "Server error" }, { status: 500 })
+    console.error("save-screenshot API error:", err.message)
+    return NextResponse.json(
+      { error: "Server configuration error" },
+      { status: 500 }
+    )
   }
 }
