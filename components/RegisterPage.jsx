@@ -38,6 +38,17 @@ function RegisterContent() {
         aria-hidden="true"
       />
 
+      {/* ===== Rules quick-open button (fixed top-right) ===== */}
+      <button
+        type="button"
+        onClick={() => setShowRules(true)}
+        aria-controls="rules-modal"
+        aria-expanded={showRules}
+        className="fixed right-4 top-25 z-40 px-3 py-2 rounded-full bg-neon-cyan text-black font-semibold shadow-[0_8px_30px_rgba(6,200,255,0.12)] hover:scale-105 transform-gpu transition-all duration-200"
+      >
+        RULES
+      </button>
+
       <div className="max-w-2xl mx-auto z-10 relative top-16">
         <div className="mb-12 text-center">
           <h1 className="font-serif section-title mb-4">REGISTER</h1>
@@ -54,6 +65,7 @@ function RegisterContent() {
       {/* RULES MODAL */}
       {showRules && (
         <div
+          id="rules-modal"
           className="fixed  inset-0 z-50 flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
@@ -82,13 +94,13 @@ function RegisterContent() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* <button
+                  <button
                     onClick={() => setShowRules(false)}
                     aria-label="Close rules"
                     className="px-3 py-1 rounded bg-black/20 hover:opacity-90 text-sm"
                   >
                     ✕
-                  </button> */}
+                  </button>
                 </div>
               </div>
 
@@ -133,17 +145,17 @@ function RegisterContent() {
                 </div>
 
                 {/* short summary box */}
-                <div className="mt-2 p-3 bg-white/5 border border-white/6 rounded-md">
+                {/* <div className="mt-2 p-3 bg-white/5 border border-white/6 rounded-md">
                   <p className="text-xs md:text-sm text-muted-text">
                     By clicking <strong>I Agree</strong> you confirm that you have read, understood, and will comply with the above rules.
                   </p>
-                </div>
+                </div> */}
               </div>
 
               {/* footer with actions */}
               <div className="p-4 md:p-6 border-t border-white/6 flex flex-col sm:flex-row items-center gap-3 justify-between bg-transparent">
                 <div className="flex items-center gap-3">
-                  <label className="inline-flex items-center gap-2 cursor-pointer text-sm md:text-base">
+                  {/* <label className="inline-flex items-center gap-2 cursor-pointer text-sm md:text-base">
                     <input
                       type="checkbox"
                       checked={agreeChecked}
@@ -151,7 +163,7 @@ function RegisterContent() {
                       className="w-4 h-4 rounded border-neon-cyan/30 bg-deep-night/50"
                     />
                     <span className="text-sm md:text-base text-muted-text">I have read and agree to the rules</span>
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -162,7 +174,7 @@ function RegisterContent() {
                     Read Later
                   </button> */}
 
-                  <button
+                  {/* <button
                     ref={closeBtnRef}
                     onClick={() => {
                       // If you want to enforce acceptance, require agreeChecked
@@ -181,7 +193,7 @@ function RegisterContent() {
                     className="w-full sm:w-auto px-4 py-2 rounded-lg bg-neon-cyan text-black font-semibold text-sm md:text-base"
                   >
                     I Agree & Continue
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

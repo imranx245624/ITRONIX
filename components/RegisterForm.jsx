@@ -12,10 +12,8 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   const { user: clerkUser } = useUser()
 
   const WORKSHOPS = [
-    { id: "ws-1", name: "Web Dev: From Idea to Launch", url: "https://youtube.com" },
-    { id: "ws-2", name: "AI & ML Bootcamp", url: "https://google.com" },
-    { id: "ws-3", name: "IoT & Embedded Systems", url: "https://instagram.com" },
-    { id: "ws-4", name: "Robotics Hands-on", url: "https://chatgpt.com" }
+    { id: "ws-1", name: "NOT available", url: "https://example.com" }
+    
   ]
 
   const EVENTS = [
@@ -24,14 +22,24 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     { id: "e-vibe", name: "Vibe Coding", mode: "individual" },
     { id: "e-golf", name: "Code Golf", mode: "individual" },
     { id: "e-busters", name: "Bug-Busters", mode: "individual" },
-    { id: "e-hack", name: "UI-Verse", mode: "individual" },
     { id: "e-Treasure", name: "Treasure Hunt", mode: "team" },
-    { id: "e-byte", name: "Byte Sized Battles", mode: "team" },
     { id: "e-presentation", name: "Presentation", mode: "team" },
     { id: "e-bgmi", name: "BGMI Tournament", mode: "team" },
-    { id: "e-free-fire", name: "Free Fire", mode: "team" },
-    { id: "e-ludo", name: "Ludo King", mode: "team" }
+    { id: "e-free-fire", name: "Free Fire", mode: "team" }
   ]
+  // const EVENTS = [
+  //   { id: "e-blind-typing", name: "Blind Typing", mode: "individual" },
+  //   { id: "e-web", name: "Web Development", mode: "individual" },
+  //   { id: "e-vibe", name: "Vibe Coding", mode: "individual" },
+  //   { id: "e-golf", name: "Code Golf", mode: "individual" },
+  //   { id: "e-busters", name: "Bug-Busters", mode: "individual" },
+  //   { id: "e-hack", name: "UI-Verse", mode: "individual" },
+  //   { id: "e-Treasure", name: "Treasure Hunt", mode: "team" },
+  //   { id: "e-byte", name: "Byte Sized Battles", mode: "team" },
+  //   { id: "e-presentation", name: "Presentation", mode: "team" },
+  //   { id: "e-bgmi", name: "BGMI Tournament", mode: "team" },
+  //   { id: "e-free-fire", name: "Free Fire", mode: "team" }
+  // ]
 
   const initialCategory = preselectedWorkshop ? "workshop" : preselectedEvent ? "event" : ""
 
@@ -835,7 +843,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
             suppressHydrationWarning={true}
           />
           <span className="font-poppins text-xs md:text-sm text-muted-text group-hover:text-neon-cyan transition-colors">
-            I accept the terms & conditions and agree to use of my data for event communications.
+            I have read and agree to the rules
           </span>
         </label>
         {errors.consent && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.consent}</p>}

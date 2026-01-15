@@ -23,6 +23,9 @@ export default function PaymentPage() {
   const amount = eventPricing[event] || 100
   const BUCKET = "payment_screenshots"
 
+  // popup for payment info
+  const [showInfoPopup, setShowInfoPopup] = useState(true)
+
   // ---------- QR map & normalization ----------
   const normalizeKey = (s = "") =>
     s
@@ -104,10 +107,8 @@ export default function PaymentPage() {
   const sanitizeFileName = (n) => n.replace(/\s+/g, "_").replace(/[^\w.\-()]/g, "")
 
   // ---------- download QR helper ----------
-  // Fetches the image as blob and triggers download (works cross-browser)
   const downloadQr = async () => {
     try {
-      // try fetch blob
       const res = await fetch(qrSrc, { cache: "no-store" })
       if (!res.ok) throw new Error("Failed to fetch")
       const blob = await res.blob()
@@ -121,11 +122,9 @@ export default function PaymentPage() {
       a.remove()
       URL.revokeObjectURL(url)
     } catch (err) {
-      // fallback: open image in new tab so user can long-press & save
       try {
         window.open(qrSrc, "_blank")
       } catch {
-        // last resort: change location
         window.location.href = qrSrc
       }
     }
@@ -219,10 +218,120 @@ export default function PaymentPage() {
     }
   }
 
+  // ---------- helper: skip / pay at venue ----------
+  const handleSkip = () => {
+    // redirect to events page or events with query param
+    const target = event ? `/events?event=${encodeURIComponent(event)}` : "/events"
+    router.push(target)
+  }
+
   // ---------- UI ----------
   return (
-    <div className="z-1 min-h-screen flex items-center justify-center bg-black text-white p-4 md:p-6">
-      <div className="w-full max-w-xl rounded-xl border p-4 md:p-6 bg-deep-night/60">
+    <div className="z-1 min-h-screen h-240 flex items-center justify-center bg-black text-white p-4 md:p-6">
+      {/* INFO POPUP: appears on top of page, responsive */}
+      {showInfoPopup && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4"
+        >
+          {/* backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowInfoPopup(false)}
+            aria-hidden="true"
+          />
+
+          <div
+            className="relative z-70 w-full max-w-2xl mx-auto rounded-xl"
+            style={{ border: "2px solid rgba(255,150,50,0.95)" }} /* border-cyber-orange */
+          >
+            <div className="bg-[#041014]/98 rounded-lg overflow-hidden">
+              {/* header */}
+              <div className="flex items-center justify-between p-4 md:p-5 border-b border-white/6">
+                <div>
+                  <h3 className="text-sm md:text-lg font-semibold text-neon-cyan">Payment options — Important</h3>
+                  <p className="text-xs md:text-sm text-muted-text mt-1">
+                    You can pay using the UPI QR codes below via these supported apps.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowInfoPopup(false)}
+                    aria-label="Close payment info"
+                    className="px-3 py-1 rounded bg-black/20 hover:opacity-90 text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              {/* body */}
+              <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div className="md:col-span-2">
+                  <p className="text-sm text-muted-text mb-3">
+                    <strong>Acceptable apps:</strong> You can pay using only <strong>PhonePe, Paytm, or Google Pay</strong> (UPI) — these are accepted for automatic verification.
+                  </p>
+
+                  <div className="flex items-center gap-3">
+                    {/* logos (small) */}
+                    <img
+                      src="images/phonepay.jpg"
+                      alt="PhonePe"
+                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
+                    />
+                    <img
+                      src="/images/paytm.jpg"
+                      alt="Paytm"
+                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
+                    />
+                    <img
+                      src="/images/googlepay.jpg"
+                      alt="Google Pay"
+                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
+                    />
+                  </div>
+
+                  <p className="text-xs text-muted-text mt-3">
+                   ⚠️ If you pay using any other app, verification might fail — in that case you can pay at the venue (choose <strong>Skip</strong> below).
+                  </p>
+                </div>
+
+                {/* QR preview box (small) */}
+                <div className="flex flex-col items-center gap-2 p-3 rounded-md bg-deep-night/60 border border-white/5">
+                  <div className="w-32 h-32 bg-white p-1 rounded-md flex items-center justify-center">
+                    <img src={qrSrc} alt="QR preview" className="max-w-full max-h-full object-contain" />
+                  </div>
+                  <div className="text-xs text-muted-text">Scan to pay</div>
+                </div>
+              </div>
+
+              {/* footer actions */}
+              <div className="flex flex-col sm:flex-row items-center gap-3 p-4 md:p-5 border-t border-white/6 bg-transparent">
+                <button
+                  type="button"
+                  onClick={() => setShowInfoPopup(false)}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-neon-cyan text-black font-semibold"
+                >
+                  Proceed to Pay
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleSkip}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-transparent border border-white/8 text-sm text-muted-text hover:bg-white/3"
+                >
+                  Skip (Pay at venue)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full relative max-w-3xl rounded-xl border p-4 md:p-6 bg-deep-night/60">
         <h1 className="text-xl md:text-2xl font-bold mb-1">Payment</h1>
         <p className="text-sm md:text-base text-muted-text mb-2">
           Name: {name || "-"}

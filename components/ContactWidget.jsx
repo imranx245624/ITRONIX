@@ -213,7 +213,7 @@ export default function ContactWidget() {
 
             {/* Hover label (desktop) - shows on hover via group-hover */}
             <span
-              className="hidden sm:inline-block text-neon-cyan font-medium px-3 py-1 rounded-full transition-opacity duration-150 opacity-0 group-hover:opacity-100 select-none"
+              className="hidden sm:inline-block text-neon-cyan font-medium px-3 py-1 rounded-full transition-opacity duration-150 "
               style={{
                 background: "rgba(0,0,0,0.45)",
                 border: "1px solid rgba(0,200,255,0.06)",
