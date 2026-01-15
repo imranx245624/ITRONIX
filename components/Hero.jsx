@@ -175,7 +175,7 @@ export default function Hero() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-            <SignedOut>
+            {/* <SignedOut>
               <div className="flex flex-col gap-2">
                 <SignInButton mode="modal">
                   <button
@@ -198,14 +198,14 @@ export default function Hero() {
 
                 <p className="text-xs text-muted-text/90 mt-1">First sign in, then register.</p>
               </div>
-            </SignedOut>
+            </SignedOut> */}
 
-            <SignedIn>
+            
               {/* link to register page, you can add ?event=... if you have a default or dynamic event */}
               <Link href="/register" className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold">
-                Register
+                Register now
               </Link>
-            </SignedIn>
+            
           </div>
 
         </div>
@@ -266,7 +266,7 @@ export default function Hero() {
         {/* CTA: No ancestor has pointer-events:none so children are clickable */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-            <SignedOut>
+            {/* <SignedOut>
               <div className="flex flex-col gap-2">
                 <SignInButton mode="modal">
                   <button
@@ -289,9 +289,9 @@ export default function Hero() {
 
                 <p className="text-xs text-muted-text/90 mt-1">First sign in, then register.</p>
               </div>
-            </SignedOut>
+            </SignedOut> */}
 
-            <SignedIn>
+            
   <Link
     href="/register"
     className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
@@ -329,7 +329,7 @@ export default function Hero() {
       }
     }
   `}</style>
-</SignedIn>
+
 <br/>
 
 

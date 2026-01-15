@@ -1,11 +1,15 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import { Suspense, useEffect, useState, useRef } from "react"
+import { useUser } from "@clerk/nextjs"
 import RegisterForm from "@/components/RegisterForm"
 
 function RegisterContent() {
   const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+
   const eventParam = searchParams.get("event")
   const workshopParam = searchParams.get("workshop")
 
@@ -14,8 +18,19 @@ function RegisterContent() {
   const [agreeChecked, setAgreeChecked] = useState(false)
   const closeBtnRef = useRef(null)
 
+  // Prevent hydration mismatches:
+  // render RULES button / modal only on the client after mount.
+  // This avoids server/client attribute differences (hydration warnings)
+  // caused by toggling UI immediately in a mount-effect.
+  const [mounted, setMounted] = useState(false)
+
+  // Clerk auth
+  const { isLoaded, isSignedIn } = useUser()
+
   useEffect(() => {
-    // open modal on mount
+    // mark as mounted on client
+    setMounted(true)
+    // open rules modal only on client (previous behavior: open on mount)
     setShowRules(true)
   }, [])
 
@@ -26,8 +41,23 @@ function RegisterContent() {
     }
   }, [showRules])
 
+  useEffect(() => {
+    // Wait until Clerk finishes loading. If user is NOT signed-in, redirect to Clerk sign-in page.
+    // We include the current path+search as redirectTo so Clerk page can send user back after signin.
+    if (!isLoaded) return
+
+    if (!isSignedIn) {
+      // build current location including querystring
+      const q = searchParams.toString()
+      const current = q ? `${pathname}?${q}` : pathname
+      // push to your existing Clerk sign-in route and pass redirectTo param
+      router.push(`/sign-in?redirectTo=${encodeURIComponent(current)}`)
+    }
+    // If user is signed in, do nothing (they keep on this page)
+  }, [isLoaded, isSignedIn, pathname, searchParams, router])
+
   return (
-    <section className="min-h-screen  bg-deep-night py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* subtle background image */}
       <div
         className="absolute inset-0 w-full h-90 bg-cover bg-center"
@@ -38,16 +68,21 @@ function RegisterContent() {
         aria-hidden="true"
       />
 
-      {/* ===== Rules quick-open button (fixed top-right) ===== */}
-      <button
-        type="button"
-        onClick={() => setShowRules(true)}
-        aria-controls="rules-modal"
-        aria-expanded={showRules}
-        className="fixed right-4 top-25 z-40 px-3 py-2 rounded-full bg-neon-cyan text-black font-semibold shadow-[0_8px_30px_rgba(6,200,255,0.12)] hover:scale-105 transform-gpu transition-all duration-200"
-      >
-        RULES
-      </button>
+      {/* ===== Rules quick-open button (fixed top-right) =====
+          NOTE: Rendered only after client mount to avoid hydration mismatches.
+          This preserves your behavior but prevents server/client attribute differences.
+      */}
+      {mounted && (
+        <button
+          type="button"
+          onClick={() => setShowRules(true)}
+          aria-controls="rules-modal"
+          aria-expanded={showRules}
+          className="fixed right-4 top-4 z-[9999] px-3 py-2 rounded-full bg-neon-cyan text-black font-semibold shadow-[0_8px_30px_rgba(6,200,255,0.12)] hover:scale-105 transform-gpu transition-all duration-200"
+        >
+          RULES
+        </button>
+      )}
 
       <div className="max-w-2xl mx-auto z-10 relative top-16">
         <div className="mb-12 text-center">
@@ -63,10 +98,10 @@ function RegisterContent() {
       </div>
 
       {/* RULES MODAL */}
-      {showRules && (
+      {mounted && showRules && (
         <div
           id="rules-modal"
-          className="fixed  inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9998] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="rules-title"
@@ -79,7 +114,7 @@ function RegisterContent() {
           />
 
           {/* modal box */}
-          <div className="relative  z-60 w-full max-w-3xl mx-auto rounded-2xl shadow-xl overflow-hidden">
+          <div className="relative z-[9999] w-full max-w-3xl mx-auto rounded-2xl shadow-xl overflow-hidden">
             <div className="bg-[#041014]/96 text-white rounded-2xl border-2 border-cyber-orange/100">
               {/* header */}
               <div className="flex items-start justify-between p-4 md:p-6 border-b border-white/6">
@@ -88,8 +123,8 @@ function RegisterContent() {
                     Important — Rules & Guidelines
                   </h2>
                   <h3 className="text-xs md:text-sm text-muted-text mt-1">
-                    Please read these rules carefully before <span className="bg-neon-cyan/20 px-1 rounded-md bold  text-sm md:text-base"
-                    >registration </span> in any event.
+                    Please read these rules carefully before{" "}
+                    <span className="bg-neon-cyan/20 px-1 rounded-md bold text-sm md:text-base">registration</span> in any event.
                   </h3>
                 </div>
 

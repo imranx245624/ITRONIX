@@ -2,18 +2,10 @@ import { Rajdhani, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
-// import DevControls from "@/components/DevControls"
-
-import FloatingAIButton from "@/components/ai/FloatingAIButton"
-import ContactWidget from "@/components/ContactWidget"   // <-- new
-
-
-
+import ClientWidgets from "@/components/ClientWidgets" // client wrapper that loads widgets with ssr:false
 
 import ClerkProviderClient from "@/components/ClerkProviderClient"
-
 import ClerkWrapper from "@/components/ClerkWrapper"
-
 
 import Header from "../components/Header"
 import RouteButtons from "../components/RouteButtons" // ensure this exists
@@ -126,8 +118,11 @@ export default function RootLayout({ children }) {
                           
           
              </main>
-             <FloatingAIButton />
-             <ContactWidget />
+
+             {/* Client-only widgets are rendered inside a client wrapper component.
+                 That wrapper performs next/dynamic({ ssr: false }) so the widgets are never
+                 server-rendered — preventing hydration mismatches. */}
+             <ClientWidgets />
 
              <Analytics />
            </ClerkProviderClient>
