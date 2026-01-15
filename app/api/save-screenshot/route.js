@@ -2,11 +2,12 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
+
 const SUPA_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPA_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 if (!SUPA_URL || !SUPA_SERVICE_KEY) {
-  // during build this file may execute — guard with helpful error
+  // during build this file may execute — guard with helpful error message
   console.error("Missing Supabase service credentials in env")
 }
 
