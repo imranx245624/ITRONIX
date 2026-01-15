@@ -55,8 +55,8 @@ export default function EventCard({ event, index = 0 }) {
           <div className="grid grid-cols-1 gap-10 mt-3">
             {/* <p className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">Registrations are open From 7th January</p> */}
             {/* LEFT: Register (same cell for SignedOut & SignedIn) */}
-            <div>
-              {/* <SignedOut>
+            {/* <div>
+              <SignedOut>
                 <SignInButton mode="modal">
                   <button className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
                     Register
@@ -71,19 +71,20 @@ export default function EventCard({ event, index = 0 }) {
                 >
                   Register
                 </Link>
-              </SignedIn> */}
-            </div>
+              </SignedIn>
+            </div> */}
 
             {/* RIGHT: Explore -> opens modal */}
-            {/* <div>
-              <button
+            <div>
+              <button 
                 type="button"
                 onClick={() => setOpen(true)}
-                className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
+                className="w-full text-center btn-secondary bg-color:neon-cyan hover:shadow-lg hover:shadow-neon-magenta/50 transition-all duration-300"
+                bg="cyber-orange"
               >
                 Explore
               </button>
-            </div> */}
+            </div>
           </div>
         </div>
       </motion.div>

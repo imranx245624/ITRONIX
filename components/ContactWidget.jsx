@@ -3,9 +3,49 @@
 
 import React, { useState, useRef, useEffect } from "react"
 
+/**
+ * ContactWidget (draggable)
+ *
+ * - Default position: same as before (left bottom on desktop).
+ * - User can drag the floating button anywhere (mouse or touch).
+ * - Position is saved to localStorage under key 'contactWidgetPos' (so it persists).
+ * - Click (tap) still toggles the popover. Dragging does not toggle.
+ * - Outside click closes the popover.
+ *
+ * Note: This file intentionally keeps original links/icons and styling.
+ */
+
 export default function ContactWidget() {
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null)
+  const buttonRef = useRef(null)
+
+  // store pixel position if user moved the widget; otherwise null (use default classes)
+  const [pos, setPos] = useState(null) // { left: number, top: number } (px) OR null
+  const draggingRef = useRef(false)
+  const pointerIdRef = useRef(null)
+  const startRef = useRef({ x: 0, y: 0, left: 0, top: 0 })
+  const movedRef = useRef(false)
+
+  // Links (as requested)
+  const INSTAGRAM = "https://instagram.com/gnc_itronix"
+  const WHATSAPP = "https://wa.me/+919905956912" // uses number you provided
+  const EMAIL = "mailto:Itronix@gncasc.org"
+
+  // load saved pos from localStorage
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("contactWidgetPos")
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (parsed && typeof parsed.left === "number" && typeof parsed.top === "number") {
+          setPos(parsed)
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
 
   // Close popover when clicking outside
   useEffect(() => {
@@ -17,22 +57,134 @@ export default function ContactWidget() {
     return () => document.removeEventListener("click", onDoc)
   }, [])
 
-  // Links (as requested)
-  const INSTAGRAM = "https://instagram.com/gnc_itronix"
-  const WHATSAPP = "https://wa.me/+919905956912" // uses number you provided
-  const EMAIL = "mailto:Itronix@gncasc.org"
+  // helper to save pos
+  const savePos = (p) => {
+    try {
+      localStorage.setItem("contactWidgetPos", JSON.stringify(p))
+    } catch {
+      // ignore
+    }
+  }
+
+  // clamp so button stays inside viewport
+  const clampPos = (left, top, btnW = 56, btnH = 56, margin = 8) => {
+    const winW = typeof window !== "undefined" ? window.innerWidth : 1024
+    const winH = typeof window !== "undefined" ? window.innerHeight : 768
+    const minLeft = margin
+    const minTop = margin
+    const maxLeft = Math.max(margin, winW - btnW - margin)
+    const maxTop = Math.max(margin, winH - btnH - margin)
+    return {
+      left: Math.min(Math.max(left, minLeft), maxLeft),
+      top: Math.min(Math.max(top, minTop), maxTop),
+    }
+  }
+
+  // pointer handlers to support drag (mouse + touch)
+  useEffect(() => {
+    function onPointerMove(e) {
+      if (!draggingRef.current || pointerIdRef.current !== e.pointerId) return
+      const dx = e.clientX - startRef.current.x
+      const dy = e.clientY - startRef.current.y
+      const newLeft = startRef.current.left + dx
+      const newTop = startRef.current.top + dy
+
+      // if movement > threshold, mark moved (prevents click toggle)
+      if (!movedRef.current && Math.hypot(dx, dy) > 6) movedRef.current = true
+
+      const clamped = clampPos(newLeft, newTop)
+      setPos(clamped)
+    }
+
+    function onPointerUp(e) {
+      if (!pointerIdRef.current) return
+      if (e.pointerId !== pointerIdRef.current) return
+      // end drag
+      if (draggingRef.current) {
+        draggingRef.current = false
+        pointerIdRef.current = null
+        // save final pos
+        if (pos) savePos(pos)
+      }
+      // remove capture
+      try {
+        if (buttonRef.current) buttonRef.current.releasePointerCapture(e.pointerId)
+      } catch {}
+    }
+
+    window.addEventListener("pointermove", onPointerMove)
+    window.addEventListener("pointerup", onPointerUp)
+    window.addEventListener("pointercancel", onPointerUp)
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove)
+      window.removeEventListener("pointerup", onPointerUp)
+      window.removeEventListener("pointercancel", onPointerUp)
+    }
+  }, [pos])
+
+  // start dragging on pointerdown
+  const onPointerDown = (e) => {
+    // only left button / primary pointer
+    if (e.button && e.button !== 0) return
+    // record pointer id
+    pointerIdRef.current = e.pointerId
+    draggingRef.current = true
+    movedRef.current = false
+
+    const rect = buttonRef.current?.getBoundingClientRect()
+    const left = rect ? rect.left : (pos ? pos.left : 24)
+    const top = rect ? rect.top : (pos ? pos.top : window.innerHeight - 80) // approximate default top if unknown
+
+    startRef.current = { x: e.clientX, y: e.clientY, left, top }
+    // capture pointer so move/up events are delivered to the button even if pointer leaves
+    try {
+      buttonRef.current?.setPointerCapture(e.pointerId)
+    } catch {}
+  }
+
+  // handle click: toggle only if not dragged (movedRef false)
+  const onButtonClick = (e) => {
+    // if we just finished a drag (movedRef true), we shouldn't toggle
+    if (movedRef.current) {
+      // reset moved flag for next interaction
+      movedRef.current = false
+      return
+    }
+    setOpen((s) => !s)
+  }
+
+  // reset position to default (optional helper) — not exposed in UI but available for debugging
+  // const resetPosition = () => {
+  //   localStorage.removeItem("contactWidgetPos")
+  //   setPos(null)
+  // }
+
+  // compute style: if pos present use left/top fixed; else use original classes (left-bottom)
+  const wrapperStyle = pos
+    ? {
+        position: "fixed",
+        left: `${pos.left}px`,
+        top: `${pos.top}px`,
+        zIndex: 99999,
+        pointerEvents: "auto",
+      }
+    : { pointerEvents: "auto" } // keep default classes for non-moved state
+
+  // default position classes (when pos === null)
+  const defaultClass = "fixed z-[99999] left-6 bottom-25 sm:left-6 sm:bottom-6 md:left-6 md:bottom-6"
 
   return (
     <div ref={containerRef}>
-      {/* Floating container: left-bottom on desktop, center-bottom on mobile */}
       <div
-        className="fixed z-[99999] left-6 bottom-25 sm:left-6 sm:bottom-6 md:left-6 md:bottom-6"
-        style={{ pointerEvents: "auto" }}
+        // apply class only when pos is null so default placement remains
+        className={pos ? "" : defaultClass}
+        style={wrapperStyle}
       >
-        {/* Button */}
         <div className="relative">
           <button
-            onClick={() => setOpen((s) => !s)}
+            ref={buttonRef}
+            onPointerDown={onPointerDown}
+            onClick={onButtonClick}
             aria-expanded={open}
             aria-label="Contact us"
             title="Contact us"
@@ -40,6 +192,8 @@ export default function ContactWidget() {
             style={{
               minWidth: 48,
               minHeight: 48,
+              touchAction: "none", // important to allow pointer events for touch drag
+              userSelect: "none",
             }}
           >
             {/* Icon */}

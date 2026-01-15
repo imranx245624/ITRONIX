@@ -5,7 +5,7 @@
     "icon": "🌐",
     "category": "hackathon",
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "Mini full-stack project challenge: design, code, deploy a working web app.",
+    "description": "Live competition to build a responsive landing page using HTML, CSS, and JavaScript.",
     "team_size": "Individual",
     "Registration fee ": "100₹",
     "prize": "____________",
@@ -14,47 +14,11 @@
   },
   {
     "id": "hackathon",
-    "title": "Hackathon",
+    "title": "UI-Verse: UI Designing Challenge",
     "icon": "⚡",
     "category": "hackathon",
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "12–24 hour team hack sprint to build prototypes judged for innovation and feasibility.",
-    "team_size": "Individual",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=hackathon"
-  },
-   {
-    "id": "hackathon",
-    "title": "Blind Typing",
-    "icon": "⌨️",
-    "category": "hackathon",
-    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "Timed typing accuracy & speed contest to test keyboard skills under pressure.",
-    "team_size": "Individual",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=hackathon"
-  },
-   {
-    "id": "hackathon",
-    "title": "Vibe Coding",
-    "icon": "👨‍💻",
-    "category": "hackathon",
-    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "Short timed coding rounds focused on creative algorithmic or UI micro-challenges.",
-    "team_size": "Individual",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=hackathon"
-  },
-   {
-    "id": "hackathon",
-    "title": "Code Golf",
-    "icon": "🏌️‍♂️",
-    "category": "hackathon",
-    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "Write the smallest working code to solve defined problems; size = score.",
+    "description": "A timed competition to design a creative, user-friendly website interface on a given topic.",
     "team_size": "Individual",
     "prize": "____________",
     "tags": [],
@@ -71,6 +35,54 @@
     "prize": "____________",
     "tags": [],
     "register_url": "/register?event=hackathon"
+  },
+  {
+    "id": "hackathon",
+    "title": "Code Golf",
+    "icon": "🏌️‍♂️",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Competitive coding event where participants solve problems using minimum characters efficiently.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+  {
+    "id": "hackathon",
+    "title": "Vibe Coding",
+    "icon": "👨‍💻",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "AI-powered competition to build creative, practical web solutions on a shared theme.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+   {
+    "id": "hackathon",
+    "title": "Blind Typing",
+    "icon": "⌨️",
+    "category": "hackathon",
+    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
+    "description": "Blind typing contest testing speed, accuracy, and muscle memory without screen visibility.",
+    "team_size": "Individual",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=hackathon"
+  },
+   {
+    "id": "innovation-fair",
+    "title": "TechSlides Arena",
+    "icon": "📈",
+    "category": "nonit",
+    "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
+    "description": "Platform to present ideas, research, or innovations with clarity and confidence.",
+    "team_size": "Individuals",
+    "prize": "____________",
+    "tags": [],
+    "register_url": "/register?event=innovation-fair"
   },
 
   {
@@ -91,31 +103,20 @@
     "icon": "⚔️",
     "category": "nonit",
     "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
-    "description": "Short, rapid-fire tech challenges testing logic, speed, and problem-solving skills",
+    "description": "Fast-paced electronics challenge testing real-time circuit building and problem-solving skills.",
     "team_size": "Individuals",
     "prize": "____________",
     "tags": [],
     "register_url": "/register?event=innovation-fair"
   },
-  {
-    "id": "innovation-fair",
-    "title": "Presentation ",
-    "icon": "📊",
-    "category": "nonit",
-    "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
-    "description": "Platform to present ideas, research, or innovations with clarity and confidence.",
-    "team_size": "Individuals",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=innovation-fair"
-  },
+  
   {
     "id": "cyber-arena",
     "title": "BGMI",
     "icon": "🪖",
     "category": "cyber",
     "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
-    "description": "E-sports tournaments + capture-the-flag security pwn challenges. Compete in teams and win gaming & tech prizes.",
+    "description": "BGMI esports tournament where teams compete strategically for survival and elimination points.",
     "team_size": "4 member team",
     "prize": "____________",
     "tags": [],
@@ -124,26 +125,15 @@
   {
     "id": "cyber-arena",
     "title": "Free Fire",
-    "icon": "💥",
+    "icon": "💀",
     "category": "cyber",
     "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
-    "description": "Fast-paced mobile esports event focused on reflexes, tactics, and squad coordination.",
+    "description": "Free Fire is a squad-based battle royale competition focused on survival and eliminations.",
     "team_size": "4 member team",
     "prize": "____________",
     "tags": [],
     "register_url": "/register?event=cyber-arena"
-  },
-   {
-    "id": "cyber-arena",
-    "title": "Ludo",
-    "icon": "🎲",
-    "category": "cyber-arena",
-    "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
-    "description": "Fun strategy board game blending luck, logic, and competitive spirit.",
-    "team_size": "Individual",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=cyber-arena"
   }
+   
   
 ]

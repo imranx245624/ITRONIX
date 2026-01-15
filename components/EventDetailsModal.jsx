@@ -3,8 +3,9 @@
 
 import { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs"
-import { eventDetails } from "@/data/eventsDetails" // adjust path if needed
+import { eventDetails } from "@/data/eventsDetails" // keep as your file
 
 function slugify(title = "") {
   return title
@@ -14,39 +15,102 @@ function slugify(title = "") {
     .replace(/(^-|-$)/g, "")
 }
 
+function normalizeText(t = "") {
+  return t.toString().toLowerCase().replace(/[^a-z0-9]/g, "")
+}
+
 export default function EventDetailsModal({ event, onClose }) {
   if (!event) return null
-  const slug = slugify(event.title || event.name || "")
-  const details = eventDetails[slug] || {}
 
-  // keep latest onClose in a ref so effect can use empty deps
+  // Try multiple ways to find matching details in eventDetails.js
+  const slugFromTitle = slugify(event.title || event.name || "")
+  const slugFromId = slugify(event.id || "")
+  const baseTitle = (event.title || "").split(":")[0].trim()
+  const slugFromBaseTitle = slugify(baseTitle)
+
+  let details = {}
+
+  // 1) exact id key (if id matches key in eventDetails)
+  if (event.id && eventDetails[slugFromId]) {
+    details = eventDetails[slugFromId]
+  }
+  // 2) exact title slug match
+  else if (slugFromTitle && eventDetails[slugFromTitle]) {
+    details = eventDetails[slugFromTitle]
+  }
+  // 3) base title match (title before colon)
+  else if (slugFromBaseTitle && eventDetails[slugFromBaseTitle]) {
+    details = eventDetails[slugFromBaseTitle]
+  }
+  // 4) try raw id (sometimes keys are not slugified exactly)
+  else if (event.id && eventDetails[event.id]) {
+    details = eventDetails[event.id]
+  }
+  // 5) fuzzy search: compare normalized title to eventDetails' title fields
+  else {
+    const target = normalizeText(event.title || event.name || event.id || "")
+    for (const k of Object.keys(eventDetails)) {
+      const edTitle = normalizeText(eventDetails[k].title || k)
+      if (edTitle && target && (edTitle === target || edTitle.includes(target) || target.includes(edTitle))) {
+        details = eventDetails[k]
+        break
+      }
+    }
+  }
+
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
 
   useEffect(() => {
-    const prevOverflow = document.body.style.overflow
+    const prev = document.body.style.overflow
     document.body.style.overflow = "hidden"
 
-    function handleKey(e) {
-      if (e.key === "Escape") {
-        onCloseRef.current && onCloseRef.current()
-      }
+    function onKey(e) {
+      if (e.key === "Escape") onCloseRef.current?.()
     }
-
-    window.addEventListener("keydown", handleKey)
-
+    window.addEventListener("keydown", onKey)
     return () => {
-      document.body.style.overflow = prevOverflow
-      window.removeEventListener("keydown", handleKey)
+      document.body.style.overflow = prev
+      window.removeEventListener("keydown", onKey)
     }
-    // EMPTY deps array here: length is constant -> no React warning
   }, [])
 
+  const show = (v, fallback = "TBD") => (v ? v : fallback)
+
+  // Helpers to read possibly inconsistent keys from event JSON
+  const getRegistrationFee = () =>
+    details.registration_fee ||
+    details.registrationFee ||
+    event.registration_fee ||
+    event.registrationFee ||
+    event["Registration fee "] ||
+    event["Registration fee"] ||
+    event["Registration Fee"] ||
+    event["Registration Fee "] ||
+    "—"
+
+  const getParticipationType = () =>
+    details.participation_type ||
+    details.participationType ||
+    details.participation ||
+    event.participation_type ||
+    event.team_size ||
+    event.teamSize ||
+    event.team_size ||
+    "Individual"
+
+  const getVenue = () => details.venue || event.venue || "—"
+
   return (
-    <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* backdrop: click closes */}
       <motion.button
         aria-label="Close modal"
-        onClick={() => onCloseRef.current && onCloseRef.current()}
+        onClick={() => onCloseRef.current?.()}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -59,98 +123,164 @@ export default function EventDetailsModal({ event, onClose }) {
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 10, opacity: 0 }}
         transition={{ duration: 0.18 }}
-        className="relative w-full max-w-[980px] mx-auto rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-3xl mx-auto rounded-2xl shadow-2xl overflow-hidden"
       >
-        {/* panel content (unchanged structure) */}
-        <div className="relative bg-[#041014]/96 text-white/95 rounded-2xl border-2" style={{ borderColor: "rgba(255,106,0,0.7)" }}>
+        {/* Inline orange border as requested */}
+        <div
+          className="relative bg-[#041014]/96 text-white rounded-2xl border-2"
+          style={{ borderColor: "rgba(255,106,0,0.85)" }}
+        >
+          {/* close top-right */}
           <div className="absolute top-3 right-3 z-20">
-            <button onClick={() => onCloseRef.current && onCloseRef.current()} className="text-sm px-3 py-1 rounded bg-black/20 hover:opacity-90">
+            <button
+              onClick={() => onCloseRef.current?.()}
+              className="text-sm px-3 py-1 rounded bg-black/20 hover:opacity-90"
+              aria-label="Close"
+            >
               ✕
             </button>
           </div>
 
-          <div className="event-modal-content max-h-[85vh] overflow-y-auto p-5 md:p-8">
-            <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-              <div className="flex-1 min-w-0">
-                <h2 className="text-2xl md:text-3xl font-serif font-bold uppercase tracking-wider text-neon-cyan mb-2">
-                  {details.title || event.title}
-                </h2>
-                <p className="text-sm text-muted-text/85 mb-4">{details.overview || event.description}</p>
+          {/* content area */}
+          <div className="event-modal-content max-h-[72vh] overflow-y-auto p-6 md:p-8">
+            {/* Title */}
+            <h2 className="text-2xl md:text-3xl font-serif font-bold uppercase tracking-wider text-neon-cyan mb-3">
+              {show(details.title || event.title || event.name, "Untitled Event")}
+            </h2>
 
-                <div className="grid grid-cols-1 gap-4 text-sm">
-                  <div>
-                    <h4 className="text-sm font-bold text-neon-magenta mb-2">Details</h4>
-                    <ul className="space-y-1 text-sm text-white/90">
-                      <li><strong>Format: </strong>{details.format || "See rules"}</li>
-                      <li><strong>Team size: </strong>{details.team_size || event.team_size || "—"}</li>
-                      <li><strong>Prize: </strong>{details.prize || event.prize || "—"}</li>
-                      <li><strong>Date / Venue: </strong>{details.date || details.venue || "TBD"}</li>
-                    </ul>
-                  </div>
+            {/* Overview */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-neon-magenta mb-1">Overview</h4>
+              <p className="text-sm text-muted-text/90">
+                {show(details.overview || event.description || details.description, "Overview not provided.")}
+              </p>
+            </div>
 
-                  <div>
-                    <h4 className="text-sm font-bold text-neon-magenta mb-2">Rules & Format</h4>
-                    {details.rules ? (
-                      <ol className="list-decimal pl-5 space-y-1 text-sm text-white/90">
-                        {details.rules.map((r, i) => <li key={i}>{r}</li>)}
-                      </ol>
-                    ) : <p className="text-sm text-muted-text/80">No extra rules provided.</p>}
-                  </div>
+            {/* Judging */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-neon-magenta mb-2">Judging</h4>
+              {details.judging && details.judging.length > 0 ? (
+                <ul className="list-disc pl-5 text-sm text-white/90 space-y-1">
+                  {details.judging.map((j, i) => (
+                    <li key={i}>{j}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-muted-text/80">Judging details not provided.</p>
+              )}
+            </div>
 
-                  <div>
-                    <h4 className="text-sm font-bold text-neon-magenta mb-2">Judging Criteria</h4>
-                    {details.judging ? (
-                      <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                        {details.judging.map((j, i) => <li key={i}>{j}</li>)}
-                      </ul>
-                    ) : <p className="text-sm text-muted-text/80">Judging details not provided.</p>}
-                  </div>
-                </div>
+            {/* Elimination condition */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-neon-magenta mb-1">Elimination Condition</h4>
+              <p className="text-sm text-muted-text/90">
+                {show(details.elimination_condition || details.eliminationCondition || event.elimination_condition, "Not specified")}
+              </p>
+            </div>
+
+            {/* Small grid for short facts */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+              <div>
+                <h4 className="text-sm font-medium text-neon-magenta mb-1">Participation</h4>
+                <div className="text-sm text-white/90">{show(getParticipationType(), "Individual")}</div>
               </div>
 
-              <aside className="w-full md:w-72 flex-shrink-0">
-                <div className="mb-4">
-                  <h4 className="text-sm font-bold text-neon-magenta mb-2">Contact</h4>
-                  {details.contact ? (
-                    <div className="bg-black/20 rounded-lg p-3 text-sm space-y-1 border border-black/20">
-                      <div className="font-semibold">{details.contact.name}</div>
-                      {details.contact.phone && <div className="flex items-center gap-2"><span className="text-neon-cyan/90">📞</span><span>{details.contact.phone}</span></div>}
-                      {details.contact.email && <div className="flex items-center gap-2"><span className="text-neon-cyan/90">✉️</span><span>{details.contact.email}</span></div>}
-                    </div>
-                  ) : <div className="text-sm text-muted-text/80">Coordinator will be announced.</div>}
-                </div>
+              <div>
+                <h4 className="text-sm font-medium text-neon-magenta mb-1">Venue</h4>
+                <div className="text-sm text-white/90">{show(getVenue(), "—")}</div>
+              </div>
 
-                <div className="mb-4">
-                  <h4 className="text-sm font-bold text-neon-magenta mb-2">Prize Pool</h4>
-                  <div className="text-lg font-rajdhani font-bold text-neon-magenta">{details.prize || "TBD"}</div>
-                </div>
+              <div>
+                <h4 className="text-sm font-medium text-neon-magenta mb-1">Registration Fee</h4>
+                <div className="text-sm text-white/90">{show(getRegistrationFee(), "—")}</div>
+              </div>
+              <div></div>
+            </div>
+          </div>
 
-                <div className="flex flex-col gap-3 mt-3">
-                  <SignedOut>
-                    <SignInButton mode="modal">
-                      <button className="w-full btn-secondary px-4 py-2 rounded font-medium">Register</button>
-                    </SignInButton>
-                  </SignedOut>
+          {/* FOOTER: Register button added here */}
+          <div className="px-6 md:px-8 py-4 border-t border-white/6 bg-transparent flex flex-col sm:flex-row gap-3 items-center">
+            {/* Left: show register (full width on small screens) */}
+            <div className="w-full sm:w-auto flex-1">
+              {/* Replace your existing SignedOut / SignedIn block with this */}
 
-                  <SignedIn>
-                    <a href={details.register_url || event.register_url || "#"} target="_blank" rel="noreferrer" className="w-full btn-secondary px-4 py-2 rounded text-center">Register / More</a>
-                  </SignedIn>
+{/* LEFT: Register area */}
+<div>
+  <SignedOut>
+    <div className="flex flex-col gap-2">
+      {/* Primary action for signed-out users: prompt to sign in first */}
+      <SignInButton mode="modal">
+        <button
+          type="button"
+          className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-primary hover:shadow-lg transition-all duration-300"
+        >
+          Sign in to register
+        </button>
+      </SignInButton>
 
-                  <button onClick={() => onCloseRef.current && onCloseRef.current()} className="w-full py-2 rounded border border-white/10 text-sm">Close</button>
-                </div>
-              </aside>
+      {/* Disabled Register to indicate flow and avoid accidental clicks */}
+      <button
+        type="button"
+        disabled
+        className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-secondary opacity-60 cursor-not-allowed"
+        aria-disabled="true"
+        title="Sign in first to register"
+      >
+        Register
+      </button>
+
+      {/* Small helper text */}
+      <p className="text-xs text-muted-text/90 mt-1">
+        First sign in, then register.
+      </p>
+    </div>
+  </SignedOut>
+
+  <SignedIn>
+    <Link
+      href={event.register_url || "#"}
+      className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold"
+    >
+      Register
+    </Link>
+  </SignedIn>
+</div>
+
+            </div>
+
+            {/* Right: optional small close button */}
+            <div className="w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => onCloseRef.current?.()}
+                className="w-full md:w-32 text-center px-4 py-2 rounded bg-black/20 hover:opacity-90 transition"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
 
-        <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl" style={{ boxShadow: "0 0 0 2px rgba(255,106,0,0.22) inset, 0 12px 40px rgba(0,0,0,0.6)" }} />
+        {/* subtle inner glow */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-2xl"
+          style={{
+            boxShadow:
+              "0 0 0 2px rgba(255,106,0,0.18) inset, 0 12px 40px rgba(0,0,0,0.5)",
+          }}
+        />
       </motion.div>
 
       <style jsx>{`
         .event-modal-content::-webkit-scrollbar { width: 10px; height: 10px; }
         .event-modal-content::-webkit-scrollbar-track { background: transparent; }
-        .event-modal-content::-webkit-scrollbar-thumb { background: rgba(255,106,0,0.25); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
-        .event-modal-content { scrollbar-width: thin; scrollbar-color: rgba(255,106,0,0.25) transparent; }
+        .event-modal-content::-webkit-scrollbar-thumb { background: rgba(255,106,0,0.23); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+        .event-modal-content { scrollbar-width: thin; scrollbar-color: rgba(255,106,0,0.23) transparent; }
+
+        @media (max-width: 640px) {
+          .event-modal-content { padding: 16px; }
+        }
       `}</style>
     </div>
   )

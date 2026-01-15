@@ -5,6 +5,8 @@
 import "./hero.css"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
+
 
 export default function Hero() {
   const heroRef = useRef(null)
@@ -279,9 +281,27 @@ export default function Hero() {
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center ">
-          <p className="btn-primary block text-center text-xs py-2 mt-2 sm:mt-0 pointer-events-auto font-poppins">
+          {/* <p className="btn-primary block text-center text-xs py-2 mt-2 sm:mt-0 pointer-events-auto font-poppins">
           Registrations are Open <br />from 15th January
-</p>
+</p> */}
+<SignedOut>
+                <SignInButton mode="modal">
+                  <button className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
+                    Register now 
+                  </button>
+                </SignInButton>
+              </SignedOut>
+
+              <SignedIn>
+                <Link
+                  href={event.register_url || "#"}
+                  className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block"
+                >
+                  Register now
+                </Link>
+              </SignedIn>
+        {/* </div> */}
+
 
           <Link
             href="/events"

@@ -1,199 +1,183 @@
 // data/eventsDetails.js
-// export an object keyed by slugified event title
+// Event details taken exactly from the provided document.
+// Only per-event information present in the document is included.
+// Do NOT add extra fields beyond what the document provides.
+
 export const eventDetails = {
   "web-development": {
     title: "Web Development",
     overview:
-      "Build a small full-stack website or feature in a limited time. Focus on UI, functionality and deployment/demo.",
-    rules: [
-      "Time limit: 3 hours.",
-      "Team size: 2-3 members.",
-      "Use any tech stack (mention stack during demo).",
-      "Plagiarism will disqualify the team."
-    ],
-    format: "Hack-style: build + 5-min demo + Q&A",
+      "A live web development competition where participants design and build a responsive landing page using HTML, CSS, and JavaScript within a limited time on an on-the-spot given topic.",
     judging: [
-      "Functionality (40%)",
-      "UI/UX (25%)",
-      "Originality (20%)",
-      "Presentation (15%)"
+      "Design and appearance",
+      "Clarity of content",
+      "Creativity",
+      "Responsiveness",
+      "Proper use of HTML, CSS, and JavaScript"
     ],
-    prize: "₹7,000 + certificates",
-    team_size: "2-3",
-    date: "TBD",
-    venue: "Lab 204 / Online demo allowed",
-    contact: { name: "Web Lead", phone: "99999XXXXX", email: "web@itronix.org" },
-    register_url: "https://your-register-link.example.com"
+    elimination_condition: "Use of AI tools or AI-generated code will lead to direct disqualification.",
+    participation_type: "Individual",
+    venue: "2nd floor computer lab",
+    registration_fee: "₹50 per participant"
   },
 
-  "hackathon": {
-    title: "Hackathon",
+  "ui-verse": {
+    title: "UI-Verse",
     overview:
-      "48-hour challenge to build an innovative solution to given themes. Focus on idea, MVP and pitch.",
-    rules: [
-      "Time limit: 48 hours.",
-      "Team size: up to 4.",
-      "Use third-party services allowed but be transparent.",
-      "Submit repository and a 3-slide pitch."
+      "A creative design competition where participants design a visually appealing and user-friendly website interface based on an on-the-spot topic within a limited time.",
+    judging: [
+      "Creativity",
+      "Visual appeal",
+      "Layout clarity",
+      "Practicality of the UI design"
     ],
-    format: "Prototype + 5-min pitch to judges",
-    judging: ["Impact (35%)", "Tech (30%)", "Design (20%)", "Pitch (15%)"],
-    prize: "₹15,000 + internships",
-    team_size: "1-4",
-    date: "TBD",
-    venue: "Auditorium / Online",
-    contact: { name: "Hack Lead", phone: "99999XXXXX", email: "hack@itronix.org" },
-    register_url: "https://your-register-link.example.com"
+    elimination_condition: "Any copied design, irrelevant or incorrect content, or violation of rules (including use of internet or AI tools) will lead to immediate disqualification.",
+    participation_type: "Individual",
+    venue: "2nd floor computer lab",
+    registration_fee: "₹30 per participant"
   },
 
-  "blind-typing": {
-    title: "Blind Typing",
+  "bug-busters": {
+    title: "Bug Busters",
     overview:
-      "Test typing speed and accuracy without seeing the text (on-screen obfuscated).",
-    rules: ["Solo event", "Time limit: 10 minutes", "Results judged by speed & accuracy"],
-    format: "Automatic scoring; top 3 winners",
-    judging: ["WPM & Accuracy combined"],
-    prize: "₹2,000",
-    team_size: "1",
-    date: "TBD",
-    venue: "Lab 101",
-    contact: { name: "Typing Lead", phone: "99999XXXXX" },
-    register_url: "https://your-register-link.example.com"
+      "A hands-on debugging competition where participants identify and fix errors in given programs using logical thinking and programming skills within a limited time.",
+    judging: [
+      "Number of bugs correctly fixed",
+      "Solution accuracy",
+      "Code efficiency",
+      "Readability",
+      "Time taken"
+    ],
+    elimination_condition:
+      "Any form of plagiarism, malpractice, or violation of rules (including use of internet or AI tools) will lead to immediate disqualification.",
+    participation_type: "Individual",
+    venue: "2nd floor computer lab",
+    registration_fee: "₹50 per participant"
+  },
+
+  "code-golf": {
+    title: "Code Golf",
+    overview:
+      "A competitive coding event where participants solve a given problem using the minimum number of characters, focusing on logic, creativity, and efficient coding skills within a limited time.",
+    judging: [
+      "Correctness of output",
+      "Shortest code length (characters)",
+      "Efficient use of language features",
+      "Earliest valid submission in case of a tie"
+    ],
+    elimination_condition:
+      "Any incorrect output, use of comments, plagiarism, external help, internet access, or rule violation will lead to disqualification.",
+    participation_type: "Individual",
+    venue: "2nd floor computer lab",
+    registration_fee: "₹50 per participant"
   },
 
   "vibe-coding": {
     title: "Vibe Coding",
     overview:
-      "Live coding contest with multiple short problems. Time-limited rounds — speed is key.",
-    rules: ["Solo", "Standard input/output", "No external help"],
-    format: "Multiple rounds; elimination style",
-    judging: ["Problems solved", "Time penalty"],
-    prize: "₹3,000",
-    team_size: "1",
-    date: "TBD",
-    venue: "Computer Lab",
-    contact: { name: "Algo Lead", email: "algo@itronix.org" },
-    register_url: "https://your-register-link.example.com"
-  },
-
-  "code-golf": {
-    title: "Code Golf",
-    overview: "Write the shortest code possible that solves given problems.",
-    rules: [
-      "Solo",
-      "Languages allowed: JS/Python/Java",
-      "Shortest source length wins (bytes/characters)"
+      "An innovative competition where participants use AI tools to design creative, practical web-based solutions on a common topic within a limited time.",
+    judging: [
+      "Problem understanding",
+      "Effective use of AI tools",
+      "Creativity",
+      "Originality",
+      "Practical usefulness",
+      "Clarity of explanation"
     ],
-    format: "Points per challenge; lowest total length wins",
-    judging: ["Correctness then length"],
-    prize: "₹2,000",
-    team_size: "1",
-    date: "TBD",
-    venue: "Lab 102",
-    contact: { name: "Code Golf Lead" },
-    register_url: "https://your-register-link.example.com"
+    elimination_condition:
+      "Any form of plagiarism, idea duplication, unfair means, or violation of rules will result in immediate disqualification.",
+    participation_type: "Individual",
+    venue: "3rd floor computer lab",
+    registration_fee: "₹50 per participant"
   },
 
-  "bug-busters": {
-    title: "Bug-Busters",
+  "blind-typing": {
+    title: "Blind Typing",
     overview:
-      "Teams are given buggy codebases; identify and fix as many bugs as possible.",
-    rules: ["Team size: 2-3", "Points for each fix verified by judge"],
-    format: "Timed bugs -> validated fixes",
-    judging: ["Bugs fixed", "Quality of fix"],
-    prize: "₹4,000",
-    team_size: "2-3",
-    date: "TBD",
-    venue: "Lab 103",
-    contact: { name: "QA Lead" },
-    register_url: "https://your-register-link.example.com"
+      "A skill-based competition where participants type a given paragraph with the monitor switched off, testing their typing speed, accuracy, and muscle memory within a fixed time.",
+    judging: ["Typing speed (WPM)", "Accuracy"],
+    elimination_condition: "Using unfair means or violating event rules will lead to immediate disqualification.",
+    participation_type: "Individual",
+    venue: "3rd floor computer lab",
+    registration_fee: "₹50 per participant"
+  },
+
+  
+
+  "techslides-arena": {
+    title: "TechSlides Arena",
+    overview:
+      "A time-bound presentation competition where participants create and present a presentation on a given on-the-spot topic, showcasing their technical knowledge, creativity, and presentation skills.",
+    judging: [
+      "Slide design and creativity",
+      "Clarity of content",
+      "Depth of topic understanding",
+      "Presentation delivery",
+      "Overall impact"
+    ],
+    elimination_condition:
+      "Use of copied or plagiarized presentations, incorrect or irrelevant content, exceeding time limits, or violation of event rules will result in immediate disqualification.",
+    participation_type: "Team (Maximum 2 members per team)",
+    venue: "3rd floor computer lab",
+    registration_fee: "₹40 per team"
   },
 
   "treasure-hunt": {
     title: "Treasure Hunt",
     overview:
-      "Live campus/online puzzle hunt — solve clues to reach next location. Teamwork + thinking.",
-    rules: ["Team size: 3-5", "Follow event marshals' instructions"],
-    format: "Sequential clue solving; first to finish wins",
-    judging: ["Time to finish", "Penalties for rule violations"],
-    prize: "₹3,000",
-    team_size: "3-5",
-    date: "TBD",
-    venue: "Campus",
-    contact: { name: "TH Lead" },
-    register_url: "https://your-register-link.example.com"
+      "An exciting team-based adventure where participants follow a map and solve riddles to uncover clues and reach the final treasure.",
+    judging: [
+      "Overall points scored after completing the hunt",
+      "First to finish wins in case of a tie"
+    ],
+    elimination_condition:
+      "Teams that fail to complete the hunt or use any form of external assistance will be immediately disqualified.",
+    participation_type: "Team (Maximum 4 members per team)",
+    venue: "Starting point: 3rd floor",
+    registration_fee: "₹50 per team"
   },
 
   "byte-sized-battles": {
     title: "Byte Sized Battles",
-    overview: "Short algorithmic duels — 1v1 bracket style. Fast coding, quick wins.",
-    rules: ["Solo 1v1", "Single elimination", "Time per round limited"],
-    format: "Bracket with best-of-3 matches",
-    judging: ["Win rounds", "Speed"],
-    prize: "₹5,000",
-    team_size: "1",
-    date: "TBD",
-    venue: "Lab 104",
-    contact: { name: "Comp Lead" },
-    register_url: "https://your-register-link.example.com"
-  },
-
-  "presentation": {
-    title: "Presentation",
     overview:
-      "Short tech/business presentations by participants. Topic pre-approved or given on spot.",
-    rules: ["Team/solo allowed", "Time: 7 minutes + 3 minutes Q&A"],
-    format: "Presentation + jury Q&A",
-    judging: ["Content (50%)", "Delivery (30%)", "Relevance (20%)"],
-    prize: "₹2,500",
-    team_size: "1-3",
-    date: "TBD",
-    venue: "Seminar Hall",
-    contact: { name: "Presentation Lead" },
-    register_url: "https://your-register-link.example.com"
+      "A fast-paced fun-tech challenge where participants complete real-time electronics-based tasks involving circuit building, logical implementation, and practical problem-solving under time pressure.",
+    judging: [
+      "Task completion accuracy",
+      "Correctness of ES circuit connections",
+      "Logical implementation",
+      "Practical understanding of components",
+      "Time taken"
+    ],
+    elimination_condition:
+      "Failure to complete ES-based tasks within the given time, incorrect circuit execution, or violation of event rules will result in elimination.",
+    participation_type: "Individual",
+    venue: "3rd floor laboratory",
+    registration_fee: "₹50 per participant"
   },
-
-  "bgmi": {
-    title: "BGMI",
-    overview: "Battle Royale mobile e-sports tournament. Play fair, no cheating.",
-    rules: ["Teams of 4", "Standard BGMI rules apply"],
-    format: "Multiple matches; total points decide winners",
-    judging: ["In-game points", "Fair play"],
-    prize: "₹6,000",
-    team_size: "4",
-    date: "TBD",
-    venue: "Gaming Zone",
-    contact: { name: "Esports Lead" },
-    register_url: "https://your-register-link.example.com"
+  "bgmi-tournament": {
+    title: "BGMI Tournament",
+    overview:
+      "A competitive BGMI esports tournament where teams battle strategically across rounds to earn maximum points through survival and eliminations.",
+    judging: ["Placement points", "Kill points", "Overall match performance"],
+    elimination_condition:
+      "Round 1 teams not in the Top 8 will be eliminated and further eliminations will be based on total points scored.",
+    participation_type: "Team (Maximum 4 members per team)",
+    venue: "Classroom 309",
+    registration_fee: "₹200 per team"
   },
 
   "free-fire": {
     title: "Free Fire",
-    overview: "Free Fire tournament, similar rules to BGMI event.",
-    rules: ["Teams of 4", "Follow organizers' room rules"],
-    format: "Multiple matches; cumulative points",
-    judging: ["In-game points"],
-    prize: "₹6,000",
-    team_size: "4",
-    date: "TBD",
-    venue: "Gaming Zone",
-    contact: { name: "Esports Lead" },
-    register_url: "https://your-register-link.example.com"
-  },
-
-  "ludo": {
-    title: "Ludo",
-    overview: "Classic Ludo tournament for quick fun and prizes.",
-    rules: ["Solo / 2-player format depending on bracket", "Fair play required"],
-    format: "Knockout bracket",
-    judging: ["Match wins"],
-    prize: "₹1,500",
-    team_size: "1-2",
-    date: "TBD",
-    venue: "Common Area",
-    contact: { name: "Events Lead" },
-    register_url: "https://your-register-link.example.com"
+    overview:
+      "A high-intensity Battle Royale gaming competition where squad teams compete in custom rooms to earn points through survival and eliminations across multiple maps.",
+    judging: ["Total points earned from match placements and kills across all rounds"],
+    elimination_condition:
+      "Use of hacks, mod APKs, scripts, emulators, teaming, glitches, or any form of unfair play will result in immediate disqualification.",
+    participation_type: "Team (Squad of 4 players)",
+    venue: "Room 206",
+    registration_fee: "₹100 per team"
   }
-};
 
-export default eventDetails;
+}
+
+export default eventDetails
