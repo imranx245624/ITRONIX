@@ -1,11 +1,16 @@
 "use client"
 
 // import CanvasBackground from "@/components/CanvasBackground"
+import { SignedIn, SignedOut, SignInButton, UserButton,SignUpButton } from "@clerk/nextjs"
+// import Link from "next/link"
+
+// import NextLink from "next/link"
+// import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 import "./hero.css"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
+// import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 
 export default function Hero() {
@@ -284,23 +289,24 @@ export default function Hero() {
           {/* <p className="btn-primary block text-center text-xs py-2 mt-2 sm:mt-0 pointer-events-auto font-poppins">
           Registrations are Open <br />from 15th January
 </p> */}
-<SignedOut>
-                <SignInButton mode="modal">
-                  <button className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
-                    Register now 
-                  </button>
-                </SignInButton>
-              </SignedOut>
+{/* <SignedOut>
+  <SignUpButton mode="modal">
+    <button className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300">
+      Register now
+    </button>
+  </SignUpButton>
+</SignedOut>
 
-              <SignedIn>
-                <Link
-                  href={event.register_url || "#"}
-                  className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block"
-                >
-                  Register now
-                </Link>
-              </SignedIn>
-        {/* </div> */}
+<SignedIn>
+  <Link
+    href={event.register_url || "#"}
+    className="w-50 text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block"
+  >
+    Register now
+  </Link>
+</SignedIn>  */}
+
+         
 
 
           <Link
