@@ -251,7 +251,7 @@ export default function Hero() {
         <p className="text-sm sm:text-base font-serif text-muted-text mb-8 sm:mb-12 ">
           Information Technology Department festival
           <br />
-          on 23 & 24 Jan 2026
+          on 23 Jan 2026
         </p>
 
         {/* TAGS */}

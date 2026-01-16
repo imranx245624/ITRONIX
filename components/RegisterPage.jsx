@@ -78,7 +78,7 @@ function RegisterContent() {
           onClick={() => setShowRules(true)}
           aria-controls="rules-modal"
           aria-expanded={showRules}
-          className="fixed right-4 top-26 z-[9999] px-3 py-2 rounded-full bg-neon-cyan text-black font-semibold shadow-[0_8px_30px_rgba(6,200,255,0.12)] hover:scale-105 transform-gpu transition-all duration-200"
+          className="fixed right-4 top-26 z-[500] px-3 py-2 rounded-full bg-neon-cyan text-black font-semibold shadow-[0_8px_30px_rgba(6,200,255,0.12)] hover:scale-105 transform-gpu transition-all duration-200"
         >
           RULES
         </button>
