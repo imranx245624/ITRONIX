@@ -12,18 +12,7 @@
     "tags": [],
     "register_url": "/register?event=hackathon"
   },
-  {
-    "id": "hackathon",
-    "title": "UI-Verse: UI Designing Challenge",
-    "icon": "⚡",
-    "category": "hackathon",
-    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "A timed competition to design a creative, user-friendly website interface on a given topic.",
-    "team_size": "Individual",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=hackathon"
-  },
+  
   {
     "id": "hackathon",
     "title": "Bug-Busters",
@@ -97,18 +86,7 @@
     "tags": [],
     "register_url": "/register?event=innovation-fair"
   },
-  {
-    "id": "innovation-fair",
-    "title": "Byte Sized Battles",
-    "icon": "⚔️",
-    "category": "nonit",
-    "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
-    "description": "Fast-paced electronics challenge testing real-time circuit building and problem-solving skills.",
-    "team_size": "Individuals",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=innovation-fair"
-  },
+  
   
   {
     "id": "cyber-arena",
