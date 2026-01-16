@@ -257,14 +257,14 @@ export default function PaymentPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => setShowInfoPopup(false)}
                     aria-label="Close payment info"
                     className="px-3 py-1 rounded bg-black/20 hover:opacity-90 text-sm"
                   >
                     ✕
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
@@ -272,7 +272,7 @@ export default function PaymentPage() {
               <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                 <div className="md:col-span-2">
                   <p className="text-sm text-muted-text mb-3">
-                    <strong>Acceptable apps:</strong> You can pay using only <strong>PhonePe, Paytm, or Google Pay</strong> (UPI) — these are accepted for automatic verification.
+                    <strong>Acceptable apps:</strong> You can pay using only <strong>PhonePe, Paytm, or Google Pay</strong> (UPI) — these are accepted for verification.
                   </p>
 
                   <div className="flex items-center gap-3">
@@ -300,12 +300,12 @@ export default function PaymentPage() {
                 </div>
 
                 {/* QR preview box (small) */}
-                <div className="flex flex-col items-center gap-2 p-3 rounded-md bg-deep-night/60 border border-white/5">
+                {/* <div className="flex flex-col items-center gap-2 p-3 rounded-md bg-deep-night/60 border border-white/5">
                   <div className="w-32 h-32 bg-white p-1 rounded-md flex items-center justify-center">
                     <img src={qrSrc} alt="QR preview" className="max-w-full max-h-full object-contain" />
                   </div>
                   <div className="text-xs text-muted-text">Scan to pay</div>
-                </div>
+                </div> */}
               </div>
 
               {/* footer actions */}

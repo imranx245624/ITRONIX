@@ -210,8 +210,11 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
       if (collegeActiveIndex >= 0 && collegeSuggestions[collegeActiveIndex]) {
         pickCollege(collegeSuggestions[collegeActiveIndex].idx)
       } else if (collegeQuery.trim()) {
+        // user typed a custom college -> set and close
         setFormData((prev) => ({ ...prev, college: collegeQuery.trim(), course: "" }))
         setCollegeShowSuggestions(false)
+        // blur to ensure suggestions don't reopen
+        try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
       }
     } else if (e.key === "Escape") {
       setCollegeShowSuggestions(false)
@@ -227,6 +230,8 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setCollegeQuery(name)
     setCollegeShowSuggestions(false)
     setCollegeActiveIndex(-1)
+    // blur the input so the suggestions don't re-open
+    try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
   }
 
   useEffect(() => {
@@ -343,6 +348,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
       } else if (courseQuery.trim()) {
         setFormData((prev) => ({ ...prev, course: courseQuery.trim() }))
         setCourseShowSuggestions(false)
+        try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
       }
     } else if (e.key === "Escape") {
       setCourseShowSuggestions(false)
@@ -357,6 +363,8 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setCourseQuery(c)
     setCourseShowSuggestions(false)
     setCourseActiveIndex(-1)
+    // blur the input so suggestions remain closed
+    try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
   }
 
   useEffect(() => {
@@ -373,6 +381,9 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   // ----------------------------
   // End colleges + courses logic
   // ----------------------------
+
+  // Phone hint state (show small 1-line popup on focus)
+  const [showPhoneHint, setShowPhoneHint] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -566,7 +577,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         {errors.email && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.email}</p>}
       </div>
 
-      <div>
+      <div className="relative">
         <label htmlFor="phone" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
           Phone <span className="text-neon-magenta">*</span>
         </label>
@@ -576,10 +587,17 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
           type="tel"
           value={formData.phone}
           onChange={handleChange}
+          onFocus={() => setShowPhoneHint(true)}
+          onBlur={() => setShowPhoneHint(false)}
           className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
           placeholder="+91 XXXXXXXXXX"
           suppressHydrationWarning={true}
         />
+        {showPhoneHint && (
+          <div className="absolute right-0 top-full mt-2 px-3 py-1 rounded bg-[#ffefdd] text-[#3a2b00] text-xs border border-[#ffdd99] shadow-sm z-50">
+            Reachable number
+          </div>
+        )}
         {errors.phone && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.phone}</p>}
       </div>
 
@@ -646,6 +664,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
                   e.preventDefault()
                   setFormData((prev) => ({ ...prev, college: collegeQuery.trim(), course: "" }))
                   setCollegeShowSuggestions(false)
+                  try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
                 }}
                 className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40"
               >
@@ -719,6 +738,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
                   e.preventDefault()
                   setFormData((prev) => ({ ...prev, course: courseQuery.trim() }))
                   setCourseShowSuggestions(false)
+                  try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
                 }}
                 className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40"
               >
