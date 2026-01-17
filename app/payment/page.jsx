@@ -66,6 +66,14 @@ export default function PaymentPage() {
   const [error, setError] = useState("")
   const inputRef = useRef(null)
 
+  // New: confirmation + uploaded flag
+  const [confirmChecked, setConfirmChecked] = useState(false)
+  const [uploaded, setUploaded] = useState(false) // true after successful upload in this session
+
+  // contact info (show in UI)
+  const TECH_PHONE = "+91 9905956912"
+  const CONTACT_EMAIL = "itronix@gncasc.org"
+
   // require sign-in (Clerk)
   useEffect(() => {
     if (!isLoaded) return
@@ -80,12 +88,17 @@ export default function PaymentPage() {
 
   // ---------- file picker ----------
   const openFilePicker = () => {
+    if (uploaded) {
+      setError("You've already uploaded a screenshot. Contact us if you need help.")
+      return
+    }
     setError("")
     inputRef.current?.click()
   }
 
   const onFileChange = (e) => {
     setError("")
+    setMessage("")
     const f = e.target.files?.[0] || null
     if (!f) {
       setFile(null)
@@ -102,6 +115,8 @@ export default function PaymentPage() {
     }
     setFile(f)
     setPreviewUrl(URL.createObjectURL(f))
+    // when user picks new file, uncheck confirm (forces re-confirmation)
+    setConfirmChecked(false)
   }
 
   const sanitizeFileName = (n) => n.replace(/\s+/g, "_").replace(/[^\w.\-()]/g, "")
@@ -137,6 +152,16 @@ export default function PaymentPage() {
     setMessage("")
     if (!file) {
       setError("Please select a screenshot to upload.")
+      return
+    }
+
+    if (!confirmChecked) {
+      setError("Please confirm the screenshot is correct before uploading.")
+      return
+    }
+
+    if (uploaded) {
+      setError("Screenshot already uploaded. Contact us if you need to change it.")
       return
     }
 
@@ -208,8 +233,12 @@ export default function PaymentPage() {
         return
       }
 
+      // success -> mark uploaded, disable further uploads in this session
+      setUploaded(true)
       setMessage("Screenshot uploaded and saved. We'll verify and confirm your registration.")
       setUploading(false)
+
+      // redirect after short delay
       setTimeout(() => router.push("/Dashboard"), 1000)
     } catch (err) {
       console.error("Unexpected error:", err)
@@ -257,14 +286,7 @@ export default function PaymentPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* <button
-                    type="button"
-                    onClick={() => setShowInfoPopup(false)}
-                    aria-label="Close payment info"
-                    className="px-3 py-1 rounded bg-black/20 hover:opacity-90 text-sm"
-                  >
-                    ✕
-                  </button> */}
+                  {/* optional close */}
                 </div>
               </div>
 
@@ -278,7 +300,7 @@ export default function PaymentPage() {
                   <div className="flex items-center gap-3">
                     {/* logos (small) */}
                     <img
-                      src="images/phonepay.jpg"
+                      src="/images/phonepay.jpg"
                       alt="PhonePe"
                       className="w-12 h-12 object-contain rounded bg-white/5 p-1"
                     />
@@ -298,14 +320,6 @@ export default function PaymentPage() {
                    ⚠️ If you pay using any other app, verification might fail — in that case you can pay at the venue (choose <strong>Skip</strong> below).
                   </p>
                 </div>
-
-                {/* QR preview box (small) */}
-                {/* <div className="flex flex-col items-center gap-2 p-3 rounded-md bg-deep-night/60 border border-white/5">
-                  <div className="w-32 h-32 bg-white p-1 rounded-md flex items-center justify-center">
-                    <img src={qrSrc} alt="QR preview" className="max-w-full max-h-full object-contain" />
-                  </div>
-                  <div className="text-xs text-muted-text">Scan to pay</div>
-                </div> */}
               </div>
 
               {/* footer actions */}
@@ -362,6 +376,16 @@ export default function PaymentPage() {
 
           {/* Upload */}
           <div className="p-3 border rounded-lg flex flex-col">
+            {/* PRECAUTION BOX */}
+            <div className="mb-3 p-3 rounded-md bg-[#1b1206]/90 text-sm" style={{ border: "2px solid rgba(255,140,30,0.95)" }}>
+              <p className="text-sm font-semibold text-white">Important — Read before uploading</p>
+              <ul className="mt-2 text-xs text-muted-text list-disc pl-4 space-y-1">
+                <li>Upload the exact transaction screenshot showing UPI reference, amount and date.</li>
+                <li>Only one upload is allowed — double-check before uploading.</li>
+                <li>If verification fails, we will contact you. If you need help, use the contact link below.</li>
+              </ul>
+            </div>
+
             <form onSubmit={handleUpload} className="space-y-3">
               <div className="flex flex-col gap-2">
                 <label className="block text-sm font-medium">Upload payment screenshot (jpg/png/webp)</label>
@@ -372,7 +396,8 @@ export default function PaymentPage() {
                   <button
                     type="button"
                     onClick={openFilePicker}
-                    className="px-3 py-2 rounded-md bg-neon-cyan text-black font-semibold text-sm"
+                    className={`px-3 py-2 rounded-md ${uploaded ? "bg-gray-600 text-white cursor-not-allowed" : "bg-neon-cyan text-black font-semibold"} text-sm`}
+                    disabled={uploaded}
                   >
                     Choose File
                   </button>
@@ -388,6 +413,18 @@ export default function PaymentPage() {
                   </div>
                 )}
 
+                {/* confirmation checkbox */}
+                <label className="inline-flex items-center gap-2 mt-2">
+                  <input
+                    type="checkbox"
+                    checked={confirmChecked}
+                    onChange={(e) => setConfirmChecked(e.target.checked)}
+                    disabled={uploaded}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-sm text-muted-text">I confirm this screenshot is of my transaction and shows correct amount & reference.</span>
+                </label>
+
                 {error && <p className="text-sm text-neon-magenta">{error}</p>}
                 {message && <p className="text-sm text-neon-cyan">{message}</p>}
               </div>
@@ -395,16 +432,17 @@ export default function PaymentPage() {
               <div>
                 <button
                   type="submit"
-                  disabled={uploading || !file}
-                  className={`w-full py-2 rounded-lg font-semibold text-sm ${uploading || !file ? "opacity-60 cursor-not-allowed" : "bg-neon-cyan text-black"}`}
+                  disabled={uploading || !file || !confirmChecked || uploaded}
+                  className={`w-full py-2 rounded-lg font-semibold text-sm ${uploading || !file || !confirmChecked || uploaded ? "opacity-60 cursor-not-allowed" : "bg-neon-cyan text-black"}`}
                 >
-                  {uploading ? "Uploading..." : "Upload Screenshot & Save"}
+                  {uploading ? "Uploading..." : uploaded ? "Uploaded" : "Upload Screenshot & Save"}
                 </button>
               </div>
             </form>
 
-            <div className="mt-2 text-xs text-muted-text">
-              <p>Make sure your UPI transaction shows the correct reference/amount. We'll verify and confirm registration.</p>
+            <div className="mt-3 text-xs text-muted-text">
+              {/* <p>Make sure your UPI transaction shows the correct reference/amount. We'll verify and confirm registration.</p> */}
+              <p className="mt-2">If verification fails or you have a problem, <a href={`mailto:${CONTACT_EMAIL}`} className="text-neon-cyan underline">email us</a> or call <a href={`tel:${TECH_PHONE}`} className="text-neon-cyan underline">{TECH_PHONE}</a>.</p>
             </div>
           </div>
         </div>

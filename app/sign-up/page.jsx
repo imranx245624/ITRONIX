@@ -29,7 +29,7 @@ export default function SignUpPage() {
 
       {/* centered card */}
       {/* Adjusted sizing for mobile: smaller max-width and allow vertical scrolling (max-h) so the form is fully accessible on small screens */}
-      <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-115 mx-auto my-6 max-h-[90vh] overflow-auto">
+      <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-115   mx-auto my-6 max-h-[90vh] overflow-auto">
         <div className="bg-[#041014]/98 rounded-2xl p-4 md:p-6 shadow-2xl border border-neon-cyan/20">
           <h2 id="signup-modal-title" className="sr-only">Sign up</h2>
 

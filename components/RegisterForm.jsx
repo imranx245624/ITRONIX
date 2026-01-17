@@ -13,7 +13,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
   const WORKSHOPS = [
     { id: "ws-1", name: "NOT available", url: "https://example.com" }
-    
   ]
 
   const EVENTS = [
@@ -28,19 +27,11 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   ]
   // const EVENTS = [
   //   { id: "e-blind-typing", name: "Blind Typing", mode: "individual" },
-  //   { id: "e-web", name: "Web Development", mode: "individual" },
-  //   { id: "e-vibe", name: "Vibe Coding", mode: "individual" },
-  //   { id: "e-golf", name: "Code Golf", mode: "individual" },
-  //   { id: "e-busters", name: "Bug-Busters", mode: "individual" },
-  //   { id: "e-hack", name: "UI-Verse", mode: "individual" },
-  //   { id: "e-Treasure", name: "Treasure Hunt", mode: "team" },
-  //   { id: "e-byte", name: "Byte Sized Battles", mode: "team" },
-  //   { id: "e-presentation", name: "Presentation", mode: "team" },
-  //   { id: "e-bgmi", name: "BGMI Tournament", mode: "team" },
-  //   { id: "e-free-fire", name: "Free Fire", mode: "team" }
+  //   ...
   // ]
 
-  const initialCategory = preselectedWorkshop ? "workshop" : preselectedEvent ? "event" : ""
+  // We don't have workshops — force category to "event"
+  const initialCategory = "event"
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -49,7 +40,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     college: "",
     course: "",
     category: initialCategory,
-    registrationType: preselectedWorkshop || preselectedEvent || "",
+    registrationType: preselectedEvent || preselectedWorkshop || "",
     teamMembers: "",
     consent: false
   })
@@ -89,7 +80,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setFormData((s) => ({
       ...s,
       category: initialCategory,
-      registrationType: preselectedWorkshop || preselectedEvent || s.registrationType
+      registrationType: preselectedEvent || preselectedWorkshop || s.registrationType
     }))
   }, [preselectedEvent, preselectedWorkshop])
 
@@ -748,7 +739,8 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         )}
       </div>
 
-      {/* Category: Workshop / Event */}
+      {/* Participation type commented out because workshops not available right now */}
+      {/*
       <div>
         <p className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Participation Type <span className="text-neon-magenta">*</span></p>
         <div className="flex gap-3 md:gap-4">
@@ -780,75 +772,53 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         </div>
         {errors.category && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.category}</p>}
       </div>
+      */}
 
-      {/* Workshop dropdown */}
-      {formData.category === "workshop" && (
-        <div>
-          <label htmlFor="registrationType" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Choose Workshop <span className="text-neon-magenta">*</span></label>
-          <select
-            id="registrationType"
-            name="registrationType"
-            value={formData.registrationType}
-            onChange={(e) => setFormData((prev) => ({ ...prev, registrationType: e.target.value }))}
-            className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
-            suppressHydrationWarning={true}
-          >
-            <option value="">Select a workshop...</option>
-            {WORKSHOPS.map((ws) => (
-              <option key={ws.id} value={ws.id}>{ws.name}</option>
-            ))}
-          </select>
-          {errors.registrationType && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.registrationType}</p>}
-        </div>
-      )}
+      {/* Event dropdown — shown directly (workshops not used) */}
+      <div>
+        <label htmlFor="registrationType" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Choose Event <span className="text-neon-magenta">*</span></label>
+        <select
+          id="registrationType"
+          name="registrationType"
+          value={formData.registrationType}
+          onChange={(e) => setFormData((prev) => ({ ...prev, registrationType: e.target.value }))}
+          className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
+          suppressHydrationWarning={true}
+        >
+          <option value="">Select an event...</option>
+          {EVENTS.map((ev) => (
+            <option key={ev.id} value={ev.id}>
+              {ev.name} {ev.mode === "team" ? "(Team)" : "(Individual)"} - ₹{eventPricing[ev.id] || 0}
+            </option>
+          ))}
+        </select>
+        {errors.registrationType && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.registrationType}</p>}
 
-      {/* Event dropdown */}
-      {formData.category === "event" && (
-        <div>
-          <label htmlFor="registrationType" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Choose Event <span className="text-neon-magenta">*</span></label>
-          <select
-            id="registrationType"
-            name="registrationType"
-            value={formData.registrationType}
-            onChange={(e) => setFormData((prev) => ({ ...prev, registrationType: e.target.value }))}
-            className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
-            suppressHydrationWarning={true}
-          >
-            <option value="">Select an event...</option>
-            {EVENTS.map((ev) => (
-              <option key={ev.id} value={ev.id}>
-                {ev.name} {ev.mode === "team" ? "(Team)" : "(Individual)"} - ₹{eventPricing[ev.id] || 0}
-              </option>
-            ))}
-          </select>
-          {errors.registrationType && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.registrationType}</p>}
+        {selectedEventObj && (
+          <div className="mt-2 md:mt-3 p-2 md:p-3 bg-neon-cyan/10 border border-neon-cyan/30 rounded-lg text-sm md:text-base">
+            <p className="font-poppins"><span className="font-semibold">Registration Fee:</span> ₹{eventPrice}</p>
+          </div>
+        )}
 
-          {selectedEventObj && (
-            <div className="mt-2 md:mt-3 p-2 md:p-3 bg-neon-cyan/10 border border-neon-cyan/30 rounded-lg text-sm md:text-base">
-              <p className="font-poppins"><span className="font-semibold">Registration Fee:</span> ₹{eventPrice}</p>
-            </div>
-          )}
-
-          {isTeamEvent && (
-            <div className="mt-2 md:mt-3">
-              <label htmlFor="teamMembers" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
-                Team Members (Names, comma-separated) <span className="text-neon-magenta">*</span>
-              </label>
-              <textarea
-                id="teamMembers"
-                name="teamMembers"
-                value={formData.teamMembers}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40 resize-none"
-                placeholder="John Doe, Jane Doe"
-                suppressHydrationWarning={true}
-              />
-              {errors.teamMembers && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.teamMembers}</p>}
-            </div>
-          )}
-        </div>
-      )}
+        {isTeamEvent && (
+          <div className="mt-2 md:mt-3">
+            <label htmlFor="teamMembers" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
+              Team Members (Names, comma-separated) <span className="text-neon-magenta">*</span>
+            </label>
+            <textarea
+              id="teamMembers"
+              name="teamMembers"
+              value={formData.teamMembers}
+              onChange={handleChange}
+              rows={3}
+              className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40 resize-none"
+              placeholder="John Doe, Jane Doe"
+              suppressHydrationWarning={true}
+            />
+            {errors.teamMembers && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.teamMembers}</p>}
+          </div>
+        )}
+      </div>
 
       {/* Consent */}
       <div>

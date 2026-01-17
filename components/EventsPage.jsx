@@ -151,98 +151,146 @@ export default function EventsPage() {
             </motion.div>
           )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-24 pt-20 border-t border-neon-cyan/20"
-          >
-            <h2 className="text-3xl md:text-4xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-12 text-center">
-              Event Schedule
-            </h2>
+         // Make sure file has: import { motion } from "framer-motion"
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  viewport={{ once: true }}
+  className="mt-24 pt-20 border-t border-neon-cyan/20"
+>
+  <h2 className="text-3xl md:text-4xl font-rajdhani font-bold uppercase tracking-wider text-neon-cyan mb-8 text-center">
+    Event Schedule
+  </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Day 1 */}
-              <div className="card-dark">
-                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 1 • 23 january</h3>
-                <div className="space-y-3 font-poppins text-muted-text text-sm">
-                  <div className="space-y-1">
-  <p className="text-neon-cyan font-semibold">09:00 AM</p>
-  <p className="font-medium">Opening Ceremony</p>
-<p className="text-neon-magenta">
-  .<br/>
-  .<br/>.</p>
+  {/* Short intro / note */}
+  <p className="text-center text-sm text-muted-text max-w-2xl mx-auto mb-8">
+    All events happen on <strong>23 January</strong>. Timings & locations below — please reach 10 minutes earlier for venue checks.
+  </p>
 
-  <p className="text-neon-magenta text-sm italic">Detailed schedule will be announced soon....</p>
-</div>
+  {/* Responsive grid: left column = timeline (times), right column = events grouped by time/venue */}
+  <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+    {/* Left: morning block (main ceremonies + presentations) */}
+    <div className="card-dark p-5">
+      <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Main schedule — morning</h3>
 
-                  {/* <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">10:00</p>
-                    <p>Keynote: "Simulating Cities" (Alumni Panel)</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">11:30</p>
-                    <p>Workshops start (AI Bootcamp)</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">15:00</p>
-                    <p>Hackathon kick-off</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">20:00</p>
-                    <p>Evening lightning talks</p>
-                  </div> */}
-                </div>
-              </div>
+      <div className="space-y-4 text-sm font-poppins text-muted-text">
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">09:00 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Inauguration Ceremony</p>
+            <p className="text-xs text-muted-text">Aura Hall 5th Floor</p>
+          </div>
+        </div>
 
-              {/* Day 2 */}
-              {/* <div className="card-dark">
-                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 2 • 23 March</h3>
-                <div className="space-y-3 font-poppins text-muted-text text-sm">
-                   <div>
-                    <p className="text-neon-cyan font-semibold">09:30</p>
-                    <p>Robotics qualifiers</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">12:00</p>
-                    <p>Speaker session: "From Idea to Startup"</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">14:00</p>
-                    <p>Hackathon continues</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">18:00</p>
-                    <p>Gaming finals</p>
-                  </div> 
-                </div>
-              </div> */}
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">09:00 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Vibe Coding</p>
+            <p className="text-xs text-muted-text">2nd Floor Lab</p>
+          </div>
+        </div>
 
-              {/* Day 3 */}
-              <div className="card-dark">
-                <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Day 2 • 24 january</h3>
-                <div className="space-y-3 font-poppins text-muted-text text-sm">
-                  {/* <div>
-                    <p className="text-neon-cyan font-semibold">10:00</p>
-                    <p>Hackathon final pitches</p>
-                  </div> */}
-                  <p className="text-neon-magenta">.<br/>
-  .<br/>.</p>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">21:00</p>
-                    <p>Prize distribution & certificates</p>
-                  </div>
-                  <div className="border-t border-neon-cyan/20 pt-3">
-                    <p className="text-neon-cyan font-semibold">22:00</p>
-                    <p>Closing ceremony</p>
-                    
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">09:00 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">BGMI Tournament</p>
+            <p className="text-xs text-muted-text">Room 309</p>
+          </div>
+        </div>
 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">09:00 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Free Fire</p>
+            <p className="text-xs text-muted-text">Room 206</p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">09:30 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Presentation</p>
+            <p className="text-xs text-muted-text">Aura Hall 5th Floor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Right: mid-day & competitions */}
+    <div className="card-dark p-5">
+      <h3 className="text-xl font-rajdhani font-bold text-neon-magenta mb-4">Competitions & tracks</h3>
+
+      <div className="space-y-4 text-sm font-poppins text-muted-text">
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">10:00 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Blind Typing</p>
+            <p className="text-xs text-muted-text">3rd Floor Lab</p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">11:30 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Bug Busters</p>
+            <p className="text-xs text-muted-text">3rd Floor Lab</p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">11:30 AM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Treasure Hunt</p>
+            <p className="text-xs text-muted-text">A7 Lobby</p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-24 shrink-0">
+            <p className="text-neon-cyan font-semibold">12:00 PM</p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Code Golf</p>
+            <p className="text-xs text-muted-text">2nd Floor Lab</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Full-width closing block */}
+    <div className="col-span-1 md:col-span-2">
+      <div className="card-dark p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 className="text-lg font-rajdhani font-bold text-neon-cyan">Closing Ceremony</h4>
+          <p className="text-sm text-muted-text">After completion of all events — Aura Hall 5th Floor</p>
+        </div>
+
+        <div className="text-right">
+          <p className="text-sm text-muted-text flex justify left">Note:</p>
+          <p className="text-xs text-neon-magenta italic">Arrive 10 minutes early for venue checks. Timings subject to minor changes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</motion.div>
+
         </div>
       </section>
     </>

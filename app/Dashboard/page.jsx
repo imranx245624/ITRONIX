@@ -101,11 +101,27 @@ export default function Dashboard() {
 
   return (
     // NOTE: vertical centering only on md+ screens — mobile will use normal top-aligned flow
-    <div className="relative top-0 pt-20 pb-24 bg-deep-night min-h-screen md:flex md:items-center md:justify-center">
+    <div className="relative top-0 pt-20 pb-24 min-h-screen md:flex md:items-center md:justify-center">
+      {/* Background image layer (blurred + dark overlay) */}
+      <div className="absolute inset-0 -z-30">
+        {/* image (slightly scaled to avoid edges showing when blurred) */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/clg_images/clg_entrance.webp')",
+            filter: "blur(6px) brightness(0.45)",
+            transform: "scale(1.02)",
+          }}
+          aria-hidden="true"
+        />
+        {/* dark overlay to ensure contrast */}
+        <div className="absolute inset-0 bg-black/55 -z-10" aria-hidden="true" />
+      </div>
+
       <div className="relative top-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Mobile compact header + quick actions */}
         <div className="sm:hidden mb-6">
-          <div className="flex items-center justify-between p-4 bg-deep-night/60 border border-cyber-orange/100 rounded-xl">
+          <div className="flex items-center justify-between p-4 bg-[rgba(3,6,9,0.55)] border border-[rgba(255,255,255,0.04)] rounded-xl backdrop-blur-sm">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-deep-night/40 to-deep-night/70 border border-neon-cyan/20 p-1 flex items-center justify-center">
                 {user?.profileImageUrl ? (
@@ -208,7 +224,7 @@ export default function Dashboard() {
         {/* main grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-center items-center">
           {/* Left column: user info card (centered on desktop via lg:col-start-2) */}
-          <aside className="lg:col-span-1 lg:col-start-2 card-dark p-6 border border-neon-cyan/100 rounded-2xl">
+          <aside className="lg:col-span-1 lg:col-start-2 card-dark p-6 border border-neon-cyan/100 rounded-2xl bg-[rgba(3,6,9,0.55)] backdrop-blur-sm">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
 
             <div className="space-y-3 text-sm text-muted-text">
@@ -269,7 +285,7 @@ export default function Dashboard() {
             ref={contactRef}
             role="dialog"
             aria-modal="true"
-            className="relative z-60 w-full max-w-sm mx-4 bg-deep-night/95 border border-cyber-orange/100 rounded-2xl p-4 shadow-lg"
+            className="relative z-60 w-full max-w-sm mx-4 bg-[rgba(3,6,9,0.95)] border border-cyber-orange/100 rounded-2xl p-4 shadow-lg"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
