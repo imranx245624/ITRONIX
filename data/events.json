@@ -1,17 +1,5 @@
 [
-  {
-    "id": "hackathon",
-    "title": "Web development",
-    "icon": "🌐",
-    "category": "hackathon",
-    "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
-    "description": "Live competition to build a responsive landing page using HTML, CSS, and JavaScript.",
-    "team_size": "Individual",
-    "Registration fee ": "100₹",
-    "prize": "____________",
-    "tags": [],
-    "register_url": "/register?event=hackathon"
-  },
+ 
   
   {
     "id": "hackathon",
@@ -50,10 +38,10 @@
     "register_url": "/register?event=hackathon"
   },
    {
-    "id": "hackathon",
+    "id": "innovation-fair",
     "title": "Blind Typing",
     "icon": "⌨️",
-    "category": "hackathon",
+    "category": "innovation-fair",
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
     "description": "Blind typing contest testing speed, accuracy, and muscle memory without screen visibility.",
     "team_size": "Individual",

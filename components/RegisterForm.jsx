@@ -18,7 +18,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
   const EVENTS = [
     { id: "e-blind-typing", name: "Blind Typing", mode: "individual" },
-    { id: "e-web", name: "Web Development", mode: "individual" },
     { id: "e-vibe", name: "Vibe Coding", mode: "individual" },
     { id: "e-golf", name: "Code Golf", mode: "individual" },
     { id: "e-busters", name: "Bug-Busters", mode: "individual" },

@@ -12,14 +12,14 @@ export default function Highlights() {
     {
       title: "TECH Events",
       description: "Competitive technical challenges designed to test coding, logic, and real-world problem-solving skills.",
-      tags: ["UI-Verse", "Web Development", "Bug out", "Blind Typing", "Code Golf", "Vibe Coding"],
+      tags: ["Bug-busters",  "Code Golf", "Vibe Coding"],
       href: "/events?filter=hackathon",
       icon: "💻",
     },
     {
       title: "Creative Events",
       description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
-      tags: ["Treasure Hunt", "PPT Presentation(Techy)", "Byte Sized Battles"],
+      tags: ["Treasure Hunt", "Tech Slides Arena", "Blind Typing",],
       href: "/events?filter=innovation-fair",
       icon: "💡",
     },

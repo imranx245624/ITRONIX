@@ -1,15 +1,15 @@
 {
-  "e-web": 50,
-  "e-hack": 30,
-  "e-busters": 50,
-  "e-golf": 50,
-  "e-vibe": 50,
-  "e-blind-typing": 50,
+  
+  
+  "e-busters": 35,
+  "e-golf": 30,
+  "e-vibe": 100,
+  "e-blind-typing": 20,
 
   "e-presentation": 40,
-  "e-Treasure": 50,
-  "e-byte": 50,
+  "e-Treasure": 120,
+  
 
   "e-bgmi": 200,
-  "e-free-fire": 100
+  "e-free-fire": 180
 }

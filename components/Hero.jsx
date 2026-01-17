@@ -255,13 +255,13 @@ export default function Hero() {
         </p>
 
         {/* TAGS */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-serif text-neon-cyan ">
+        {/* <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-serif text-neon-cyan ">
           {["Hackathon", "Web Dev", "Vibe Coding", "Debugging", "Creativity", "Gaming"].map((tag) => (
             <span key={tag} className="px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">
               {tag}
             </span>
           ))}
-        </div>
+        </div> */}
 
         {/* CTA: No ancestor has pointer-events:none so children are clickable */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
