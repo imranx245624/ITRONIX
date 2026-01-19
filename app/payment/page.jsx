@@ -1,4 +1,3 @@
-// app/payment/page.jsx
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation"
@@ -18,8 +17,9 @@ export default function PaymentPage() {
   const name = params.get("name")
   const email = params.get("email")
   const phone = params.get("phone")
-  const registrationId = params.get("registrationId") // optional
+  const registrationId = params.get("registrationId")
 
+  // optional
   const amount = eventPricing[event] || 100
   const BUCKET = "payment_screenshots"
 
@@ -119,7 +119,7 @@ export default function PaymentPage() {
     setConfirmChecked(false)
   }
 
-  const sanitizeFileName = (n) => n.replace(/\s+/g, "_").replace(/[^\w.\-()]/g, "")
+  const sanitizeFileName = (n = "") => n.replace(/\s+/g, "_").replace(/[^\w.\-()]/g, "")
 
   // ---------- download QR helper ----------
   const downloadQr = async () => {
@@ -154,17 +154,14 @@ export default function PaymentPage() {
       setError("Please select a screenshot to upload.")
       return
     }
-
     if (!confirmChecked) {
       setError("Please confirm the screenshot is correct before uploading.")
       return
     }
-
     if (uploaded) {
       setError("Screenshot already uploaded. Contact us if you need to change it.")
       return
     }
-
     if (!isSignedIn) {
       setError("You must be signed in to save the screenshot. Please sign in and retry.")
       return
@@ -180,11 +177,7 @@ export default function PaymentPage() {
 
       const { data: uploadData, error: uploadErr } = await supabase.storage
         .from(BUCKET)
-        .upload(path, file, {
-          cacheControl: "3600",
-          upsert: false,
-          contentType: file.type,
-        })
+        .upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type })
 
       if (uploadErr) {
         console.error("Supabase upload error:", uploadErr)
@@ -193,11 +186,10 @@ export default function PaymentPage() {
         return
       }
 
-      const pubResp = supabase.storage.from(BUCKET).getPublicUrl(path)
+      // get public url (robust against different response shapes)
+      const pubResp = await supabase.storage.from(BUCKET).getPublicUrl(path)
       const publicURL =
-        (pubResp && (pubResp.publicURL || pubResp.publicUrl)) ||
-        (pubResp?.data && (pubResp.data.publicUrl || pubResp.data.publicURL)) ||
-        ""
+        (pubResp && (pubResp.publicURL || pubResp.publicUrl)) || (pubResp?.data && (pubResp.data.publicUrl || pubResp.data.publicURL)) || ""
 
       const payload = {
         registrationId: registrationId || null,
@@ -238,7 +230,7 @@ export default function PaymentPage() {
       setMessage("Screenshot uploaded and saved. We'll verify and confirm your registration.")
       setUploading(false)
 
-      // redirect after short delay
+      // redirect to dashboard
       setTimeout(() => router.push("/Dashboard"), 1000)
     } catch (err) {
       console.error("Unexpected error:", err)
@@ -249,96 +241,47 @@ export default function PaymentPage() {
 
   // ---------- helper: skip / pay at venue ----------
   const handleSkip = () => {
-    // redirect to events page or events with query param
     const target = event ? `/events?event=${encodeURIComponent(event)}` : "/events"
     router.push(target)
   }
 
   // ---------- UI ----------
   return (
-    <div className="z-1 min-h-screen h-240 flex items-center justify-center bg-black text-white p-4 md:p-6">
+    <div className="z-1 min-h-screen h-320 flex items-center justify-center bg-black text-white p-4 md:p-6">
       {/* INFO POPUP: appears on top of page, responsive */}
       {showInfoPopup && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-60 flex items-center justify-center p-4"
-        >
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-60 flex items-center justify-center p-4">
           {/* backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowInfoPopup(false)}
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowInfoPopup(false)} aria-hidden="true" />
 
-          <div
-            className="relative z-70 w-full max-w-2xl mx-auto rounded-xl"
-            style={{ border: "2px solid rgba(255,150,50,0.95)" }} /* border-cyber-orange */
-          >
+          <div className="relative z-70 w-full max-w-2xl mx-auto rounded-xl" style={{ border: "2px solid rgba(255,150,50,0.95)" }}>
             <div className="bg-[#041014]/98 rounded-lg overflow-hidden">
               {/* header */}
               <div className="flex items-center justify-between p-4 md:p-5 border-b border-white/6">
                 <div>
                   <h3 className="text-sm md:text-lg font-semibold text-neon-cyan">Payment options — Important</h3>
-                  <p className="text-xs md:text-sm text-muted-text mt-1">
-                    You can pay using the UPI QR codes below via these supported apps.
-                  </p>
+                  <p className="text-xs md:text-sm text-muted-text mt-1">You can pay using the UPI QR codes below via these supported apps.</p>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  {/* optional close */}
-                </div>
+                <div className="flex items-center gap-2">{/* optional close */}</div>
               </div>
 
               {/* body */}
-              <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+              <div className="p-4  md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                 <div className="md:col-span-2">
-                  <p className="text-sm text-muted-text mb-3">
-                    <strong>Acceptable apps:</strong> You can pay using only <strong>PhonePe, Paytm, or Google Pay</strong> (UPI) — these are accepted for verification.
-                  </p>
-
+                  <p className="text-sm text-muted-text mb-3"><strong>Acceptable apps:</strong> You can pay using only <strong>PhonePe, Paytm, or Google Pay</strong> (UPI) — these are accepted for verification.</p>
                   <div className="flex items-center gap-3">
-                    {/* logos (small) */}
-                    <img
-                      src="/images/phonepay.jpg"
-                      alt="PhonePe"
-                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
-                    />
-                    <img
-                      src="/images/paytm.jpg"
-                      alt="Paytm"
-                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
-                    />
-                    <img
-                      src="/images/googlepay.jpg"
-                      alt="Google Pay"
-                      className="w-12 h-12 object-contain rounded bg-white/5 p-1"
-                    />
+                    <img src="/images/phonepay.jpg" alt="PhonePe" className="w-12 h-12 object-contain rounded bg-white/5 p-1" />
+                    <img src="/images/paytm.jpg" alt="Paytm" className="w-12 h-12 object-contain rounded bg-white/5 p-1" />
+                    <img src="/images/googlepay.jpg" alt="Google Pay" className="w-12 h-12 object-contain rounded bg-white/5 p-1" />
                   </div>
-
-                  <p className="text-xs text-muted-text mt-3">
-                   ⚠️ If you pay using any other app, verification might fail — in that case you can pay at the venue (choose <strong>Skip</strong> below).
-                  </p>
+                  <p className="text-xs text-muted-text mt-3">⚠️ If you pay using any other app, verification might fail — in that case you can pay at the venue (choose <strong>Skip</strong> below).</p>
                 </div>
               </div>
 
               {/* footer actions */}
               <div className="flex flex-col sm:flex-row items-center gap-3 p-4 md:p-5 border-t border-white/6 bg-transparent">
-                <button
-                  type="button"
-                  onClick={() => setShowInfoPopup(false)}
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-neon-cyan text-black font-semibold"
-                >
-                  Proceed to Pay
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleSkip}
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-transparent border border-white/8 text-sm text-muted-text hover:bg-white/3"
-                >
-                  Skip (Pay at venue)
-                </button>
+                <button type="button" onClick={() => setShowInfoPopup(false)} className="w-full sm:w-auto px-4 py-2 rounded-lg bg-neon-cyan text-black font-semibold">Proceed to Pay</button>
+                <button type="button" onClick={handleSkip} className="w-full sm:w-auto px-4 py-2 rounded-lg bg-transparent border border-white/8 text-sm text-muted-text hover:bg-white/3">Skip (Pay at venue)</button>
               </div>
             </div>
           </div>
@@ -347,30 +290,18 @@ export default function PaymentPage() {
 
       <div className="w-full relative max-w-3xl rounded-xl border p-4 md:p-6 bg-deep-night/60">
         <h1 className="text-xl md:text-2xl font-bold mb-1">Payment</h1>
-        <p className="text-sm md:text-base text-muted-text mb-2">
-          Name: {name || "-"}
-          <br />
-          Email: {email || "-"}
-        </p>
+        <p className="text-sm md:text-base text-muted-text mb-2">Name: {name || "-"}<br />Email: {email || "-"}</p>
         <p className="text-lg md:text-2xl text-cyan-400 font-semibold mb-4">₹{amount}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* QR area */}
           <div className="flex flex-col items-center gap-2 p-3 border rounded-lg">
             <p className="text-xs md:text-sm mb-1">Scan QR to pay via UPI</p>
-
             <div className="w-44 h-44 md:w-56 md:h-56 bg-white p-1 rounded-md flex items-center justify-center">
               <img src={qrSrc} alt="QR code" className="max-w-full max-h-full object-contain" />
             </div>
-
             <div className="flex gap-2 mt-2">
-              <button
-                type="button"
-                onClick={downloadQr}
-                className="px-4 py-2 text-sm rounded-md bg-neon-cyan text-black font-semibold"
-              >
-                Download
-              </button>
+              <button type="button" onClick={downloadQr} className="px-4 py-2 text-sm rounded-md bg-neon-cyan text-black font-semibold">Download</button>
             </div>
           </div>
 
@@ -389,7 +320,6 @@ export default function PaymentPage() {
             <form onSubmit={handleUpload} className="space-y-3">
               <div className="flex flex-col gap-2">
                 <label className="block text-sm font-medium">Upload payment screenshot (jpg/png/webp)</label>
-
                 <input ref={inputRef} type="file" accept="image/*" onChange={onFileChange} className="hidden" />
 
                 <div className="flex gap-2 items-center">
@@ -401,6 +331,7 @@ export default function PaymentPage() {
                   >
                     Choose File
                   </button>
+
                   <div className="text-sm">
                     {file ? <span className="text-sm text-muted-text">{file.name}</span> : <span className="text-sm text-neon-magenta">No file chosen</span>}
                   </div>
@@ -415,13 +346,7 @@ export default function PaymentPage() {
 
                 {/* confirmation checkbox */}
                 <label className="inline-flex items-center gap-2 mt-2">
-                  <input
-                    type="checkbox"
-                    checked={confirmChecked}
-                    onChange={(e) => setConfirmChecked(e.target.checked)}
-                    disabled={uploaded}
-                    className="w-4 h-4"
-                  />
+                  <input type="checkbox" checked={confirmChecked} onChange={(e) => setConfirmChecked(e.target.checked)} disabled={uploaded} className="w-4 h-4" />
                   <span className="text-sm text-muted-text">I confirm this screenshot is of my transaction and shows correct amount & reference.</span>
                 </label>
 
@@ -441,7 +366,6 @@ export default function PaymentPage() {
             </form>
 
             <div className="mt-3 text-xs text-muted-text">
-              {/* <p>Make sure your UPI transaction shows the correct reference/amount. We'll verify and confirm registration.</p> */}
               <p className="mt-2">If verification fails or you have a problem, <a href={`mailto:${CONTACT_EMAIL}`} className="text-neon-cyan underline">email us</a> or call <a href={`tel:${TECH_PHONE}`} className="text-neon-cyan underline">{TECH_PHONE}</a>.</p>
             </div>
           </div>

@@ -45,23 +45,17 @@ export default function EventsPage() {
     {
       id: "hackathon",
       label: "💻 Tech EventS",
-      // description: "Competitive technical challenges designed to test coding, logic, and real-world problem-solving skills.",
       description: "",
-
     },
     {
       id: "innovation-fair",
       label: "💡 Creative Events",
-      // description: "Engaging creativity-based activities that blend innovation, imagination, and interactive participation.",
-      
       description: "",
     },
     {
       id: "cyber-arena",
       label: "🎮 Cyber Arena",
-      description: "High-energy e-sports battles where players compete for skill, strategy, and victory.",
       description: "",
-
     },
   ]
 
@@ -151,8 +145,9 @@ export default function EventsPage() {
             </motion.div>
           )}
 
-         // Make sure file has: import { motion } from "framer-motion"
+          {/* Make sure file has: import { motion } from "framer-motion" */}
 <motion.div
+  id="section-schedule"
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6 }}
@@ -168,7 +163,7 @@ export default function EventsPage() {
     All events happen on <strong>23 January</strong>. Timings & locations below — please reach 10 minutes earlier for venue checks.
   </p>
 
-  {/* Responsive grid: left column = timeline (times), right column = events grouped by time/venue */}
+  {/* Responsive grid: left column = timeline (times), right column = events grouped by time/venue) */}
   <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
     {/* Left: morning block (main ceremonies + presentations) */}
     <div className="card-dark p-5">

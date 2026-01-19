@@ -175,39 +175,10 @@ export default function Hero() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-            {/* <SignedOut>
-              <div className="flex flex-col gap-2">
-                <SignInButton mode="modal">
-                  <button
-                    type="button"
-                    className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-primary hover:shadow-lg transition-all duration-300"
-                  >
-                    Sign in to register
-                  </button>
-                </SignInButton>
-
-                <button
-                  type="button"
-                  disabled
-                  className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-secondary opacity-60 cursor-not-allowed"
-                  aria-disabled="true"
-                  title="Sign in first to register"
-                >
-                  Register
-                </button>
-
-                <p className="text-xs text-muted-text/90 mt-1">First sign in, then register.</p>
-              </div>
-            </SignedOut> */}
-
-            
-              {/* link to register page, you can add ?event=... if you have a default or dynamic event */}
               <Link href="/register" className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold">
                 Register now
               </Link>
-            
           </div>
-
         </div>
         </div>
       </div>
@@ -254,44 +225,9 @@ export default function Hero() {
           on 23 Jan 2026
         </p>
 
-        {/* TAGS */}
-        {/* <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 text-xs sm:text-sm font-serif text-neon-cyan ">
-          {["Hackathon", "Web Dev", "Vibe Coding", "Debugging", "Creativity", "Gaming"].map((tag) => (
-            <span key={tag} className="px-3 py-1 border border-neon-cyan/30 rounded-full backdrop-blur-sm bg-[rgba(4,8,12,0.36)]">
-              {tag}
-            </span>
-          ))}
-        </div> */}
-
         {/* CTA: No ancestor has pointer-events:none so children are clickable */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-            {/* <SignedOut>
-              <div className="flex flex-col gap-2">
-                <SignInButton mode="modal">
-                  <button
-                    type="button"
-                    className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-primary hover:shadow-lg transition-all duration-300"
-                  >
-                    Sign in to register
-                  </button>
-                </SignInButton>
-
-                <button
-                  type="button"
-                  disabled
-                  className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-secondary opacity-60 cursor-not-allowed"
-                  aria-disabled="true"
-                  title="Sign in first to register"
-                >
-                  Register
-                </button>
-
-                <p className="text-xs text-muted-text/90 mt-1">First sign in, then register.</p>
-              </div>
-            </SignedOut> */}
-
-            
   <Link
     href="/register"
     className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
@@ -335,12 +271,24 @@ export default function Hero() {
 
           </div>
 </div>
+
           <Link
             href="/events"
-            className="btn-secondary text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-110 hover:rotate-1 hover:shadow-lg hover:shadow-neon-cyan/50"
+            className="btn-secondary text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-110 hover:rotate-1 hover:shadow-lg hover:shadow-neon-cyan/50 mt-6 inline-block"
           >
             See Events
           </Link>
+
+          {/* SCHEDULE BUTTON placed below "See Events" (redirects to schedule section on events page) */}
+          <div className="mt-3">
+            <Link
+              href="/events#section-schedule"
+              className="text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 rounded-md border border-neon-cyan/30 backdrop-blur-sm bg-[rgba(4,8,12,0.36)] hover:shadow-lg hover:shadow-neon-cyan/30 transition-all duration-200 inline-block"
+              aria-label="Go to schedule"
+            >
+              Schedule
+            </Link>
+          </div>
         
       </div>
 
