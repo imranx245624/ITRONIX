@@ -125,7 +125,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   }
 
   // ----------------------------
-  // Colleges autocomplete
+  // Colleges autocomplete (unchanged)
   // ----------------------------
   const [colleges, setColleges] = useState([])
   const [collegeQuery, setCollegeQuery] = useState("")
@@ -154,7 +154,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   useEffect(() => {
     const q = (collegeQuery || "").trim()
     if (!q) {
-      // do not auto-hide suggestions here — we prefer to show suggestions on focus (handled separately)
       setCollegeSuggestions([])
       setCollegeShowSuggestions(false)
       setCollegeActiveIndex(-1)
@@ -225,126 +224,132 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   }, [])
 
   // ----------------------------
-  // Courses list (single master list) + autocomplete
+  // SIMPLE Course dropdown + editable textbox
   // ----------------------------
-  const [coursesList, setCoursesList] = useState([])
-  const [courseQuery, setCourseQuery] = useState("")
-  const [courseSuggestions, setCourseSuggestions] = useState([])
-  const [courseShowSuggestions, setCourseShowSuggestions] = useState(false)
-  const [courseActiveIndex, setCourseActiveIndex] = useState(-1)
+  const [coursesGroups, setCoursesGroups] = useState([]) // [{ title, items: [] }]
+  const [coursesListFlat, setCoursesListFlat] = useState([]) // flat list (A-Z)
+  const [courseQuery, setCourseQuery] = useState("") // content in text box (editable)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const courseInputRef = useRef(null)
-  const courseSuggestionsRef = useRef(null)
+  const courseDropdownRef = useRef(null)
 
   useEffect(() => {
-    // LOAD COURSES FROM IMPORTED JSON DIRECTLY (reliable)
+    // Build grouped lists from coursesData
     try {
       const json = coursesData || {}
-      let list = []
-      if (Array.isArray(json.all_courses)) {
-        list = json.all_courses.slice()
-      } else {
-        // combine _default categories and other arrays
-        if (json._default) {
-          Object.keys(json._default).forEach((k) => {
-            if (Array.isArray(json._default[k])) list = list.concat(json._default[k])
-          })
+      const groups = []
+
+      // helper: push group if has items
+      const pushGroup = (title, arr) => {
+        if (!Array.isArray(arr) || arr.length === 0) return
+        const cleaned = Array.from(new Set(arr)).filter(Boolean)
+        if (cleaned.length) groups.push({ title, items: cleaned })
+      }
+
+      // prefer explicit categories in _default
+      if (json._default) {
+        // map some keys to friendly titles
+        const mapping = {
+          school_11_12: "School (11 / 12)",
+          ug_science: "UG - Science",
+          ug_engineering: "UG - Engineering",
+          ug_arts_commerce: "UG - Arts & Commerce",
+          ug_professional: "UG - Professional",
+          pg_common: "PG & Common"
         }
-        Object.keys(json).forEach((k) => {
-          if (k === "_default" || k === "all_courses") return
-          if (Array.isArray(json[k])) list = list.concat(json[k])
+        Object.keys(json._default).forEach((k) => {
+          const title = mapping[k] || k.replace(/_/g, " ").toUpperCase()
+          pushGroup(title, json._default[k])
         })
       }
-      // ensure unique and stable order (A-Z friendly)
-      const deduped = Array.from(new Set(list)).sort((a, b) => a.localeCompare(b))
-      setCoursesList(deduped)
+
+      // also include any top-level arrays (like all_courses split groups)
+      Object.keys(json).forEach((k) => {
+        if (k === "_default" || k === "all_courses") return
+        if (Array.isArray(json[k])) {
+          const title = k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+          pushGroup(title, json[k])
+        }
+      })
+
+      // Fallback: if nothing found, try all_courses
+      if (groups.length === 0 && Array.isArray(json.all_courses)) {
+        pushGroup("All Courses", json.all_courses)
+      }
+
+      // Build flat list for convenience (A-Z)
+      const flat = []
+      groups.forEach((g) => {
+        g.items.forEach((it) => flat.push(it))
+      })
+      const dedupedFlat = Array.from(new Set(flat)).sort((a, b) => a.localeCompare(b))
+
+      // if still empty fallback to a small set
+      if (dedupedFlat.length === 0) {
+        const fallback = [
+          "B.Sc. (Computer Science)",
+          "B.Sc. (Information Technology)",
+          "BCA (Bachelor of Computer Applications)",
+          "B.Com (General)",
+          "B.A. (General)",
+          "B.Tech - Computer Science & Engineering",
+          "MCA",
+          "MBA",
+          "BMM (Bachelor of Mass Media)"
+        ]
+        setCoursesGroups([{ title: "Common Courses", items: fallback }])
+        setCoursesListFlat(fallback)
+      } else {
+        setCoursesGroups(groups)
+        setCoursesListFlat(dedupedFlat)
+      }
     } catch (err) {
-      // fallback minimal list
-      setCoursesList([
-        "B.Sc. (Computer Science)",
-        "B.Sc. (Information Technology)",
-        "BCA",
-        "B.Com",
-        "B.A.",
-        "B.Tech (CS)",
-        "MCA",
-        "MBA"
-      ])
+      setCoursesGroups([{ title: "Common Courses", items: ["B.Sc. (Computer Science)", "BCA", "BMM (Bachelor of Mass Media)"] }])
+      setCoursesListFlat(["B.Sc. (Computer Science)", "BCA", "BMM (Bachelor of Mass Media)"])
     }
   }, [])
 
-  useEffect(() => {
-    const q = (courseQuery || "").trim()
-    // If empty query -> do not hide; we prefer to show all on focus (handled below)
-    if (!q) {
-      setCourseSuggestions([])
-      setCourseShowSuggestions(false)
-      setCourseActiveIndex(-1)
-      return
-    }
-    const low = q.toLowerCase()
-    const results = []
-    for (let i = 0; i < coursesList.length; i++) {
-      const it = coursesList[i]
-      const ln = it.toLowerCase()
-      let score = 0
-      if (ln.startsWith(low)) score += 3
-      if (ln.includes(low)) score += 1
-      if (score > 0) results.push({ idx: i, text: it, score })
-      if (results.length >= 200) break
-    }
-    results.sort((a, b) => b.score - a.score)
-    const limited = results.slice(0, 50)
-    setCourseSuggestions(limited)
-    setCourseShowSuggestions(limited.length > 0)
-    setCourseActiveIndex(-1)
-  }, [courseQuery, coursesList])
-
-  const onCourseKeyDown = (e) => {
-    if (!courseShowSuggestions) return
-    if (e.key === "ArrowDown") {
-      e.preventDefault()
-      setCourseActiveIndex((i) => Math.min(i + 1, courseSuggestions.length - 1))
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault()
-      setCourseActiveIndex((i) => Math.max(i - 1, 0))
-    } else if (e.key === "Enter") {
-      e.preventDefault()
-      if (courseActiveIndex >= 0 && courseSuggestions[courseActiveIndex]) {
-        pickCourse(courseSuggestions[courseActiveIndex].idx)
-      } else if (courseQuery.trim()) {
-        setFormData((prev) => ({ ...prev, course: courseQuery.trim() }))
-        setCourseShowSuggestions(false)
-        try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
-      }
-    } else if (e.key === "Escape") {
-      setCourseShowSuggestions(false)
-      setCourseActiveIndex(-1)
-    }
+  // open dropdown on focus / click
+  const openCourseDropdown = () => {
+    setDropdownOpen(true)
+  }
+  const closeCourseDropdown = () => {
+    setDropdownOpen(false)
   }
 
-  function pickCourse(idx) {
-    const c = coursesList[idx]
-    if (!c) return
-    setFormData((prev) => ({ ...prev, course: c }))
-    setCourseQuery(c)
-    setCourseShowSuggestions(false)
-    setCourseActiveIndex(-1)
-    try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
+  // pick from dropdown
+  const pickCourseFromDropdown = (name) => {
+    const value = name === "Other" ? (courseQuery.trim() || "Other") : name
+    setFormData((prev) => ({ ...prev, course: value }))
+    setCourseQuery(value)
+    setDropdownOpen(false)
+    // blur input so keyboard won't re-open it (optional)
+    try { courseInputRef.current?.blur() } catch {}
+    setErrors((prev) => ({ ...prev, course: undefined }))
   }
 
+  // click outside to close
   useEffect(() => {
     function onDocClick(e) {
-      if (courseInputRef.current && !courseInputRef.current.contains(e.target) && courseSuggestionsRef.current && !courseSuggestionsRef.current.contains(e.target)) {
-        setCourseShowSuggestions(false)
-        setCourseActiveIndex(-1)
+      if (courseInputRef.current && !courseInputRef.current.contains(e.target) && courseDropdownRef.current && !courseDropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false)
       }
     }
     document.addEventListener("click", onDocClick)
     return () => document.removeEventListener("click", onDocClick)
   }, [])
 
+  // When user types in textbox, update formData.course as editable value
+  const onCourseTextChange = (e) => {
+    const val = e.target.value
+    setCourseQuery(val)
+    setFormData((prev) => ({ ...prev, course: val }))
+    // keep dropdown open so user can still pick if they want
+    // (but do not force it)
+  }
+
   // ----------------------------
-  // End colleges + courses logic
+  // End course logic
   // ----------------------------
 
   // Phone hint state (show small 1-line popup on focus)
@@ -566,7 +571,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         {errors.phone && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.phone}</p>}
       </div>
 
-      {/* College autocomplete */}
+      {/* College autocomplete (unchanged) */}
       <div className="relative">
         <label htmlFor="college" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
           College / School <span className="text-neon-magenta">*</span>
@@ -585,7 +590,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
             }}
             onKeyDown={onCollegeKeyDown}
             onFocus={() => {
-              // show top colleges on focus if query empty (so user sees A-Z/choices)
               if (!collegeQuery.trim() && colleges.length) {
                 const all = colleges.map((c, idx) => ({ idx, name: c.name, score: 0 })).slice(0, 50)
                 setCollegeSuggestions(all)
@@ -650,7 +654,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         )}
       </div>
 
-      {/* Course autocomplete */}
+      {/* Course: editable textbox + grouped dropdown */}
       <div className="relative">
         <label htmlFor="course" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
           Course / Stream <span className="text-neon-magenta">*</span>
@@ -663,28 +667,13 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
             type="text"
             autoComplete="off"
             value={courseQuery || formData.course}
-            onChange={(e) => {
-              setCourseQuery(e.target.value)
-              setFormData((prev) => ({ ...prev, course: "" }))
-            }}
-            onKeyDown={onCourseKeyDown}
-            onFocus={() => {
-              // when focused and query empty -> show full courses list (A-Z)
-              if (!courseQuery.trim() && coursesList.length) {
-                const all = coursesList.map((c, idx) => ({ idx, text: c, score: 0 })).slice(0, 100)
-                setCourseSuggestions(all)
-                setCourseShowSuggestions(true)
-                setCourseActiveIndex(-1)
-              } else if (courseSuggestions.length) {
-                setCourseShowSuggestions(true)
-              }
-            }}
-            placeholder="Type and select your course (searchable)…"
+            onChange={onCourseTextChange}
+            onFocus={() => openCourseDropdown()}
+            onClick={() => openCourseDropdown()}
+            placeholder="Click to choose or type your course (e.g. B.Sc., BMM, BCA…) "
             className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
-            aria-autocomplete="list"
-            aria-controls="course-listbox"
-            aria-expanded={courseShowSuggestions}
-            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded={dropdownOpen}
             suppressHydrationWarning={true}
           />
         </div>
@@ -693,44 +682,44 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
         {errors.course && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.course}</p>}
 
-        {courseShowSuggestions && courseSuggestions.length > 0 && (
-          <ul
-            id="course-listbox"
-            ref={courseSuggestionsRef}
+        {dropdownOpen && (
+          <div
+            ref={courseDropdownRef}
+            className="absolute z-50 mt-1 md:mt-2 max-h-72 w-full overflow-auto rounded-lg bg-deep-night/95 border border-neon-cyan/20 p-1 shadow-lg"
             role="listbox"
-            aria-label="Course suggestions"
-            className="absolute z-50 mt-1 md:mt-2 max-h-40 md:max-h-60 w-full overflow-auto rounded-lg bg-deep-night/95 border border-neon-cyan/20 p-1 shadow-lg"
+            aria-label="Course list"
             suppressHydrationWarning={true}
           >
-            {courseSuggestions.map((s, idx) => (
-              <li
-                key={s.idx + "-" + idx}
-                role="option"
-                aria-selected={courseActiveIndex === idx}
-                onMouseDown={(e) => { e.preventDefault(); pickCourse(s.idx) }}
-                onMouseEnter={() => setCourseActiveIndex(idx)}
-                className={`px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none ${courseActiveIndex === idx ? "bg-neon-cyan/10 text-neon-cyan" : "text-muted-text hover:bg-deep-night/40"}`}
-              >
-                {s.text}
-              </li>
+            {coursesGroups.map((g, gi) => (
+              <div key={gi} className="mb-2 last:mb-0">
+                <div className="px-2 py-1 text-xs md:text-sm font-semibold text-neon-cyan/90">{g.title}</div>
+                <ul>
+                  {g.items.map((it, ii) => (
+                    <li
+                      key={gi + "-" + ii}
+                      onMouseDown={(e) => { e.preventDefault(); pickCourseFromDropdown(it) }}
+                      className="px-3 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40 rounded"
+                      role="option"
+                    >
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
 
-            {courseQuery.trim() && !courseSuggestions.find(x => x.text === courseQuery.trim()) && (
-              <li
-                role="option"
-                aria-selected={false}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  setFormData((prev) => ({ ...prev, course: courseQuery.trim() }))
-                  setCourseShowSuggestions(false)
-                  try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
-                }}
-                className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40"
-              >
-                Use "{courseQuery.trim()}"
-              </li>
-            )}
-          </ul>
+            <div className="border-t border-neon-cyan/10 mt-1 pt-2">
+              <ul>
+                <li
+                  onMouseDown={(e) => { e.preventDefault(); pickCourseFromDropdown("Other") }}
+                  className="px-3 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40 rounded font-medium"
+                  role="option"
+                >
+                  Other (enter manually)
+                </li>
+              </ul>
+            </div>
+          </div>
         )}
       </div>
 
