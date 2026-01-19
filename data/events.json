@@ -9,7 +9,7 @@
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
     "description": "Debugging challenge: find and fix bugs in prepared codebases under time limit.",
     "team_size": "Individual",
-    "prize": "____________",
+    "prize": "Cash Prize/Trophies + certificate",
     "tags": [],
     "register_url": "/register?event=hackathon"
   },
@@ -21,7 +21,7 @@
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
     "description": "Competitive coding event where participants solve problems using minimum characters efficiently.",
     "team_size": "Individual",
-    "prize": "____________",
+    "prize": "Cash Prize/Trophies + certificate",
     "tags": [],
     "register_url": "/register?event=hackathon"
   },
@@ -33,7 +33,7 @@
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
     "description": "AI-powered competition to build creative, practical web solutions on a shared theme.",
     "team_size": "Individual",
-    "prize": "____________",
+    "prize": "Cash Prize/Trophies + certificate",
     "tags": [],
     "register_url": "/register?event=hackathon"
   },
@@ -45,7 +45,7 @@
     "short": "24-hour hackathon: build prototypes, sprint to prototype, pitch to judges.",
     "description": "Blind typing contest testing speed, accuracy, and muscle memory without screen visibility.",
     "team_size": "Individual",
-    "prize": "____________",
+    "prize": "Cash Prize + certificate",
     "tags": [],
     "register_url": "/register?event=hackathon"
   },
@@ -57,7 +57,7 @@
     "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
     "description": "Platform to present ideas, research, or innovations with clarity and confidence.",
     "team_size": "Individuals",
-    "prize": "____________",
+    "prize": "Cash Prize + certificate",
     "tags": [],
     "register_url": "/register?event=innovation-fair"
   },
@@ -70,7 +70,7 @@
     "short": "Campus fair for design, management, product ideas, business pitches, and creative projects.",
     "description": "Exciting clue-based adventure combining intelligence, teamwork, and campus exploration.",
     "team_size": "4 member team",
-    "prize": "____________",
+    "prize": "Cash Prize + certificate",
     "tags": [],
     "register_url": "/register?event=innovation-fair"
   },
@@ -84,7 +84,7 @@
     "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
     "description": "BGMI esports tournament where teams compete strategically for survival and elimination points.",
     "team_size": "4 member team",
-    "prize": "____________",
+    "prize": "Cash Prize + certificate",
     "tags": [],
     "register_url": "/register?event=cyber-arena"
   },
@@ -96,7 +96,7 @@
     "short": "E-sports tournaments + capture-the-flag security pwn challenges.",
     "description": "Free Fire is a squad-based battle royale competition focused on survival and eliminations.",
     "team_size": "4 member team",
-    "prize": "____________",
+    "prize": "Cash Prize + certificate",
     "tags": [],
     "register_url": "/register?event=cyber-arena"
   }
