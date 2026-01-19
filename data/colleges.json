@@ -145,5 +145,21 @@
   { "name": "DPS Chennai (11th-12th)", "city": "Chennai", "state": "Tamil Nadu", "type": "school" },
 
   { "name": "Misc Regional Colleges - India (Representative list) - 1", "city": "Multiple", "state": "Multiple", "type": "college" },
-  { "name": "Misc Regional Colleges - India (Representative list) - 2", "city": "Multiple", "state": "Multiple", "type": "college" }
+  { "name": "Misc Regional Colleges - India (Representative list) - 2", "city": "Multiple", "state": "Multiple", "type": "college" },
+  
+  { "name": "Vidyalankar Institute of Technology, Wadala (Vidyalankar Institute of Technology)", "city": "Mumbai", "state": "Maharashtra", "type": "institute" },
+  { "name": "Guru Nanak Khalsa College of Arts, Science & Commerce (Matunga)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Wilson College, Mumbai","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "SIES College of Arts, Science & Commerce (Sion West)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "SIES Graduate School of Technology (SIES GST)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "R. A. Podar College of Commerce & Economics (Ramniranjan Anandilal Podar College)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Ramnarain Ruia Autonomous College (Ruia College)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "SNDT Women's University (Shreemati Nathibai Damodar Thackersey Women's University)","city":"Mumbai","state":"Maharashtra","type":"university"},
+  { "name": "D. G. Ruparel College of Arts, Science & Commerce","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Kirti M. Doongursee College of Arts, Science & Commerce (Kirti College, Dadar)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Shrimati M. M. K. College of Commerce & Economics (M. M. K. College, Bandra)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Guru Nanak High School and Junior College, Dadar (Guru Nanak Junior College)","city":"Mumbai","state":"Maharashtra","type":"school/junior-college"},
+  { "name": "St. Anthony's High School & Junior College, Dadar (St. Anthony's Junior College)","city":"Mumbai","state":"Maharashtra","type":"school/junior-college"}
+
+
 ]
