@@ -274,14 +274,14 @@ export default function PaymentPage() {
                     <img src="/images/paytm.jpg" alt="Paytm" className="w-12 h-12 object-contain rounded bg-white/5 p-1" />
                     <img src="/images/googlepay.jpg" alt="Google Pay" className="w-12 h-12 object-contain rounded bg-white/5 p-1" />
                   </div>
-                  <p className="text-xs text-muted-text mt-3">⚠️ If you pay using any other app, verification might fail — in that case you can pay at the venue (choose <strong>Skip</strong> below).</p>
+                  <p className="text-xs text-muted-text mt-3">⚠️ If you pay using any other app, verification might fail — in that case please contact the organizers. contact--990595912</p>
                 </div>
               </div>
 
               {/* footer actions */}
               <div className="flex flex-col sm:flex-row items-center gap-3 p-4 md:p-5 border-t border-white/6 bg-transparent">
                 <button type="button" onClick={() => setShowInfoPopup(false)} className="w-full sm:w-auto px-4 py-2 rounded-lg bg-neon-cyan text-black font-semibold">Proceed to Pay</button>
-                <button type="button" onClick={handleSkip} className="w-full sm:w-auto px-4 py-2 rounded-lg bg-transparent border border-white/8 text-sm text-muted-text hover:bg-white/3">Skip (Pay at venue)</button>
+                {/* <button type="button" onClick={handleSkip} className="w-full sm:w-auto px-4 py-2 rounded-lg bg-transparent border border-white/8 text-sm text-muted-text hover:bg-white/3">Skip (Pay at venue)</button> */}
               </div>
             </div>
           </div>
