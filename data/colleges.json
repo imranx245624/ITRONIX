@@ -154,6 +154,11 @@
   { "name": "Wilson College, Mumbai","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "SIES College of Arts, Science & Commerce (Sion West)","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "SIES Graduate School of Technology (SIES GST)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "S.I.W.S. N.R. Swamy College of Commerce & Economics.","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "S.I.W.S. High School (school / secondary section run by the same society)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "S.I.W.S. Junior College (Junior College — Science & Commerce)","city":"Mumbai","state":"Maharashtra","type":"college"},
+  { "name": "Smt. Thirumalai College of Science (S.I.W.S.","city":"Mumbai","state":"Maharashtra","type":"college"},
+
   { "name": "R. A. Podar College of Commerce & Economics (Ramniranjan Anandilal Podar College)","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "Ramnarain Ruia Autonomous College (Ruia College)","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "SNDT Women's University (Shreemati Nathibai Damodar Thackersey Women's University)","city":"Mumbai","state":"Maharashtra","type":"university"},
