@@ -148,6 +148,8 @@
   { "name": "Misc Regional Colleges - India (Representative list) - 2", "city": "Multiple", "state": "Multiple", "type": "college" },
   
   { "name": "Vidyalankar Institute of Technology, Wadala (Vidyalankar Institute of Technology)", "city": "Mumbai", "state": "Maharashtra", "type": "institute" },
+  { "name": "Vidyalankar School of Information Technology", "city": "Mumbai", "state": "Maharashtra", "type": "institute" },
+
   { "name": "Guru Nanak Khalsa College of Arts, Science & Commerce (Matunga)","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "Wilson College, Mumbai","city":"Mumbai","state":"Maharashtra","type":"college"},
   { "name": "SIES College of Arts, Science & Commerce (Sion West)","city":"Mumbai","state":"Maharashtra","type":"college"},

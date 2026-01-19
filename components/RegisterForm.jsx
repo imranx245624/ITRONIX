@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation"
 // If using Clerk auth, import useUser hook
 import { useUser } from "@clerk/nextjs"
 import eventPricing from "@/data/eventPricing.json"
-import collegesData from "@/data/colleges.json" // ← minimal change: import colleges JSON directly
+import collegesData from "@/data/colleges.json" // imported already
+import coursesData from "@/data/courses.json"   // <-- NEW: import courses json directly
 
 export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) {
   const router = useRouter()
@@ -25,12 +26,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     { id: "e-bgmi", name: "BGMI Tournament", mode: "team" },
     { id: "e-free-fire", name: "Free Fire", mode: "team" }
   ]
-  // const EVENTS = [
-  //   { id: "e-blind-typing", name: "Blind Typing", mode: "individual" },
-  //   ...
-  // ]
 
-  // We don't have workshops — force category to "event"
   const initialCategory = "event"
 
   const [formData, setFormData] = useState({
@@ -140,30 +136,25 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   const collegeSuggestionsRef = useRef(null)
 
   useEffect(() => {
-    let cancelled = false
-    async function load() {
-      try {
-        const json = collegesData
-        const list = Array.isArray(json)
-          ? json.map((it) => {
-              if (typeof it === "string") return { name: it, city: "", state: "", type: "college", courses: [] }
-              return { name: it.name || it.title || "", city: it.city || "", state: it.state || "", type: it.type || "college", courses: Array.isArray(it.courses) ? it.courses : [] }
-            })
-          : []
-        if (!cancelled) setColleges(list)
-      } catch (err) {
-        if (!cancelled) setColleges([{ name: "Guru Nanak College of Arts, Commerce and Science", city: "Mumbai", state: "Maharashtra", type: "college", courses: ["B.Sc.", "B.Com", "B.A.", "BCA"] }])
-      }
-    }
-    load()
-    return () => {
-      cancelled = true
+    // load colleges data from import (no fetch)
+    try {
+      const list = Array.isArray(collegesData)
+        ? collegesData.map((it) => {
+            if (typeof it === "string") return { name: it, city: "", state: "", type: "college", courses: [] }
+            return { name: it.name || it.title || "", city: it.city || "", state: it.state || "", type: it.type || "college", courses: Array.isArray(it.courses) ? it.courses : [] }
+          })
+        : []
+      setColleges(list)
+    } catch (err) {
+      // fallback single college
+      setColleges([{ name: "Guru Nanak College of Arts, Commerce and Science", city: "Mumbai", state: "Maharashtra", type: "college", courses: ["B.Sc.", "B.Com", "B.A.", "BCA"] }])
     }
   }, [])
 
   useEffect(() => {
     const q = (collegeQuery || "").trim()
     if (!q) {
+      // do not auto-hide suggestions here — we prefer to show suggestions on focus (handled separately)
       setCollegeSuggestions([])
       setCollegeShowSuggestions(false)
       setCollegeActiveIndex(-1)
@@ -203,7 +194,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         // user typed a custom college -> set and close
         setFormData((prev) => ({ ...prev, college: collegeQuery.trim(), course: "" }))
         setCollegeShowSuggestions(false)
-        // blur to ensure suggestions don't reopen
         try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
       }
     } else if (e.key === "Escape") {
@@ -220,7 +210,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setCollegeQuery(name)
     setCollegeShowSuggestions(false)
     setCollegeActiveIndex(-1)
-    // blur the input so the suggestions don't re-open
     try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
   }
 
@@ -247,58 +236,45 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
   const courseSuggestionsRef = useRef(null)
 
   useEffect(() => {
-    let cancelled = false
-    async function loadCourses() {
-      try {
-        const res = await fetch("/data/courses.json")
-        if (res.ok) {
-          const json = await res.json()
-          let list = []
-          if (Array.isArray(json.all_courses)) {
-            list = json.all_courses
-          } else {
-            const dd = json._default || {}
-            const keys = Object.keys(dd)
-            keys.forEach((k) => {
-              if (Array.isArray(dd[k])) list = list.concat(dd[k])
-            })
-            Object.keys(json).forEach((k) => {
-              if (k !== "_default" && k !== "all_courses" && Array.isArray(json[k])) list = list.concat(json[k])
-            })
-          }
-          const deduped = Array.from(new Set(list))
-          if (!cancelled) setCoursesList(deduped)
-        } else {
-          if (!cancelled) setCoursesList([
-            "B.Sc. (Computer Science)",
-            "B.Sc. (Information Technology)",
-            "BCA",
-            "B.Com",
-            "B.A.",
-            "B.Tech (CS)",
-            "MCA",
-            "MBA"
-          ])
+    // LOAD COURSES FROM IMPORTED JSON DIRECTLY (reliable)
+    try {
+      const json = coursesData || {}
+      let list = []
+      if (Array.isArray(json.all_courses)) {
+        list = json.all_courses.slice()
+      } else {
+        // combine _default categories and other arrays
+        if (json._default) {
+          Object.keys(json._default).forEach((k) => {
+            if (Array.isArray(json._default[k])) list = list.concat(json._default[k])
+          })
         }
-      } catch (err) {
-        if (!cancelled) setCoursesList([
-          "B.Sc. (Computer Science)",
-          "B.Sc. (Information Technology)",
-          "BCA",
-          "B.Com",
-          "B.A.",
-          "B.Tech (CS)",
-          "MCA",
-          "MBA"
-        ])
+        Object.keys(json).forEach((k) => {
+          if (k === "_default" || k === "all_courses") return
+          if (Array.isArray(json[k])) list = list.concat(json[k])
+        })
       }
+      // ensure unique and stable order (A-Z friendly)
+      const deduped = Array.from(new Set(list)).sort((a, b) => a.localeCompare(b))
+      setCoursesList(deduped)
+    } catch (err) {
+      // fallback minimal list
+      setCoursesList([
+        "B.Sc. (Computer Science)",
+        "B.Sc. (Information Technology)",
+        "BCA",
+        "B.Com",
+        "B.A.",
+        "B.Tech (CS)",
+        "MCA",
+        "MBA"
+      ])
     }
-    loadCourses()
-    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
     const q = (courseQuery || "").trim()
+    // If empty query -> do not hide; we prefer to show all on focus (handled below)
     if (!q) {
       setCourseSuggestions([])
       setCourseShowSuggestions(false)
@@ -353,7 +329,6 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
     setCourseQuery(c)
     setCourseShowSuggestions(false)
     setCourseActiveIndex(-1)
-    // blur the input so suggestions remain closed
     try { courseInputRef.current?.querySelector("input")?.blur() } catch {}
   }
 
@@ -609,7 +584,17 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
               setFormData((prev) => ({ ...prev, college: "", course: "" }))
             }}
             onKeyDown={onCollegeKeyDown}
-            onFocus={() => { if (collegeSuggestions.length) setCollegeShowSuggestions(true) }}
+            onFocus={() => {
+              // show top colleges on focus if query empty (so user sees A-Z/choices)
+              if (!collegeQuery.trim() && colleges.length) {
+                const all = colleges.map((c, idx) => ({ idx, name: c.name, score: 0 })).slice(0, 50)
+                setCollegeSuggestions(all)
+                setCollegeShowSuggestions(true)
+                setCollegeActiveIndex(-1)
+              } else if (collegeSuggestions.length) {
+                setCollegeShowSuggestions(true)
+              }
+            }}
             placeholder="Start typing your college or school name..."
             className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
             aria-autocomplete="list"
@@ -683,7 +668,17 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
               setFormData((prev) => ({ ...prev, course: "" }))
             }}
             onKeyDown={onCourseKeyDown}
-            onFocus={() => { if (courseSuggestions.length) setCourseShowSuggestions(true) }}
+            onFocus={() => {
+              // when focused and query empty -> show full courses list (A-Z)
+              if (!courseQuery.trim() && coursesList.length) {
+                const all = coursesList.map((c, idx) => ({ idx, text: c, score: 0 })).slice(0, 100)
+                setCourseSuggestions(all)
+                setCourseShowSuggestions(true)
+                setCourseActiveIndex(-1)
+              } else if (courseSuggestions.length) {
+                setCourseShowSuggestions(true)
+              }
+            }}
             placeholder="Type and select your course (searchable)…"
             className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
             aria-autocomplete="list"
@@ -739,42 +734,7 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
         )}
       </div>
 
-      {/* Participation type commented out because workshops not available right now */}
-      {/*
-      <div>
-        <p className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Participation Type <span className="text-neon-magenta">*</span></p>
-        <div className="flex gap-3 md:gap-4">
-          <label className={`px-3 md:px-4 py-2 rounded-lg border ${formData.category === "workshop" ? "border-neon-cyan bg-deep-night/30" : "border-neon-cyan/20"} cursor-pointer`}>
-            <input
-              type="radio"
-              name="category"
-              value="workshop"
-              checked={formData.category === "workshop"}
-              onChange={() => handleCategoryChange("workshop")}
-              className="hidden"
-              suppressHydrationWarning={true}
-            />
-            <span className="font-poppins text-sm md:text-base">Workshop</span>
-          </label>
-
-          <label className={`px-3 md:px-4 py-2 rounded-lg border ${formData.category === "event" ? "border-neon-cyan bg-deep-night/30" : "border-neon-cyan/20"} cursor-pointer`}>
-            <input
-              type="radio"
-              name="category"
-              value="event"
-              checked={formData.category === "event"}
-              onChange={() => handleCategoryChange("event")}
-              className="hidden"
-              suppressHydrationWarning={true}
-            />
-            <span className="font-poppins text-sm md:text-base">Event</span>
-          </label>
-        </div>
-        {errors.category && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.category}</p>}
-      </div>
-      */}
-
-      {/* Event dropdown — shown directly (workshops not used) */}
+      {/* Event dropdown */}
       <div>
         <label htmlFor="registrationType" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">Choose Event <span className="text-neon-magenta">*</span></label>
         <select
