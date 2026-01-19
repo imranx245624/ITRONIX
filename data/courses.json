@@ -18,6 +18,10 @@
       "B.Sc. (Chemistry)",
       "B.Sc. (Microbiology)",
       "B.Sc. (Biotechnology)",
+      "B.Sc. (Electronics)",
+      "B.Sc. (Statistics)",
+      "B.Sc. (Environmental Science)",
+      "B.Sc. (Animation)",
       "BCA (Bachelor of Computer Applications)",
       "B.Voc (IT / Computer)"
     ],
@@ -37,7 +41,11 @@
       "B.A. (Economics)",
       "B.A. (English)",
       "BBA",
-      "BMS"
+      "BMS",
+      "BMM",
+      "BMM (Bachelor of Mass Media)",
+      "BJMC (Bachelor of Journalism & Mass Communication)",
+      "BFA (Bachelor of Fine Arts)"
     ],
     "ug_professional": [
       "B.Arch",
@@ -47,7 +55,10 @@
       "MBBS",
       "B.Pharm",
       "D.Pharm",
-      "B.Sc. Nursing"
+      "B.Sc. Nursing",
+      "B.Sc. (Hospitality & Hotel Management)",
+      "B.Voc (Multimedia)",
+      "B.Voc (Fashion Design)"
     ],
     "pg_common": [
       "M.Sc. (Computer Science)",
@@ -59,7 +70,9 @@
       "MCA",
       "M.Tech",
       "MBA",
-      "PhD / Research Programs"
+      "PhD / Research Programs",
+      "MFA",
+      "M.J.M.C (Master of Journalism & Mass Communication)"
     ]
   },
 
@@ -79,6 +92,10 @@
     "B.Sc. (Chemistry)",
     "B.Sc. (Microbiology)",
     "B.Sc. (Biotechnology)",
+    "B.Sc. (Electronics)",
+    "B.Sc. (Statistics)",
+    "B.Sc. (Environmental Science)",
+    "B.Sc. (Animation)",
     "BCA (Bachelor of Computer Applications)",
     "B.Voc (IT / Computer)",
     "B.Tech - Computer Science & Engineering",
@@ -95,6 +112,10 @@
     "B.A. (English)",
     "BBA",
     "BMS",
+    "BMM",
+    "BMM (Bachelor of Mass Media)",
+    "BJMC (Bachelor of Journalism & Mass Communication)",
+    "BFA (Bachelor of Fine Arts)",
     "B.Arch",
     "B.Des",
     "LLB (Integrated)",
@@ -103,6 +124,9 @@
     "B.Pharm",
     "D.Pharm",
     "B.Sc. Nursing",
+    "B.Sc. (Hospitality & Hotel Management)",
+    "B.Voc (Multimedia)",
+    "B.Voc (Fashion Design)",
     "M.Sc. (Computer Science)",
     "M.Sc. (Mathematics)",
     "M.Sc. (Physics)",
@@ -113,6 +137,8 @@
     "M.Tech",
     "MBA",
     "PhD / Research Programs",
+    "MFA",
+    "M.J.M.C (Master of Journalism & Mass Communication)",
     "Diploma - Engineering (CE/EE/ME/ECE/IT)",
     "Diploma - Polytechnic",
     "PG Diploma - Data Science",
@@ -122,17 +148,18 @@
     "Certificate - AI & ML",
     "Certificate - IoT",
     "Certificate - Embedded Systems",
-    "B.Sc. (Statistics)",
-    "B.Sc. (Environmental Science)",
-    "B.Sc. (Electronics)",
-    "B.Sc. (Hospitality & Tourism)",
-    "B.Com (Accounting & Finance)",
+    "Certificate - Film & TV Production",
+    "Certificate - Graphic Design",
+    "Certificate - Photography",
     "Integrated M.Sc. (Research)",
     "Integrated MBA",
     "B.Ed",
     "M.Ed",
     "LLM",
     "Executive MBA",
-    "M.Phil"
+    "M.Phil",
+    "Diploma - Fashion Design",
+    "Certificate - Animation",
+    "Certificate - UX/UI Design"
   ]
 }
