@@ -573,87 +573,30 @@ export default function RegisterForm({ preselectedEvent, preselectedWorkshop }) 
 
       {/* College autocomplete (unchanged) */}
       <div className="relative">
-        <label htmlFor="college" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
-          College / School <span className="text-neon-magenta">*</span>
-        </label>
+  <label htmlFor="college" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
+    College / School <span className="text-neon-magenta">*</span>
+  </label>
 
-        <div ref={collegeInputRef}>
-          <input
-            id="college"
-            name="college_input"
-            type="text"
-            autoComplete="off"
-            value={collegeQuery}
-            onChange={(e) => {
-              setCollegeQuery(e.target.value)
-              setFormData((prev) => ({ ...prev, college: "", course: "" }))
-            }}
-            onKeyDown={onCollegeKeyDown}
-            onFocus={() => {
-              if (!collegeQuery.trim() && colleges.length) {
-                const all = colleges.map((c, idx) => ({ idx, name: c.name, score: 0 })).slice(0, 50)
-                setCollegeSuggestions(all)
-                setCollegeShowSuggestions(true)
-                setCollegeActiveIndex(-1)
-              } else if (collegeSuggestions.length) {
-                setCollegeShowSuggestions(true)
-              }
-            }}
-            placeholder="Start typing your college or school name..."
-            className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
-            aria-autocomplete="list"
-            aria-controls="college-listbox"
-            aria-expanded={collegeShowSuggestions}
-            role="combobox"
-            suppressHydrationWarning={true}
-          />
-        </div>
+  <div>
+    <input
+      id="college"
+      name="college"
+      type="text"
+      autoComplete="off"
+      value={formData.college}
+      onChange={(e) => {
+        const v = e.target.value
+        setFormData((prev) => ({ ...prev, college: v, course: "" }))
+        setErrors((prev) => ({ ...prev, college: undefined }))
+      }}
+      placeholder="Type your college or school name..."
+      className="w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base bg-deep-night/50 border border-neon-cyan/30 rounded-lg font-poppins text-muted-text focus:outline-none focus:ring-1 focus:ring-neon-cyan/40"
+      suppressHydrationWarning={true}
+    />
+  </div>
 
-        <input type="hidden" name="college" value={formData.college} suppressHydrationWarning={true} />
-
-        {errors.college && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.college}</p>}
-
-        {collegeShowSuggestions && collegeSuggestions.length > 0 && (
-          <ul
-            id="college-listbox"
-            ref={collegeSuggestionsRef}
-            role="listbox"
-            aria-label="College suggestions"
-            className="absolute z-50 mt-1 md:mt-2 max-h-40 md:max-h-60 w-full overflow-auto rounded-lg bg-deep-night/95 border border-neon-cyan/20 p-1 shadow-lg"
-            suppressHydrationWarning={true}
-          >
-            {collegeSuggestions.map((s, idx) => (
-              <li
-                key={s.idx + "-" + idx}
-                role="option"
-                aria-selected={collegeActiveIndex === idx}
-                onMouseDown={(e) => { e.preventDefault(); pickCollege(s.idx) }}
-                onMouseEnter={() => setCollegeActiveIndex(idx)}
-                className={`px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none ${collegeActiveIndex === idx ? "bg-neon-cyan/10 text-neon-cyan" : "text-muted-text hover:bg-deep-night/40"}`}
-              >
-                {s.name} <span className="text-xs md:text-sm text-muted-text"> — {colleges[s.idx]?.city || ''}{colleges[s.idx]?.state ? ', ' + colleges[s.idx].state : ''}</span>
-              </li>
-            ))}
-
-            {collegeQuery.trim() && !collegeSuggestions.find(x => x.name === collegeQuery.trim()) && (
-              <li
-                role="option"
-                aria-selected={false}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  setFormData((prev) => ({ ...prev, college: collegeQuery.trim(), course: "" }))
-                  setCollegeShowSuggestions(false)
-                  try { collegeInputRef.current?.querySelector("input")?.blur() } catch {}
-                }}
-                className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-sm cursor-pointer select-none text-muted-text hover:bg-deep-night/40"
-              >
-                Use "{collegeQuery.trim()}"
-              </li>
-            )}
-          </ul>
-        )}
-      </div>
-
+  {errors.college && <p className="mt-1 text-xs md:text-sm text-neon-magenta">{errors.college}</p>}
+</div>
       {/* Course: editable textbox + grouped dropdown */}
       <div className="relative">
         <label htmlFor="course" className="block font-poppins text-sm md:text-base font-semibold text-neon-cyan mb-2">
