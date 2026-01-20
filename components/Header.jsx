@@ -105,41 +105,41 @@ export default function Header() {
         <div className="ml-auto flex items-center gap-2">
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-3">
-            <SignedOut>
+            {/* <SignedOut>
               <SignInButton mode="modal">
                 <button className="btn-secondary text-xs px-5 py-2">
                   Sign in
                 </button>
               </SignInButton>
-            </SignedOut>
+            </SignedOut> */}
 
-            <SignedIn>
+            {/* <SignedIn> */}
               <Link href="/Dashboard" className="btn-secondary">
                 Dashboard
               </Link>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
+              {/* <UserButton afterSignOutUrl="/" />
+            </SignedIn> */}
           </div>
 
           {/* Mobile */}
           <div className="md:hidden flex items-center gap-2">
-            <SignedOut>
+            {/* <SignedOut>
               <SignInButton mode="modal">
                 <button className="p-2 rounded-md bg-deep-night/40 border border-neon-cyan/10 text-neon-cyan text-sm">
                   Sign in
                 </button>
               </SignInButton>
-            </SignedOut>
+            </SignedOut> */}
 
-            <SignedIn>
+          
               <Link
                 href="/Dashboard"
                 className="p-2 rounded-md bg-deep-night/30 border border-neon-cyan/10 text-neon-cyan text-sm"
               >
                 Dashboard
               </Link>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
+              {/* <UserButton afterSignOutUrl="/" /> */}
+            
           </div>
         </div>
       </nav>

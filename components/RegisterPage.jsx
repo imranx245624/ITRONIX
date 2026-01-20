@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import { Suspense, useEffect, useState, useRef } from "react"
-import { useUser } from "@clerk/nextjs"
+// import { useUser } from "@clerk/nextjs"
 import RegisterForm from "@/components/RegisterForm"
 
 function RegisterContent() {
@@ -25,7 +25,7 @@ function RegisterContent() {
   const [mounted, setMounted] = useState(false)
 
   // Clerk auth
-  const { isLoaded, isSignedIn } = useUser()
+  // const { isLoaded, isSignedIn } = useUser()
 
   useEffect(() => {
     // mark as mounted on client
@@ -44,17 +44,17 @@ function RegisterContent() {
   useEffect(() => {
     // Wait until Clerk finishes loading. If user is NOT signed-in, redirect to Clerk sign-in page.
     // We include the current path+search as redirectTo so Clerk page can send user back after signin.
-    if (!isLoaded) return
+    // if (!isLoaded) return
 
-    if (!isSignedIn) {
-      // build current location including querystring
-      const q = searchParams.toString()
-      const current = q ? `${pathname}?${q}` : pathname
-      // push to your existing Clerk sign-in route and pass redirectTo param
-      router.push(`/sign-in?redirectTo=${encodeURIComponent(current)}`)
-    }
+    // if (!isSignedIn) {
+    //   // build current location including querystring
+    //   const q = searchParams.toString()
+    //   const current = q ? `${pathname}?${q}` : pathname
+    //   // push to your existing Clerk sign-in route and pass redirectTo param
+    //   router.push(`/sign-in?redirectTo=${encodeURIComponent(current)}`)
+    // }
     // If user is signed in, do nothing (they keep on this page)
-  }, [isLoaded, isSignedIn, pathname, searchParams, router])
+  }, [ pathname, searchParams, router])
 
   return (
     <section className="min-h-screen bg-deep-night py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

@@ -222,8 +222,8 @@ export default function Dashboard() {
         </div>
 
         {/* main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-center items-center">
-          {/* Left column: user info card (centered on desktop via lg:col-start-2) */}
+        {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-center items-center">
+          Left column: user info card (centered on desktop via lg:col-start-2)
           <aside className="lg:col-span-1 lg:col-start-2 card-dark p-6 border border-neon-cyan/100 rounded-2xl bg-[rgba(3,6,9,0.55)] backdrop-blur-sm">
             <h3 className="font-rajdhani text-neon-cyan text-lg mb-3">Your Info</h3>
 
@@ -238,10 +238,10 @@ export default function Dashboard() {
                 <div className="mt-1">{email}</div>
               </div>
 
-              {/* <div>
+              <div>
                 <span className="block text-xs uppercase text-neon-cyan/70">Phone</span>
                 <div className="mt-1">{phone || "—"}</div>
-              </div> */}
+              </div>
 
               <div>
                 <span className="block text-xs uppercase text-neon-cyan/70">Joined</span>
@@ -250,17 +250,17 @@ export default function Dashboard() {
             </div>
 
             <div className="mt-6">
-              {/* <Link href="/account" className="w-full btn-secondary block text-center">
+              <Link href="/account" className="w-full btn-secondary block text-center">
                 Manage account
-              </Link> */}
+              </Link>
             </div>
           </aside>
 
-          {/* Right / main column: registrations */}
-          {/* <section className="lg:col-span-2 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
+          Right / main column: registrations
+          <section className="lg:col-span-2 card-dark p-6 border border-neon-cyan/20 rounded-2xl">
             (commented-out registrations block left exactly as you had it)
-          </section> */}
-        </div>
+          </section>
+        </div> */}
 
         {/* Footer quick links */}
         <div className="relative h-30 mt-8 text-center text-sm text-muted-text">
@@ -304,10 +304,10 @@ export default function Dashboard() {
             </div>
 
             <div className="mt-4 space-y-3 text-sm">
-              <div>
-                {/* <div className="text-xs uppercase text-neon-cyan/70">Name</div>
-                <div className="font-medium ">Technical Head</div> */}
-              </div>
+              {/* <div>
+                <div className="text-xs uppercase text-neon-cyan/70">Name</div>
+                <div className="font-medium ">Technical Head</div>
+              </div> */}
 
               <div>
                 <div className="text-xs uppercase text-neon-cyan/70">Phone</div>

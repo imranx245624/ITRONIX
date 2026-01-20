@@ -4,13 +4,13 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useEffect, useState, useRef, useMemo } from "react"
 import eventPricing from "@/data/eventPricing.json"
 import { supabase } from "@/lib/supabase"
-import { useUser } from "@clerk/nextjs"
+// import { useUser } from "@clerk/nextjs"
 
 export default function PaymentPage() {
   // router / auth
   const params = useSearchParams()
   const router = useRouter()
-  const { user, isLoaded, isSignedIn } = useUser()
+  // const { user } = useUser()
 
   // query params
   const event = params.get("event")
@@ -76,9 +76,9 @@ export default function PaymentPage() {
 
   // require sign-in (Clerk)
   useEffect(() => {
-    if (!isLoaded) return
-    if (!isSignedIn) router.push("/sign-in")
-  }, [isLoaded, isSignedIn, router])
+    // if (!isLoaded) return
+    // if (!isSignedIn) router.push("/sign-in")
+  }, [ router])
 
   useEffect(() => {
     return () => {
@@ -162,10 +162,10 @@ export default function PaymentPage() {
       setError("Screenshot already uploaded. Contact us if you need to change it.")
       return
     }
-    if (!isSignedIn) {
-      setError("You must be signed in to save the screenshot. Please sign in and retry.")
-      return
-    }
+    // if (!isSignedIn) {
+    //   setError("You must be signed in to save the screenshot. Please sign in and retry.")
+    //   return
+    // }
 
     setUploading(true)
     try {

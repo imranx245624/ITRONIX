@@ -206,44 +206,33 @@ export default function EventDetailsModal({ event, onClose }) {
 
 {/* LEFT: Register area */}
 <div>
-  <SignedOut>
-    <div className="flex flex-col gap-2">
-      {/* Primary action for signed-out users: prompt to sign in first */}
-      <SignInButton mode="modal">
-        <button
-          type="button"
-          className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-primary hover:shadow-lg transition-all duration-300"
-        >
-          Sign in to register
-        </button>
-      </SignInButton>
-
-      {/* Disabled Register to indicate flow and avoid accidental clicks */}
-      <button
-        type="button"
-        disabled
-        className="w-full text-center px-4 py-2 rounded-lg font-semibold btn-secondary opacity-60 cursor-not-allowed"
-        aria-disabled="true"
-        title="Sign in first to register"
-      >
-        Register
-      </button>
+  <Link
+    href="/register"
+    className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
+               bg-gradient-to-r from-[#06F7FF] via-[#00C2FF] to-[#06F7FF]
+               shadow-[0_14px_40px_rgba(6,247,255,0.14)] block
+               transform-gpu will-change-transform
+               animate-[pulseScale_1s_ease-in-out_infinite_alternate]"
+    aria-label="Register"
+  >
+    REGISTER NOW
+  </Link>
 
       {/* Small helper text */}
-      <p className="text-xs text-muted-text/90 mt-1">
+      {/* <p className="text-xs text-muted-text/90 mt-1">
         First sign in, then register.
       </p>
-    </div>
-  </SignedOut>
+    </div> */}
+  
 
-  <SignedIn>
+  {/* <SignedIn>
     <Link
       href={event.register_url || "#"}
       className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold"
     >
       Register
     </Link>
-  </SignedIn>
+  </SignedIn> */}
 </div>
 
             </div>
