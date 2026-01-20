@@ -176,22 +176,12 @@ export default function Dashboard() {
         {/* header */}
         <div className="hidden md:flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-deep-night/40 to-deep-night/70 border border-neon-cyan/20 p-1 flex items-center justify-center">
-              {/* profile image */}
-              {user?.profileImageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={user.profileImageUrl} alt="avatar" className="w-14 h-14 rounded-md object-cover" />
-              ) : (
-                <div className="w-14 h-14 rounded-md bg-deep-night/60 flex items-center justify-center text-neon-cyan font-bold">
-                  {displayName ? displayName.charAt(0).toUpperCase() : "U"}
-                </div>
-              )}
-            </div>
+            
 
             <div>
-              <h2 className="text-lg md:text-2xl font-rajdhani font-bold text-neon-cyan">
+              {/* <h2 className="text-lg md:text-2xl font-rajdhani font-bold text-neon-cyan">
                 Welcome, {displayName || "Participant"}
-              </h2>
+              </h2> */}
               {/* <p className="text-sm text-muted-text mt-1">{email}</p> */}
               {/* <p className="text-xs text-muted-text mt-1">Member ID: <span className="text-neon-magenta">{user?.id}</span></p> */}
             </div>
