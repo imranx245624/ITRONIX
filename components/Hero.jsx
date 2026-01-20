@@ -4,6 +4,7 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs"
 import "./hero.css"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { Color } from "three/src/Three.Core.js"
 
 export default function Hero() {
   const heroRef = useRef(null)
@@ -168,7 +169,7 @@ export default function Hero() {
             <p>
               <strong>ITRONIX</strong> is the annual technical fest of the <strong>Information Technology Department</strong>, celebrating innovation, creativity, and technical excellence.
             </p>
-
+              
             <p>
               Through a vibrant mix of <strong>Technical competitions, Non-Technical challenges, Gaming events, Workshops</strong> and interactive experiences, <strong>ITRONIX</strong> provides a platform for students to learn, compete, collaborate, and showcase their skills.
             </p>
@@ -240,6 +241,12 @@ export default function Hero() {
     REGISTER NOW
   </Link>
 
+  {/* registration notice under register button */}
+  <p className="mt-3 text-xs sm:text-sm  font-medium" style={{
+    color: "red",
+    fontWeight: "bold",
+  }}>Registrations close at 9:00 PM, 22nd January</p>
+
   {/* inline styles in same component (not a separate file) */}
   <style jsx>{`
     @keyframes pulseScale {
@@ -266,38 +273,57 @@ export default function Hero() {
     }
   `}</style>
 
-<br/>
-
-
           </div>
 </div>
 
           <Link
             href="/events"
             className="btn-secondary text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-110 hover:rotate-1 hover:shadow-lg hover:shadow-neon-cyan/50 mt-6 inline-block"
-          >
-            See Events
+          style={{
+
+  textTransform: "none",
+  letterSpacing: "normal",
+}}
+>
+            Explore Event Details
           </Link>
 
-          {/* SCHEDULE BUTTON placed below "See Events" (redirects to schedule section on events page) */}
-          <div className="mt-3">
-            <Link
-              href="/events#section-schedule"
-              className="text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 rounded-md border border-neon-cyan/30 backdrop-blur-sm bg-[rgba(4,8,12,0.36)] hover:shadow-lg hover:shadow-neon-cyan/30 transition-all duration-200 inline-block"
-              aria-label="Go to schedule"
-            >
-              Schedule
-            </Link>
-          </div>
+          {/* SCHEDULE BUTTON + Brochure download
+              Behavior:
+               - DOM order: Schedule (first) then Brochure (second)
+               - On mobile (default): Brochure is positioned absolute bottom-left of hero (so it's visually at left bottom)
+               - On md+ (desktop): layout becomes static and flex-row-reverse so Brochure appears to the left of Schedule (close by)
+               - Place brochure file in the public folder (e.g. public/Brochure-Itronix.pdf)
+          */}
+         <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
+  <a
+    href="/Brochure-Itronix.pdf"
+    download
+    aria-label="Download brochure"
+    className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neon-cyan text-black font-semibold text-sm hover:shadow-lg"
+  >
+    <span className="text-lg" aria-hidden>📥</span>
+    <span>Brochure</span>
+  </a>
+
+  <Link
+    href="/events#section-schedule"
+    className="inline-block text-center text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 rounded-md border border-neon-cyan/30 backdrop-blur-sm bg-[rgba(4,8,12,0.36)] hover:shadow-lg hover:shadow-neon-cyan/30 transition-all duration-200"
+    aria-label="Go to schedule"
+  >
+    Schedule
+  </Link>
+</div>
+
         
       </div>
 
       {/* SCROLL INDICATOR */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce flex flex-col items-center gap-2 text-neon-cyan/70">
+      {/* <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce flex flex-col items-center gap-2 text-neon-cyan/70">
         <svg className="w-5 h-5 sm:w-6 sm:h-6 text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </div> */}
     </section>
   )
 }
