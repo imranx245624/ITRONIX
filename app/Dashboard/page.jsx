@@ -204,9 +204,9 @@ export default function Dashboard() {
                 Browse Workshops
               </Link> */}
 
-              <SignOutButton>
+              {/* <SignOutButton>
                 <button className="ml-1 btn-ghost px-3 py-2 border border-neon-cyan/100 rounded  text-xs">Sign out</button>
-              </SignOutButton>
+              </SignOutButton> */}
             </div>
 
             {/* Mobile actions: show Dashboard button (current page) and signout */}
@@ -214,9 +214,9 @@ export default function Dashboard() {
               <Link href="/workshops" className="p-2 rounded-md bg-deep-night/40 border border-neon-cyan/10 text-neon-cyan text-sm">
                 Workshops
               </Link>
-              <SignOutButton>
+              {/* <SignOutButton>
                 <button className="p-2 rounded-md bg-deep-night/30 border border-neon-cyan/10 text-sm">Sign out</button>
-              </SignOutButton>
+              </SignOutButton> */}
             </div>
           </div>
         </div>
