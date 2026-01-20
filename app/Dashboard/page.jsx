@@ -253,7 +253,7 @@ export default function Dashboard() {
         </div> */}
 
         {/* Footer quick links */}
-        <div className="relative h-30 mt-8 text-center text-sm text-muted-text">
+        <div className="relative h-30 mt-8 text-center text-2000 text-muted-text">
           <p>
             Need help?{" "}
             <button
