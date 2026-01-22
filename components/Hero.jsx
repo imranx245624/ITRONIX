@@ -16,8 +16,19 @@ export default function Hero() {
   // if user manually closed the info card, keep it closed until they return to top
   const [overlayClosed, setOverlayClosed] = useState(false)
 
+  // NEW: popup state for TechSlides Arena
+  const [showPptPopup, setShowPptPopup] = useState(false)
+
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  // show PPT popup after 2s
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setShowPptPopup(true)
+    }, 2000)
+    return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
@@ -94,6 +105,17 @@ export default function Hero() {
   // overlay should be interactive only when visible and not closed
   const overlayInteractive = !overlayClosed && overlayProgress > 0.02
 
+  // TechSlides topics (exact as you provided)
+  const techSlidesTopics = [
+    "Green IT & Sustainability",
+    "Use of Data Analytics in Business Growth",
+    "Cyber Safety & Ethical Hacking",
+    "Digital India & Smart Technology",
+    "Significance of Prompt Engineering",
+    "Scrolling culture and it's impact on focus",
+    "Maipulated Reality: the Deepfake Era"
+  ]
+
   return (
     <section
       id="hero"
@@ -120,7 +142,7 @@ export default function Hero() {
       />
 
       {/* DYNAMIC BLUR + INFO OVERLAY */}
-      <div
+      {/* <div
         className="fixed inset-0 z-40 flex items-center justify-center"
         aria-hidden="true"
         onClick={() => {
@@ -133,9 +155,9 @@ export default function Hero() {
           backdropFilter: `blur(${blurPx}px)`,
           WebkitBackdropFilter: `blur(${blurPx}px)`,
         }}
-      >
+      > */}
         {/* Info card */}
-        <div
+        {/* <div
           className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/200 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-2"
           style={{
             transform: `translateY(${cardTranslate}px)`,
@@ -181,8 +203,8 @@ export default function Hero() {
               </Link>
           </div>
         </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
 
       {/* ================= MAIN CONTENT (make clickable by NOT using pointer-events-none on this container) ================= */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center -mt-14 sm:mt-0">
@@ -319,11 +341,65 @@ export default function Hero() {
       </div>
 
       {/* SCROLL INDICATOR */}
-      {/* <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce flex flex-col items-center gap-2 text-neon-cyan/70">
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce flex flex-col items-center gap-2 text-neon-cyan/70">
         <svg className="w-5 h-5 sm:w-6 sm:h-6 text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div> */}
+      </div>
+
+      {/* TechSlides popup (appears 2s after load) */}
+      {showPptPopup && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4"
+        >
+          {/* backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setShowPptPopup(false)}
+            aria-hidden="true"
+          />
+
+          <div className="relative z-70 w-full max-w-lg mx-auto rounded-xl">
+            <div className="bg-[#041014]/98 rounded-lg overflow-hidden border-2 border-cyber-orange/100 p-4">
+              <div className="flex items-start justify-between">
+                <h3 className="text-lg md:text-xl font-semibold text-neon-cyan">TechSlides Arena — Topics Revealed</h3>
+                <button
+                  onClick={() => setShowPptPopup(false)}
+                  aria-label="Close topics popup"
+                  className="ml-3 w-8 h-8 rounded-md bg-deep-night/40 border border-neon-cyan/10 flex items-center justify-center text-neon-cyan hover:bg-neon-cyan/6 focus:outline-none"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="mt-3 text-sm text-muted-text">
+                <p className="mb-2">Topics for Tech Slide Arena (Presentation):</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  {techSlidesTopics.map((t, i) => (
+                    <li key={i} className="text-white">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={() => setShowPptPopup(false)}
+                  className="px-3 py-1 rounded-md bg-neon-cyan text-black font-semibold"
+                >
+                  Got it
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
