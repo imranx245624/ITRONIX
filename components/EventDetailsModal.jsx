@@ -206,7 +206,7 @@ export default function EventDetailsModal({ event, onClose }) {
 
 {/* LEFT: Register area */}
 <div>
-  <Link
+  {/* <Link
     href="/register"
     className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
                bg-gradient-to-r from-[#06F7FF] via-[#00C2FF] to-[#06F7FF]
@@ -216,7 +216,7 @@ export default function EventDetailsModal({ event, onClose }) {
     aria-label="Register"
   >
     REGISTER NOW
-  </Link>
+  </Link> */}
 
       {/* Small helper text */}
       {/* <p className="text-xs text-muted-text/90 mt-1">

@@ -251,8 +251,8 @@ export default function Hero() {
         {/* CTA: No ancestor has pointer-events:none so children are clickable */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-  <Link
-    href="/register"
+  {/* <Link
+    href=""
     className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
                bg-gradient-to-r from-[#06F7FF] via-[#00C2FF] to-[#06F7FF]
                shadow-[0_14px_40px_rgba(6,247,255,0.14)] block
@@ -260,14 +260,19 @@ export default function Hero() {
                animate-[pulseScale_1s_ease-in-out_infinite_alternate]"
     aria-label="Register"
   >
-    REGISTER NOW
-  </Link>
+    REGISTER End NOW please regsiter tomorrow till 9AM 
+  </Link> */}
+  {/* <p className="w-full text-center px-4 py-2 rounded-lg font-semibold text-black
+               bg-gradient-to-r from-[#06F7FF] via-[#00C2FF] to-[#06F7FF]
+               shadow-[0_14px_40px_rgba(6,247,255,0.14)] block
+               transform-gpu will-change-transform
+               animate-[pulseScale_1s_ease-in-out_infinite_alternate]" >REGISTER NOW </p> */}
 
   {/* registration notice under register button */}
   <p className="mt-3 text-xs sm:text-sm  font-medium" style={{
     color: "red",
     fontWeight: "bold",
-  }}>Registrations close at 9:00 PM, 22nd January</p>
+  }}>Registrations closed!  NOw  reggister offline till tomorrow 9 AM</p>
 
   {/* inline styles in same component (not a separate file) */}
   <style jsx>{`
