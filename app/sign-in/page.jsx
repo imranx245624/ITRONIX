@@ -16,7 +16,7 @@ export default function SignInPage() {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return null
+  // if (!mounted) return null
 
   return (
     // fixed full-screen overlay so sign-in sits above everything

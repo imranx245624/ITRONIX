@@ -142,7 +142,7 @@ export default function Hero() {
       />
 
       {/* DYNAMIC BLUR + INFO OVERLAY */}
-      {/* <div
+       <div
         className="fixed inset-0 z-40 flex items-center justify-center"
         aria-hidden="true"
         onClick={() => {
@@ -155,9 +155,9 @@ export default function Hero() {
           backdropFilter: `blur(${blurPx}px)`,
           WebkitBackdropFilter: `blur(${blurPx}px)`,
         }}
-      > */}
+      > 
         {/* Info card */}
-        {/* <div
+        <div
           className="max-w-3xl w-[calc(100%-3rem)] sm:w-[760px] p-6 rounded-2xl border border-neon-cyan/200 bg-gradient-to-br from-deep-night/60 to-deep-night/80 shadow-lg text-left relative top-2"
           style={{
             transform: `translateY(${cardTranslate}px)`,
@@ -198,13 +198,13 @@ export default function Hero() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <div>
-              <Link href="/register" className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold">
+              {/* <Link href="/register" className="w-full text-center btn-secondary hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300 block px-4 py-2 rounded-lg font-semibold">
                 Register now
-              </Link>
+              </Link> */}
           </div>
         </div>
-        </div> */}
-      {/* </div> */}
+        </div> 
+       </div> 
 
       {/* ================= MAIN CONTENT (make clickable by NOT using pointer-events-none on this container) ================= */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center -mt-14 sm:mt-0">
@@ -269,10 +269,10 @@ export default function Hero() {
                animate-[pulseScale_1s_ease-in-out_infinite_alternate]" >REGISTER NOW </p> */}
 
   {/* registration notice under register button */}
-  <p className="mt-3 text-xs sm:text-sm  font-medium" style={{
+  {/* <p className="mt-3 text-xs sm:text-sm  font-medium" style={{
     color: "red",
     fontWeight: "bold",
-  }}>Registrations closed!  NOw  reggister offline till tomorrow 9 AM</p>
+  }}>Registrations closed!  NOw  reggister offline till tomorrow 9 AM</p> */}
 
   {/* inline styles in same component (not a separate file) */}
   <style jsx>{`
@@ -353,13 +353,13 @@ export default function Hero() {
       </div>
 
       {/* TechSlides popup (appears 2s after load) */}
-      {showPptPopup && (
+      {/* {showPptPopup && (
         <div
           role="dialog"
           aria-modal="true"
           className="fixed inset-0 z-60 flex items-center justify-center p-4"
         >
-          {/* backdrop */}
+          backdrop
           <div
             className="absolute inset-0 bg-black/60"
             onClick={() => setShowPptPopup(false)}
@@ -404,7 +404,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </section>
   )
 }
